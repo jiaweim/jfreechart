@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------
@@ -41,7 +41,7 @@ package org.jfree.data.xy;
  * An base class that you can use to create new implementations of the
  * {@link IntervalXYDataset} interface.
  */
-public abstract class AbstractIntervalXYDataset<S extends Comparable<S>> 
+public abstract class AbstractIntervalXYDataset<S extends Comparable<S>>
         extends AbstractXYDataset<S>
         implements IntervalXYDataset<S> {
 
@@ -49,9 +49,8 @@ public abstract class AbstractIntervalXYDataset<S extends Comparable<S>>
      * Returns the start x-value (as a double primitive) for an item within a
      * series.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The value.
      */
     @Override
@@ -68,9 +67,8 @@ public abstract class AbstractIntervalXYDataset<S extends Comparable<S>>
      * Returns the end x-value (as a double primitive) for an item within a
      * series.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The value.
      */
     @Override
@@ -87,9 +85,8 @@ public abstract class AbstractIntervalXYDataset<S extends Comparable<S>>
      * Returns the start y-value (as a double primitive) for an item within a
      * series.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The value.
      */
     @Override
@@ -106,9 +103,8 @@ public abstract class AbstractIntervalXYDataset<S extends Comparable<S>>
      * Returns the end y-value (as a double primitive) for an item within a
      * series.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The value.
      */
     @Override

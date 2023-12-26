@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -36,16 +36,13 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.util.GradientPaintTransformer;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
-import org.jfree.chart.util.GradientPaintTransformer;
-import org.jfree.chart.api.RectangleEdge;
 
 /**
  * An implementation of the {@link XYBarPainter} interface that preserves the
@@ -59,19 +56,18 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
     /**
      * Creates a new instance.
      */
-    public StandardXYBarPainter() {
-    }
+    public StandardXYBarPainter() {}
 
     /**
      * Paints a single bar instance.
      *
-     * @param g2  the graphics target.
-     * @param renderer  the renderer.
-     * @param row  the row index.
-     * @param column  the column index.
-     * @param bar  the bar
-     * @param base  indicates which side of the rectangle is the base of the
-     *              bar.
+     * @param g2       the graphics target.
+     * @param renderer the renderer.
+     * @param row      the row index.
+     * @param column   the column index.
+     * @param bar      the bar
+     * @param base     indicates which side of the rectangle is the base of the
+     *                 bar.
      */
     @Override
     public void paintBar(Graphics2D g2, XYBarRenderer renderer, int row,
@@ -87,7 +83,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
 
         // draw the outline...
         if (renderer.isDrawBarOutline()) {
-               // && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
+            // && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
             Stroke stroke = renderer.getItemOutlineStroke(row, column);
             Paint paint = renderer.getItemOutlinePaint(row, column);
             if (stroke != null && paint != null) {
@@ -102,14 +98,14 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
     /**
      * Paints a single bar instance.
      *
-     * @param g2  the graphics target.
+     * @param g2        the graphics target.
      * @param renderer  the renderer.
-     * @param row  the row index.
-     * @param column  the column index.
-     * @param bar  the bar
-     * @param base  indicates which side of the rectangle is the base of the
-     *              bar.
-     * @param pegShadow  peg the shadow to the base of the bar?
+     * @param row       the row index.
+     * @param column    the column index.
+     * @param bar       the bar
+     * @param base      indicates which side of the rectangle is the base of the
+     *                  bar.
+     * @param pegShadow peg the shadow to the base of the bar?
      */
     @Override
     public void paintBarShadow(Graphics2D g2, XYBarRenderer renderer, int row,
@@ -136,12 +132,11 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
     /**
      * Creates a shadow for the bar.
      *
-     * @param bar  the bar shape.
-     * @param xOffset  the x-offset for the shadow.
-     * @param yOffset  the y-offset for the shadow.
-     * @param base  the edge that is the base of the bar.
-     * @param pegShadow  peg the shadow to the base?
-     *
+     * @param bar       the bar shape.
+     * @param xOffset   the x-offset for the shadow.
+     * @param yOffset   the y-offset for the shadow.
+     * @param base      the edge that is the base of the bar.
+     * @param pegShadow peg the shadow to the base?
      * @return A rectangle for the shadow.
      */
     private Rectangle2D createShadow(RectangularShape bar, double xOffset,
@@ -157,24 +152,21 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
                 y0 += yOffset;
             }
             y1 += yOffset;
-        }
-        else if (base == RectangleEdge.BOTTOM) {
+        } else if (base == RectangleEdge.BOTTOM) {
             x0 += xOffset;
             x1 += xOffset;
             y0 += yOffset;
             if (!pegShadow) {
                 y1 += yOffset;
             }
-        }
-        else if (base == RectangleEdge.LEFT) {
+        } else if (base == RectangleEdge.LEFT) {
             if (!pegShadow) {
                 x0 += xOffset;
             }
             x1 += xOffset;
             y0 += yOffset;
             y1 += yOffset;
-        }
-        else if (base == RectangleEdge.RIGHT) {
+        } else if (base == RectangleEdge.RIGHT) {
             x0 += xOffset;
             if (!pegShadow) {
                 x1 += xOffset;
@@ -188,8 +180,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
     /**
      * Tests this instance for equality with an arbitrary object.
      *
-     * @param obj  the obj ({@code null} permitted).
-     *
+     * @param obj the obj ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -214,5 +205,4 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
         // no fields to compute...
         return hash;
     }
-
 }

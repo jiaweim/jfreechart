@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -35,23 +35,22 @@
  *                   Richard Atkinson;
  *                   Michel Santos;
  *                   Ted Schwartz (fix for bug 1955483);
- * 
+ *
  */
 
 package org.jfree.data.xy;
+
+import org.jfree.chart.internal.Args;
+import org.jfree.chart.internal.CloneUtils;
+import org.jfree.data.general.Series;
+import org.jfree.data.general.SeriesChangeEvent;
+import org.jfree.data.general.SeriesException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import org.jfree.chart.internal.Args;
-import org.jfree.chart.internal.CloneUtils;
-
-import org.jfree.data.general.Series;
-import org.jfree.data.general.SeriesChangeEvent;
-import org.jfree.data.general.SeriesException;
 
 /**
  * Represents a sequence of zero or more data items in the form (x, y).  By
@@ -60,20 +59,26 @@ import org.jfree.data.general.SeriesException;
  * defaults can be changed in the constructor.  Y-values can be
  * {@code null} to represent missing values.
  */
-public class XYSeries<K extends Comparable<K>> extends Series<K> 
+public class XYSeries<K extends Comparable<K>> extends Series<K>
         implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     static final long serialVersionUID = -5908509288197150436L;
 
     // In version 0.9.12, in response to several developer requests, I changed
     // the 'data' attribute from 'private' to 'protected', so that others can
     // make subclasses that work directly with the underlying data structure.
 
-    /** Storage for the data items in the series. */
+    /**
+     * Storage for the data items in the series.
+     */
     protected List<XYDataItem> data;
 
-    /** The maximum number of items for the series. */
+    /**
+     * The maximum number of items for the series.
+     */
     private int maximumItemCount = Integer.MAX_VALUE;
 
     /**
@@ -82,19 +87,29 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      */
     private boolean autoSort;
 
-    /** A flag that controls whether or not duplicate x-values are allowed. */
+    /**
+     * A flag that controls whether or not duplicate x-values are allowed.
+     */
     private boolean allowDuplicateXValues;
 
-    /** The lowest x-value in the series, excluding Double.NaN values. */
+    /**
+     * The lowest x-value in the series, excluding Double.NaN values.
+     */
     private double minX;
 
-    /** The highest x-value in the series, excluding Double.NaN values. */
+    /**
+     * The highest x-value in the series, excluding Double.NaN values.
+     */
     private double maxX;
 
-    /** The lowest y-value in the series, excluding Double.NaN values. */
+    /**
+     * The lowest y-value in the series, excluding Double.NaN values.
+     */
     private double minY;
 
-    /** The highest y-value in the series, excluding Double.NaN values. */
+    /**
+     * The highest y-value in the series, excluding Double.NaN values.
+     */
     private double maxY;
 
     /**
@@ -102,7 +117,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * be sorted into ascending order by x-value, and duplicate x-values will
      * be allowed (these defaults can be modified with another constructor).
      *
-     * @param key  the series key ({@code null} not permitted).
+     * @param key the series key ({@code null} not permitted).
      */
     public XYSeries(K key) {
         this(key, true, true);
@@ -112,9 +127,9 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Constructs a new empty series, with the auto-sort flag set as requested,
      * and duplicate values allowed.
      *
-     * @param key  the series key ({@code null} not permitted).
-     * @param autoSort  a flag that controls whether or not the items in the
-     *                  series are sorted.
+     * @param key      the series key ({@code null} not permitted).
+     * @param autoSort a flag that controls whether or not the items in the
+     *                 series are sorted.
      */
     public XYSeries(K key, boolean autoSort) {
         this(key, autoSort, true);
@@ -124,11 +139,11 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Constructs a new xy-series that contains no data.  You can specify
      * whether or not duplicate x-values are allowed for the series.
      *
-     * @param key  the series key ({@code null} not permitted).
-     * @param autoSort  a flag that controls whether or not the items in the
-     *                  series are sorted.
-     * @param allowDuplicateXValues  a flag that controls whether duplicate
-     *                               x-values are allowed.
+     * @param key                   the series key ({@code null} not permitted).
+     * @param autoSort              a flag that controls whether or not the items in the
+     *                              series are sorted.
+     * @param allowDuplicateXValues a flag that controls whether duplicate
+     *                              x-values are allowed.
      */
     public XYSeries(K key, boolean autoSort, boolean allowDuplicateXValues) {
         super(key);
@@ -147,9 +162,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * (for example, when the series is empty).
      *
      * @return The smallest x-value.
-     *
      * @see #getMaxX()
-     *
      * @since 1.0.13
      */
     public double getMinX() {
@@ -162,9 +175,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * (for example, when the series is empty).
      *
      * @return The largest x-value.
-     *
      * @see #getMinX()
-     *
      * @since 1.0.13
      */
     public double getMaxX() {
@@ -177,9 +188,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * smallest y-value (for example, when the series is empty).
      *
      * @return The smallest y-value.
-     *
      * @see #getMaxY()
-     *
      * @since 1.0.13
      */
     public double getMinY() {
@@ -192,9 +201,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * (for example, when the series is empty).
      *
      * @return The largest y-value.
-     *
      * @see #getMinY()
-     *
      * @since 1.0.13
      */
     public double getMaxY() {
@@ -204,8 +211,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Updates the cached values for the minimum and maximum data values.
      *
-     * @param item  the item added ({@code null} not permitted).
-     *
+     * @param item the item added ({@code null} not permitted).
      * @since 1.0.13
      */
     private void updateBoundsForAddedItem(XYDataItem item) {
@@ -223,8 +229,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Updates the cached values for the minimum and maximum data values on
      * the basis that the specified item has just been removed.
      *
-     * @param item  the item added ({@code null} not permitted).
-     *
+     * @param item the item added ({@code null} not permitted).
      * @since 1.0.13
      */
     private void updateBoundsForRemovedItem(XYDataItem item) {
@@ -246,13 +251,11 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
         }
         if (itemContributesToYBounds) {
             findBoundsByIteration();
-        }
-        else if (itemContributesToXBounds) {
+        } else if (itemContributesToXBounds) {
             if (getAutoSort()) {
                 this.minX = getX(0).doubleValue();
                 this.maxX = getX(getItemCount() - 1).doubleValue();
-            }
-            else {
+            } else {
                 findBoundsByIteration();
             }
         }
@@ -299,7 +302,6 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Returns the number of items in the series.
      *
      * @return The item count.
-     *
      * @see #getItems()
      */
     @Override
@@ -322,7 +324,6 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * The default value is {@code Integer.MAX_VALUE}.
      *
      * @return The maximum item count.
-     *
      * @see #setMaximumItemCount(int)
      */
     public int getMaximumItemCount() {
@@ -341,7 +342,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * the series (in which case a {@link SeriesChangeEvent} will be sent to
      * all registered listeners).
      *
-     * @param maximum  the maximum number of items for the series.
+     * @param maximum the maximum number of items for the series.
      */
     public void setMaximumItemCount(int maximum) {
         this.maximumItemCount = maximum;
@@ -357,7 +358,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds a data item to the series and sends a {@link SeriesChangeEvent} to
      * all registered listeners.
      *
-     * @param item  the (x, y) item ({@code null} not permitted).
+     * @param item the (x, y) item ({@code null} not permitted).
      */
     public void add(XYDataItem item) {
         // argument checking delegated...
@@ -368,8 +369,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds a data item to the series and sends a {@link SeriesChangeEvent} to
      * all registered listeners.
      *
-     * @param x  the x value.
-     * @param y  the y value.
+     * @param x the x value.
+     * @param y the y value.
      */
     public void add(double x, double y) {
         add(Double.valueOf(x), Double.valueOf(y), true);
@@ -379,11 +380,11 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds a data item to the series and, if requested, sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param x  the x value.
-     * @param y  the y value.
-     * @param notify  a flag that controls whether or not a
-     *                {@link SeriesChangeEvent} is sent to all registered
-     *                listeners.
+     * @param x      the x value.
+     * @param y      the y value.
+     * @param notify a flag that controls whether or not a
+     *               {@link SeriesChangeEvent} is sent to all registered
+     *               listeners.
      */
     public void add(double x, double y, boolean notify) {
         add(Double.valueOf(x), Double.valueOf(y), notify);
@@ -394,8 +395,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * all registered listeners.  The unusual pairing of parameter types is to
      * make it easier to add {@code null} y-values.
      *
-     * @param x  the x value.
-     * @param y  the y value ({@code null} permitted).
+     * @param x the x value.
+     * @param y the y value ({@code null} permitted).
      */
     public void add(double x, Number y) {
         add(Double.valueOf(x), y);
@@ -406,11 +407,11 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * {@link SeriesChangeEvent} to all registered listeners.  The unusual
      * pairing of parameter types is to make it easier to add null y-values.
      *
-     * @param x  the x value.
-     * @param y  the y value ({@code null} permitted).
-     * @param notify  a flag that controls whether or not a
-     *                {@link SeriesChangeEvent} is sent to all registered
-     *                listeners.
+     * @param x      the x value.
+     * @param y      the y value ({@code null} permitted).
+     * @param notify a flag that controls whether or not a
+     *               {@link SeriesChangeEvent} is sent to all registered
+     *               listeners.
      */
     public void add(double x, Number y, boolean notify) {
         add(Double.valueOf(x), y, notify);
@@ -420,15 +421,14 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds a new data item to the series (in the correct position if the
      * {@code autoSort} flag is set for the series) and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
-     * <P>
+     * <p>
      * Throws an exception if the x-value is a duplicate AND the
      * allowDuplicateXValues flag is false.
      *
-     * @param x  the x-value ({@code null} not permitted).
-     * @param y  the y-value ({@code null} permitted).
-     *
+     * @param x the x-value ({@code null} not permitted).
+     * @param y the y-value ({@code null} permitted).
      * @throws SeriesException if the x-value is a duplicate and the
-     *     {@code allowDuplicateXValues} flag is not set for this series.
+     *                         {@code allowDuplicateXValues} flag is not set for this series.
      */
     public void add(Number x, Number y) {
         // argument checking delegated...
@@ -438,15 +438,15 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Adds new data to the series and, if requested, sends a
      * {@link SeriesChangeEvent} to all registered listeners.
-     * <P>
+     * <p>
      * Throws an exception if the x-value is a duplicate AND the
      * allowDuplicateXValues flag is false.
      *
-     * @param x  the x-value ({@code null} not permitted).
-     * @param y  the y-value ({@code null} permitted).
-     * @param notify  a flag the controls whether or not a
-     *                {@link SeriesChangeEvent} is sent to all registered
-     *                listeners.
+     * @param x      the x-value ({@code null} not permitted).
+     * @param y      the y-value ({@code null} permitted).
+     * @param notify a flag the controls whether or not a
+     *               {@link SeriesChangeEvent} is sent to all registered
+     *               listeners.
      */
     public void add(Number x, Number y, boolean notify) {
         // delegate argument checking to XYDataItem...
@@ -458,10 +458,10 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds a data item to the series and, if requested, sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param item  the (x, y) item ({@code null} not permitted).
-     * @param notify  a flag that controls whether or not a
-     *                {@link SeriesChangeEvent} is sent to all registered
-     *                listeners.
+     * @param item   the (x, y) item ({@code null} not permitted).
+     * @param notify a flag that controls whether or not a
+     *               {@link SeriesChangeEvent} is sent to all registered
+     *               listeners.
      */
     public void add(XYDataItem item, boolean notify) {
         Args.nullNotPermitted(item, "item");
@@ -470,8 +470,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
             int index = Collections.binarySearch(this.data, item);
             if (index < 0) {
                 this.data.add(-index - 1, item);
-            }
-            else {
+            } else {
                 if (this.allowDuplicateXValues) {
                     // need to make sure we are adding *after* any duplicates
                     int size = this.data.size();
@@ -481,17 +480,14 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
                     }
                     if (index < this.data.size()) {
                         this.data.add(index, item);
-                    }
-                    else {
+                    } else {
                         this.data.add(item);
                     }
-                }
-                else {
+                } else {
                     throw new SeriesException("X-value already exists.");
                 }
             }
-        }
-        else {
+        } else {
             if (!this.allowDuplicateXValues) {
                 // can't allow duplicate values, so we need to check whether
                 // there is an item with the given x-value already
@@ -516,8 +512,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Deletes a range of items from the series and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param start  the start index (zero-based).
-     * @param end  the end index (zero-based).
+     * @param start the start index (zero-based).
+     * @param end   the end index (zero-based).
      */
     public void delete(int start, int end) {
         this.data.subList(start, end + 1).clear();
@@ -529,8 +525,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Removes the item at the specified index and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param index  the index.
-     *
+     * @param index the index.
      * @return The item removed.
      */
     public XYDataItem remove(int index) {
@@ -546,8 +541,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * a series permits multiple items with the same x-value, this method
      * could remove any one of the items with that x-value.
      *
-     * @param x  the x-value.
-
+     * @param x the x-value.
      * @return The item removed.
      */
     public XYDataItem remove(Number x) {
@@ -572,8 +566,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Returns a copy of the data item with the specified index.
      *
-     * @param index  the index.
-     *
+     * @param index the index.
      * @return The data item with the specified index.
      */
     public XYDataItem getDataItem(int index) {
@@ -584,10 +577,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Return the data item with the specified index.
      *
-     * @param index  the index.
-     *
+     * @param index the index.
      * @return The data item with the specified index.
-     *
      * @since 1.0.14
      */
     XYDataItem getRawDataItem(int index) {
@@ -597,8 +588,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Returns the x-value at the specified index.
      *
-     * @param index  the index (zero-based).
-     *
+     * @param index the index (zero-based).
      * @return The x-value (never {@code null}).
      */
     public Number getX(int index) {
@@ -608,8 +598,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Returns the y-value at the specified index.
      *
-     * @param index  the index (zero-based).
-     *
+     * @param index the index (zero-based).
      * @return The y-value (possibly {@code null}).
      */
     public Number getY(int index) {
@@ -620,9 +609,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * A function to find the minimum of two values, but ignoring any
      * Double.NaN values.
      *
-     * @param a  the first value.
-     * @param b  the second value.
-     *
+     * @param a the first value.
+     * @param b the second value.
      * @return The minimum of the two values.
      */
     private double minIgnoreNaN(double a, double b) {
@@ -639,9 +627,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * A function to find the maximum of two values, but ignoring any
      * Double.NaN values.
      *
-     * @param a  the first value.
-     * @param b  the second value.
-     *
+     * @param a the first value.
+     * @param b the second value.
      * @return The maximum of the two values.
      */
     private double maxIgnoreNaN(double a, double b) {
@@ -658,9 +645,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Updates the value of an item in the series and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param index  the item (zero based index).
-     * @param y  the new value ({@code null} permitted).
-     *
+     * @param index the item (zero based index).
+     * @param y     the new value ({@code null} permitted).
      * @since 1.0.1
      */
     public void updateByIndex(int index, Number y) {
@@ -676,8 +662,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
 
         if (iterate) {
             findBoundsByIteration();
-        }
-        else if (y != null) {
+        } else if (y != null) {
             double yy = y.doubleValue();
             this.minY = minIgnoreNaN(this.minY, yy);
             this.maxY = maxIgnoreNaN(this.maxY, yy);
@@ -688,11 +673,10 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Updates an item in the series.
      *
-     * @param x  the x-value ({@code null} not permitted).
-     * @param y  the y-value ({@code null} permitted).
-     *
+     * @param x the x-value ({@code null} not permitted).
+     * @param y the y-value ({@code null} permitted).
      * @throws SeriesException if there is no existing item with the specified
-     *         x-value.
+     *                         x-value.
      */
     public void update(Number x, Number y) {
         int index = indexOf(x);
@@ -706,11 +690,9 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds or updates an item in the series and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param x  the x-value.
-     * @param y  the y-value.
-     *
+     * @param x the x-value.
+     * @param y the y-value.
      * @return The item that was overwritten, if any.
-     *
      * @since 1.0.10
      */
     public XYDataItem addOrUpdate(double x, double y) {
@@ -721,11 +703,10 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds or updates an item in the series and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param x  the x-value ({@code null} not permitted).
-     * @param y  the y-value ({@code null} permitted).
-     *
+     * @param x the x-value ({@code null} not permitted).
+     * @param y the y-value ({@code null} permitted).
      * @return A copy of the overwritten data item, or {@code null} if no
-     *         item was overwritten.
+     * item was overwritten.
      */
     public XYDataItem addOrUpdate(Number x, Number y) {
         // defer argument checking
@@ -736,11 +717,9 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Adds or updates an item in the series and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
-     * @param item  the data item ({@code null} not permitted).
-     *
+     * @param item the data item ({@code null} not permitted).
      * @return A copy of the overwritten data item, or {@code null} if no
-     *         item was overwritten.
-     *
+     * item was overwritten.
      * @since 1.0.14
      */
     public XYDataItem addOrUpdate(XYDataItem item) {
@@ -766,14 +745,12 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
 
             if (iterate) {
                 findBoundsByIteration();
-            }
-            else if (item.getY() != null) {
+            } else if (item.getY() != null) {
                 double yy = item.getY().doubleValue();
                 this.minY = minIgnoreNaN(this.minY, yy);
                 this.maxY = maxIgnoreNaN(this.maxY, yy);
             }
-        }
-        else {
+        } else {
             // if the series is sorted, the negative index is a result from
             // Collections.binarySearch() and tells us where to insert the
             // new item...otherwise it will be just -1 and we should just
@@ -781,8 +758,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
             item = (XYDataItem) item.clone();
             if (this.autoSort) {
                 this.data.add(-index - 1, item);
-            }
-            else {
+            } else {
                 this.data.add(item);
             }
             updateBoundsForAddedItem(item);
@@ -803,15 +779,13 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * aware that for an unsorted series, the index is found by iterating
      * through all items in the series.
      *
-     * @param x  the x-value ({@code null} not permitted).
-     *
+     * @param x the x-value ({@code null} not permitted).
      * @return The index.
      */
     public int indexOf(Number x) {
         if (this.autoSort) {
             return Collections.binarySearch(this.data, new XYDataItem(x, null));
-        }
-        else {
+        } else {
             for (int i = 0; i < this.data.size(); i++) {
                 XYDataItem item = this.data.get(i);
                 if (item.getX().equals(x)) {
@@ -826,7 +800,6 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Returns a new array containing the x and y values from this series.
      *
      * @return A new array containing the x and y values from this series.
-     *
      * @since 1.0.4
      */
     public double[][] toArray() {
@@ -837,8 +810,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
             Number y = getY(i);
             if (y != null) {
                 result[1][i] = y.doubleValue();
-            }
-            else {
+            } else {
                 result[1][i] = Double.NaN;
             }
         }
@@ -849,10 +821,9 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
      * Returns a clone of the series.
      *
      * @return A clone of the series.
-     *
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
-    @Override 
+    @Override
     @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {
         XYSeries<K> clone = (XYSeries) super.clone();
@@ -863,11 +834,9 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Creates a new series by copying a subset of the data in this time series.
      *
-     * @param start  the index of the first item to copy.
-     * @param end  the index of the last item to copy.
-     *
+     * @param start the index of the first item to copy.
+     * @param end   the index of the last item to copy.
      * @return A series containing a copy of this series from start until end.
-     *
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
     @SuppressWarnings("unchecked")
@@ -882,8 +851,7 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
                 XYDataItem clone = CloneUtils.clone(item);
                 try {
                     copy.add(clone);
-                }
-                catch (SeriesException e) {
+                } catch (SeriesException e) {
                     throw new RuntimeException(
                             "Unable to add cloned data item.", e);
                 }
@@ -896,9 +864,8 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     /**
      * Tests this series for equality with an arbitrary object.
      *
-     * @param obj  the object to test against for equality
-     *             ({@code null} permitted).
-     *
+     * @param obj the object to test against for equality
+     *            ({@code null} permitted).
      * @return A boolean.
      */
     @Override

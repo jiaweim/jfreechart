@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -50,9 +50,8 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * item.  If this lower bound is specified, it should be less than or
      * equal to the upper bound of the interval (if one is specified).
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The lower bound of the x-interval ({@code null} permitted).
      */
     Number getStartX(int series, int item);
@@ -61,11 +60,9 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * Returns the lower bound of the x-interval (as a double primitive) for
      * the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The lower bound of the x-interval.
-     *
      * @see #getStartX(int, int)
      */
     double getStartXValue(int series, int item);
@@ -75,9 +72,8 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * item.  If this upper bound is specified, it should be greater than or
      * equal to the lower bound of the interval (if one is specified).
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The upper bound of the x-interval ({@code null} permitted).
      */
     Number getEndX(int series, int item);
@@ -86,11 +82,9 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * Returns the upper bound of the x-interval (as a double primitive) for
      * the specified series and item.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The upper bound of the x-interval.
-     *
      * @see #getEndX(int, int)
      */
     double getEndXValue(int series, int item);
@@ -100,9 +94,8 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * item.  If this lower bound is specified, it should be less than or
      * equal to the upper bound of the interval (if one is specified).
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The lower bound of the y-interval ({@code null} permitted).
      */
     Number getStartY(int series, int item);
@@ -111,11 +104,9 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * Returns the lower bound of the y-interval (as a double primitive) for
      * the specified series and item.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The lower bound of the y-interval.
-     *
      * @see #getStartY(int, int)
      */
     double getStartYValue(int series, int item);
@@ -125,9 +116,8 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * item.  If this upper bound is specified, it should be greater than or
      * equal to the lower bound of the interval (if one is specified).
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The upper bound of the y-interval ({@code null} permitted).
      */
     Number getEndY(int series, int item);
@@ -136,11 +126,9 @@ public interface IntervalXYDataset<S extends Comparable<S>> extends XYDataset<S>
      * Returns the upper bound of the y-interval (as a double primitive) for
      * the specified series and item.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return The upper bound of the y-interval.
-     *
      * @see #getEndY(int, int)
      */
     double getEndYValue(int series, int item);

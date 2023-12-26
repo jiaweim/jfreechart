@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------
@@ -39,6 +39,7 @@ package org.jfree.data.xy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.jfree.chart.internal.Args;
 import org.jfree.chart.api.PublicCloneable;
 
@@ -54,7 +55,7 @@ import org.jfree.data.general.DatasetChangeEvent;
  *
  * @since 1.0.3
  */
-public class DefaultIntervalXYDataset<S extends Comparable<S>> 
+public class DefaultIntervalXYDataset<S extends Comparable<S>>
         extends AbstractIntervalXYDataset<S>
         implements PublicCloneable {
 
@@ -93,13 +94,11 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the key for a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
      * @return The key for the series.
-     *
      * @throws IllegalArgumentException if {@code series} is not in the
-     *     specified range.
+     *                                  specified range.
      */
     @Override
     public S getSeriesKey(int series) {
@@ -110,13 +109,11 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the number of items in the specified series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
      * @return The item count.
-     *
      * @throws IllegalArgumentException if {@code series} is not in the
-     *     specified range.
+     *                                  specified range.
      */
     @Override
     public int getItemCount(int series) {
@@ -128,18 +125,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getX(int, int)
      */
     @Override
@@ -151,18 +145,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getY(int, int)
      */
     @Override
@@ -174,18 +165,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the starting x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The starting x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getStartX(int, int)
      */
     @Override
@@ -197,18 +185,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the ending x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The ending x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getEndX(int, int)
      */
     @Override
@@ -220,18 +205,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the starting y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The starting y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getStartY(int, int)
      */
     @Override
@@ -243,18 +225,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the ending y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The ending y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getEndY(int, int)
      */
     @Override
@@ -266,18 +245,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the ending x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The ending x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getEndXValue(int, int)
      */
     @Override
@@ -288,18 +264,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the ending y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The ending y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getEndYValue(int, int)
      */
     @Override
@@ -310,18 +283,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the starting x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The starting x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getStartXValue(int, int)
      */
     @Override
@@ -332,18 +302,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the starting y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The starting y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getStartYValue(int, int)
      */
     @Override
@@ -354,18 +321,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The x-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getXValue(int, int)
      */
     @Override
@@ -376,18 +340,15 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
     /**
      * Returns the y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
      * @return The y-value.
-     *
      * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
+     *                                        within the specified range.
      * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     *                                        within the specified range.
      * @see #getYValue(int, int)
      */
     @Override
@@ -400,11 +361,11 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
      * the data for that series, then sends a {@link DatasetChangeEvent} to
      * all registered listeners.
      *
-     * @param seriesKey  the series key ({@code null} not permitted).
-     * @param data  the data (must be an array with length 6, containing six
-     *     arrays of equal length, the first three containing the x-values
-     *     (x, xLow and xHigh) and the last three containing the y-values
-     *     (y, yLow and yHigh)).
+     * @param seriesKey the series key ({@code null} not permitted).
+     * @param data      the data (must be an array with length 6, containing six
+     *                  arrays of equal length, the first three containing the x-values
+     *                  (x, xLow and xHigh) and the last three containing the y-values
+     *                  (y, yLow and yHigh)).
      */
     public void addSeries(S seriesKey, double[][] data) {
         Args.nullNotPermitted(seriesKey, "seriesKey");
@@ -418,14 +379,13 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
                 || length != data[3].length || length != data[4].length
                 || length != data[5].length) {
             throw new IllegalArgumentException(
-                "The 'data' array must contain six arrays with equal length.");
+                    "The 'data' array must contain six arrays with equal length.");
         }
         int seriesIndex = indexOf(seriesKey);
         if (seriesIndex == -1) {  // add a new series
             this.seriesKeys.add(seriesKey);
             this.seriesList.add(data);
-        }
-        else {  // replace an existing series
+        } else {  // replace an existing series
             this.seriesList.remove(seriesIndex);
             this.seriesList.add(seriesIndex, data);
         }
@@ -443,8 +403,7 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
      *         exactly the same values.</li>
      * </ul>
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -513,9 +472,8 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
      * Returns a clone of this dataset.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if the dataset contains a series with
-     *         a key that cannot be cloned.
+     *                                    a key that cannot be cloned.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -543,7 +501,7 @@ public class DefaultIntervalXYDataset<S extends Comparable<S>>
             System.arraycopy(y, 0, yy, 0, y.length);
             System.arraycopy(yStart, 0, yyStart, 0, yStart.length);
             System.arraycopy(yEnd, 0, yyEnd, 0, yEnd.length);
-            clone.seriesList.add(i, new double[][] {xx, xxStart, xxEnd, yy,
+            clone.seriesList.add(i, new double[][]{xx, xxStart, xxEnd, yy,
                     yyStart, yyEnd});
         }
         return clone;

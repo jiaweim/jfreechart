@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -32,14 +32,23 @@
  * Original Author:  David Gilbert;
  * Contributor(s):   Laurence Vanhelsuwe;
  *                   Peter Kolb (patches 1934255 and 2603321);
- * 
+ *
  */
 
 package org.jfree.chart.axis;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.api.RectangleInsets;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.internal.Args;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.text.TextAnchor;
+import org.jfree.data.Range;
+import org.jfree.data.RangeType;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
@@ -50,44 +59,43 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.chart.api.RectangleEdge;
-import org.jfree.chart.api.RectangleInsets;
-import org.jfree.chart.text.TextAnchor;
-import org.jfree.chart.internal.Args;
-import org.jfree.data.Range;
-import org.jfree.data.RangeType;
-
 /**
  * An axis for displaying numerical data.
- * <P>
+ * <p>
  * If the axis is set up to automatically determine its range to fit the data,
  * you can ensure that the range includes zero (statisticians usually prefer
  * this) by setting the {@code autoRangeIncludesZero} flag to
  * {@code true}.
- * <P>
+ * <p>
  * The {@code NumberAxis} class has a mechanism for automatically
  * selecting a tick unit that is appropriate for the current axis range.
  */
 public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 2805933088476185789L;
 
-    /** The default value for the autoRangeIncludesZero flag. */
+    /**
+     * The default value for the autoRangeIncludesZero flag.
+     */
     public static final boolean DEFAULT_AUTO_RANGE_INCLUDES_ZERO = true;
 
-    /** The default value for the autoRangeStickyZero flag. */
+    /**
+     * The default value for the autoRangeStickyZero flag.
+     */
     public static final boolean DEFAULT_AUTO_RANGE_STICKY_ZERO = true;
 
-    /** The default tick unit. */
+    /**
+     * The default tick unit.
+     */
     public static final NumberTickUnit DEFAULT_TICK_UNIT = new NumberTickUnit(
             1.0, new DecimalFormat("0"));
 
-    /** The default setting for the vertical tick labels flag. */
+    /**
+     * The default setting for the vertical tick labels flag.
+     */
     public static final boolean DEFAULT_VERTICAL_TICK_LABELS = false;
 
     /**
@@ -110,13 +118,19 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      */
     private boolean autoRangeStickyZero;
 
-    /** The tick unit for the axis. */
+    /**
+     * The tick unit for the axis.
+     */
     private NumberTickUnit tickUnit;
 
-    /** The override number format. */
+    /**
+     * The override number format.
+     */
     private NumberFormat numberFormatOverride;
 
-    /** An optional band for marking regions on the axis. */
+    /**
+     * An optional band for marking regions on the axis.
+     */
     private MarkerAxisBand markerBand;
 
     /**
@@ -129,7 +143,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Constructs a number axis, using default values where necessary.
      *
-     * @param label  the axis label ({@code null} permitted).
+     * @param label the axis label ({@code null} permitted).
      */
     public NumberAxis(String label) {
         super(label, NumberAxis.createStandardTickUnits());
@@ -145,7 +159,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Returns the axis range type.
      *
      * @return The axis range type (never {@code null}).
-     *
      * @see #setRangeType(RangeType)
      */
     public RangeType getRangeType() {
@@ -155,8 +168,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Sets the axis range type.
      *
-     * @param rangeType  the range type ({@code null} not permitted).
-     *
+     * @param rangeType the range type ({@code null} not permitted).
      * @see #getRangeType()
      */
     public void setRangeType(RangeType rangeType) {
@@ -184,8 +196,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * <p>
      * Any change to the flag will trigger an {@link AxisChangeEvent}.
      *
-     * @param flag  the new value of the flag.
-     *
+     * @param flag the new value of the flag.
      * @see #getAutoRangeIncludesZero()
      */
     public void setAutoRangeIncludesZero(boolean flag) {
@@ -203,7 +214,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * data range but inside the margins defined for the axis.
      *
      * @return The flag.
-     *
      * @see #setAutoRangeStickyZero(boolean)
      */
     public boolean getAutoRangeStickyZero() {
@@ -214,8 +224,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Sets a flag that affects the auto-range when zero falls outside the data
      * range but inside the margins defined for the axis.
      *
-     * @param flag  the new flag.
-     *
+     * @param flag the new flag.
      * @see #getAutoRangeStickyZero()
      */
     public void setAutoRangeStickyZero(boolean flag) {
@@ -237,7 +246,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * irrelevant if the method is called before the axis has been drawn.
      *
      * @return The tick unit for the axis.
-     *
      * @see #setTickUnit(NumberTickUnit)
      * @see ValueAxis#isAutoTickUnitSelection()
      */
@@ -252,8 +260,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * restore it using the {@link ValueAxis#setAutoTickUnitSelection(boolean)}
      * method).
      *
-     * @param unit  the new tick unit ({@code null} not permitted).
-     *
+     * @param unit the new tick unit ({@code null} not permitted).
      * @see #getTickUnit()
      * @see #setTickUnit(NumberTickUnit, boolean, boolean)
      */
@@ -269,9 +276,9 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * (you can restore it using the
      * {@link ValueAxis#setAutoTickUnitSelection(boolean)} method).
      *
-     * @param unit  the new tick unit ({@code null} not permitted).
-     * @param notify  notify listeners?
-     * @param turnOffAutoSelect  turn off the auto-tick selection?
+     * @param unit              the new tick unit ({@code null} not permitted).
+     * @param notify            notify listeners?
+     * @param turnOffAutoSelect turn off the auto-tick selection?
      */
     public void setTickUnit(NumberTickUnit unit, boolean notify,
             boolean turnOffAutoSelect) {
@@ -292,7 +299,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * be used to format the numbers on the axis.
      *
      * @return The number formatter (possibly {@code null}).
-     *
      * @see #setNumberFormatOverride(NumberFormat)
      */
     public NumberFormat getNumberFormatOverride() {
@@ -303,8 +309,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Sets the number format override.  If this is non-null, then it will be
      * used to format the numbers on the axis.
      *
-     * @param formatter  the number formatter ({@code null} permitted).
-     *
+     * @param formatter the number formatter ({@code null} permitted).
      * @see #getNumberFormatOverride()
      */
     public void setNumberFormatOverride(NumberFormat formatter) {
@@ -316,7 +321,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Returns the (optional) marker band for the axis.
      *
      * @return The marker band (possibly {@code null}).
-     *
      * @see #setMarkerBand(MarkerAxisBand)
      */
     public MarkerAxisBand getMarkerBand() {
@@ -325,12 +329,11 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
 
     /**
      * Sets the marker band for the axis.
-     * <P>
+     * <p>
      * The marker band is optional, leave it set to {@code null} if you
      * don't require it.
      *
      * @param band the new band ({@code null} permitted).
-     *
      * @see #getMarkerBand()
      */
     public void setMarkerBand(MarkerAxisBand band) {
@@ -373,8 +376,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             if (this.rangeType == RangeType.POSITIVE) {
                 lower = Math.max(0.0, lower);
                 upper = Math.max(0.0, upper);
-            }
-            else if (this.rangeType == RangeType.NEGATIVE) {
+            } else if (this.rangeType == RangeType.NEGATIVE) {
                 lower = Math.min(0.0, lower);
                 upper = Math.min(0.0, upper);
             }
@@ -389,8 +391,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             double fixedAutoRange = getFixedAutoRange();
             if (fixedAutoRange > 0.0) {
                 lower = upper - fixedAutoRange;
-            }
-            else {
+            } else {
                 // ensure the autorange is at least <minRange> in size...
                 double minRange = getAutoRangeMinimumSize();
                 if (range < minRange) {
@@ -407,8 +408,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                             upper = upper - lower;
                             lower = 0.0;
                         }
-                    }
-                    else if (this.rangeType == RangeType.NEGATIVE) {
+                    } else if (this.rangeType == RangeType.NEGATIVE) {
                         if (upper > 0.0) {
                             lower = lower - upper;
                             upper = 0.0;
@@ -419,18 +419,15 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 if (getAutoRangeStickyZero()) {
                     if (upper <= 0.0) {
                         upper = Math.min(0.0, upper + getUpperMargin() * range);
-                    }
-                    else {
+                    } else {
                         upper = upper + getUpperMargin() * range;
                     }
                     if (lower >= 0.0) {
                         lower = Math.max(0.0, lower - getLowerMargin() * range);
-                    }
-                    else {
+                    } else {
                         lower = lower - getLowerMargin() * range;
                     }
-                }
-                else {
+                } else {
                     upper = upper + getUpperMargin() * range;
                     lower = lower - getLowerMargin() * range;
                 }
@@ -447,12 +444,10 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * <p>
      * Note that it is possible for the coordinate to fall outside the plotArea.
      *
-     * @param value  the data value.
+     * @param value the data value.
      * @param area  the area for plotting the data.
      * @param edge  the axis location.
-     *
      * @return The Java2D coordinate.
-     *
      * @see #java2DToValue(double, Rectangle2D, RectangleEdge)
      */
     @Override
@@ -468,18 +463,14 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = area.getX();
             max = area.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             max = area.getMinY();
             min = area.getMaxY();
         }
         if (isInverted()) {
-            return max
-                   - ((value - axisMin) / (axisMax - axisMin)) * (max - min);
-        }
-        else {
-            return min
-                   + ((value - axisMin) / (axisMax - axisMin)) * (max - min);
+            return max - ((value - axisMin) / (axisMax - axisMin)) * (max - min);
+        } else {
+            return min + ((value - axisMin) / (axisMax - axisMin)) * (max - min);
         }
 
     }
@@ -488,12 +479,10 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Converts a coordinate in Java2D space to the corresponding data value,
      * assuming that the axis runs along one edge of the specified dataArea.
      *
-     * @param java2DValue  the coordinate in Java2D space.
-     * @param area  the area in which the data is plotted.
-     * @param edge  the location.
-     *
+     * @param java2DValue the coordinate in Java2D space.
+     * @param area        the area in which the data is plotted.
+     * @param edge        the location.
      * @return The data value.
-     *
      * @see #valueToJava2D(double, Rectangle2D, RectangleEdge)
      */
     @Override
@@ -509,18 +498,16 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = area.getX();
             max = area.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             min = area.getMaxY();
             max = area.getY();
         }
         if (isInverted()) {
             return axisMax
-                   - (java2DValue - min) / (max - min) * (axisMax - axisMin);
-        }
-        else {
+                    - (java2DValue - min) / (max - min) * (axisMax - axisMin);
+        } else {
             return axisMin
-                   + (java2DValue - min) / (max - min) * (axisMax - axisMin);
+                    + (java2DValue - min) / (max - min) * (axisMax - axisMin);
         }
 
     }
@@ -529,7 +516,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Calculates the value of the lowest visible tick on the axis.
      *
      * @return The value of the lowest visible tick on the axis.
-     *
      * @see #calculateHighestVisibleTickValue()
      */
     protected double calculateLowestVisibleTickValue() {
@@ -542,7 +528,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Calculates the value of the highest visible tick on the axis.
      *
      * @return The value of the highest visible tick on the axis.
-     *
      * @see #calculateLowestVisibleTickValue()
      */
     protected double calculateHighestVisibleTickValue() {
@@ -560,23 +545,22 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         double unit = getTickUnit().getSize();
         Range range = getRange();
         return (int) (Math.floor(range.getUpperBound() / unit)
-                      - Math.ceil(range.getLowerBound() / unit) + 1);
+                - Math.ceil(range.getLowerBound() / unit) + 1);
     }
 
     /**
      * Draws the axis on a Java 2D graphics device (such as the screen or a
      * printer).
      *
-     * @param g2  the graphics device ({@code null} not permitted).
-     * @param cursor  the cursor location.
+     * @param g2        the graphics device ({@code null} not permitted).
+     * @param cursor    the cursor location.
      * @param plotArea  the area within which the axes and data should be drawn
      *                  ({@code null} not permitted).
      * @param dataArea  the area within which the data should be drawn
      *                  ({@code null} not permitted).
-     * @param edge  the location of the axis ({@code null} not permitted).
-     * @param plotState  collects information about the plot
-     *                   ({@code null} permitted).
-     *
+     * @param edge      the location of the axis ({@code null} not permitted).
+     * @param plotState collects information about the plot
+     *                  ({@code null} permitted).
      * @return The axis state (never {@code null}).
      */
     @Override
@@ -599,9 +583,9 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         state = drawTickMarksAndLabels(g2, cursor, plotArea, dataArea, edge);
 
         if (getAttributedLabel() != null) {
-            state = drawAttributedLabel(getAttributedLabel(), g2, plotArea, 
+            state = drawAttributedLabel(getAttributedLabel(), g2, plotArea,
                     dataArea, edge, state);
-            
+
         } else {
             state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
         }
@@ -612,13 +596,12 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
 
     /**
      * Creates the standard tick units.
-     * <P>
+     * <p>
      * If you don't like these defaults, create your own instance of TickUnits
      * and then pass it to the setStandardTickUnits() method in the
      * NumberAxis class.
      *
      * @return The standard tick units.
-     *
      * @see #setStandardTickUnits(TickUnitSource)
      * @see #createIntegerTickUnits()
      */
@@ -630,7 +613,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Returns a collection of tick units for integer values.
      *
      * @return A collection of tick units for integer values.
-     *
      * @see #setStandardTickUnits(TickUnitSource)
      * @see #createStandardTickUnits()
      */
@@ -642,15 +624,13 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Creates a collection of standard tick units.  The supplied locale is
      * used to create the number formatter (a localised instance of
      * {@code NumberFormat}).
-     * <P>
+     * <p>
      * If you don't like these defaults, create your own instance of
      * {@link TickUnits} and then pass it to the
      * {@code setStandardTickUnits()} method.
      *
-     * @param locale  the locale.
-     *
+     * @param locale the locale.
      * @return A tick unit collection.
-     *
      * @see #setStandardTickUnits(TickUnitSource)
      */
     public static TickUnitSource createStandardTickUnits(Locale locale) {
@@ -663,9 +643,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Uses a given Locale to create the DecimalFormats.
      *
      * @param locale the locale to use to represent Numbers.
-     *
      * @return A collection of tick units for integer values.
-     *
      * @see #setStandardTickUnits(TickUnitSource)
      */
     public static TickUnitSource createIntegerTickUnits(Locale locale) {
@@ -676,8 +654,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Estimates the maximum tick label height.
      *
-     * @param g2  the graphics device.
-     *
+     * @param g2 the graphics device.
      * @return The maximum height.
      */
     protected double estimateMaximumTickLabelHeight(Graphics2D g2) {
@@ -693,18 +670,17 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Estimates the maximum width of the tick labels, assuming the specified
      * tick unit is used.
-     * <P>
+     * <p>
      * Rather than computing the string bounds of every tick on the axis, we
      * just look at two values: the lower bound and the upper bound for the
      * axis.  These two values will usually be representative.
      *
-     * @param g2  the graphics device.
-     * @param unit  the tick unit to use for calculation.
-     *
+     * @param g2   the graphics device.
+     * @param unit the tick unit to use for calculation.
      * @return The estimated maximum width of the tick labels.
      */
     protected double estimateMaximumTickLabelWidth(Graphics2D g2,
-                                                   TickUnit unit) {
+            TickUnit unit) {
 
         RectangleInsets tickLabelInsets = getTickLabelInsets();
         double result = tickLabelInsets.getLeft() + tickLabelInsets.getRight();
@@ -715,8 +691,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             FontRenderContext frc = g2.getFontRenderContext();
             LineMetrics lm = getTickLabelFont().getLineMetrics("0", frc);
             result += lm.getHeight();
-        }
-        else {
+        } else {
             // look at lower and upper bounds...
             FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
             Range range = getRange();
@@ -727,8 +702,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
                 upperStr = formatter.format(upper);
-            }
-            else {
+            } else {
                 lowerStr = unit.valueToString(lower);
                 upperStr = unit.valueToString(upper);
             }
@@ -746,17 +720,16 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * display as many ticks as possible (selected from an array of 'standard'
      * tick units) without the labels overlapping.
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area defined by the axes.
-     * @param edge  the axis location.
+     * @param g2       the graphics device.
+     * @param dataArea the area defined by the axes.
+     * @param edge     the axis location.
      */
     protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
             RectangleEdge edge) {
 
         if (RectangleEdge.isTopOrBottom(edge)) {
             selectHorizontalAutoTickUnit(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             selectVerticalAutoTickUnit(g2, dataArea, edge);
         }
 
@@ -767,16 +740,16 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * display as many ticks as possible (selected from an array of 'standard'
      * tick units) without the labels overlapping.
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area defined by the axes.
-     * @param edge  the axis location.
+     * @param g2       the graphics device.
+     * @param dataArea the area defined by the axes.
+     * @param edge     the axis location.
      */
     protected void selectHorizontalAutoTickUnit(Graphics2D g2,
             Rectangle2D dataArea, RectangleEdge edge) {
 
         TickUnit unit = getTickUnit();
         TickUnitSource tickUnitSource = getStandardTickUnits();
- 
+
         // we should start with the current tick unit if it gives a count in 
         // the range 3 to 40 otherwise estimate one that will give a count <= 10
         double length = getRange().getLength();
@@ -815,11 +788,11 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * display as many ticks as possible (selected from an array of 'standard'
      * tick units) without the labels overlapping.
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area in which the plot should be drawn.
-     * @param edge  the axis location.
+     * @param g2       the graphics device.
+     * @param dataArea the area in which the plot should be drawn.
+     * @param edge     the axis location.
      */
-    protected void selectVerticalAutoTickUnit(Graphics2D g2, 
+    protected void selectVerticalAutoTickUnit(Graphics2D g2,
             Rectangle2D dataArea, RectangleEdge edge) {
 
         double tickLabelHeight = estimateMaximumTickLabelHeight(g2);
@@ -831,7 +804,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         double guess;
         if (unitHeight > 0) { // then extrapolate...
             guess = (tickLabelHeight / unitHeight) * unit1.getSize();
-        } else { 
+        } else {
             guess = getRange().getLength() / 20.0;
         }
         NumberTickUnit unit2 = (NumberTickUnit) tickUnits.getCeilingTickUnit(
@@ -850,22 +823,20 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2  the graphics device.
-     * @param state  the axis state.
-     * @param dataArea  the area in which the plot should be drawn.
-     * @param edge  the location of the axis.
-     *
+     * @param g2       the graphics device.
+     * @param state    the axis state.
+     * @param dataArea the area in which the plot should be drawn.
+     * @param edge     the location of the axis.
      * @return A list of ticks.
      */
     @Override
-    public List refreshTicks(Graphics2D g2, AxisState state, 
+    public List refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
 
         List result = new java.util.ArrayList();
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             result = refreshTicksVertical(g2, dataArea, edge);
         }
         return result;
@@ -876,10 +847,9 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area in which the data should be drawn.
-     * @param edge  the location of the axis.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area in which the data should be drawn.
+     * @param edge     the location of the axis.
      * @return A list of ticks.
      */
     protected List refreshTicksHorizontal(Graphics2D g2,
@@ -905,7 +875,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 minorTickSpaces = tu.getMinorTickCount();
             }
             for (int minorTick = 1; minorTick < minorTickSpaces; minorTick++) {
-                double minorTickValue = lowestTickValue 
+                double minorTickValue = lowestTickValue
                         - size * minorTick / minorTickSpaces;
                 if (getRange().contains(minorTickValue)) {
                     result.add(new NumberTick(TickType.MINOR, minorTickValue,
@@ -919,8 +889,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                }
-                else {
+                } else {
                     tickLabel = getTickUnit().valueToString(currentTickValue);
                 }
                 TextAnchor anchor, rotationAnchor;
@@ -930,17 +899,14 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                     rotationAnchor = TextAnchor.CENTER_RIGHT;
                     if (edge == RectangleEdge.TOP) {
                         angle = Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = -Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.TOP) {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.TOP_CENTER;
                         rotationAnchor = TextAnchor.TOP_CENTER;
                     }
@@ -951,7 +917,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 result.add(tick);
                 double nextTickValue = lowestTickValue + ((i + 1) * size);
                 for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                     minorTick++) {
                     double minorTickValue = currentTickValue
                             + (nextTickValue - currentTickValue)
                             * minorTick / minorTickSpaces;
@@ -971,10 +937,9 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area in which the plot should be drawn.
-     * @param edge  the location of the axis.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area in which the plot should be drawn.
+     * @param edge     the location of the axis.
      * @return A list of ticks.
      */
     protected List refreshTicksVertical(Graphics2D g2,
@@ -1015,8 +980,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                }
-                else {
+                } else {
                     tickLabel = getTickUnit().valueToString(currentTickValue);
                 }
 
@@ -1028,31 +992,28 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
                         angle = -Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
                         angle = Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.LEFT) {
                         anchor = TextAnchor.CENTER_RIGHT;
                         rotationAnchor = TextAnchor.CENTER_RIGHT;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.CENTER_LEFT;
                         rotationAnchor = TextAnchor.CENTER_LEFT;
                     }
                 }
 
-                Tick tick = new NumberTick(currentTickValue, tickLabel, anchor, 
+                Tick tick = new NumberTick(currentTickValue, tickLabel, anchor,
                         rotationAnchor, angle);
                 result.add(tick);
 
                 double nextTickValue = lowestTickValue + ((i + 1) * size);
                 for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                     minorTick++) {
                     double minorTickValue = currentTickValue
                             + (nextTickValue - currentTickValue)
                             * minorTick / minorTickSpaces;
@@ -1072,16 +1033,15 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Returns a clone of the axis.
      *
      * @return A clone
-     *
      * @throws CloneNotSupportedException if some component of the axis does
-     *         not support cloning.
+     *                                    not support cloning.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
         NumberAxis clone = (NumberAxis) super.clone();
         if (this.numberFormatOverride != null) {
             clone.numberFormatOverride
-                = (NumberFormat) this.numberFormatOverride.clone();
+                    = (NumberFormat) this.numberFormatOverride.clone();
         }
         return clone;
     }
@@ -1089,8 +1049,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Tests the axis for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override

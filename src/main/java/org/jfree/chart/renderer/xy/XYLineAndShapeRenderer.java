@@ -77,12 +77,13 @@ import org.jfree.data.xy.XYDataset;
  * <br><br>
  * <img src="doc-files/XYLineAndShapeRendererSample.png"
  * alt="XYLineAndShapeRendererSample.png">
- *
  */
 public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -7435246895986425885L;
 
     /**
@@ -91,10 +92,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      */
     private Map<Integer, Boolean> seriesLinesVisibleMap;
 
-    /** The default value returned by the getLinesVisible() method. */
+    /**
+     * The default value returned by the getLinesVisible() method.
+     */
     private boolean defaultLinesVisible;
 
-    /** The shape that is used to represent a line in the legend. */
+    /**
+     * The shape that is used to represent a line in the legend.
+     */
     private transient Shape legendLine;
 
     /**
@@ -103,7 +108,9 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      */
     private Map<Integer, Boolean> seriesShapesVisibleMap;
 
-    /** The default value returned by the getShapeVisible() method. */
+    /**
+     * The default value returned by the getShapeVisible() method.
+     */
     private boolean defaultShapesVisible;
 
     /**
@@ -112,10 +119,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      */
     private Map<Integer, Boolean> seriesShapesFilledMap;
 
-    /** The default value returned by the getShapeFilled() method. */
+    /**
+     * The default value returned by the getShapeFilled() method.
+     */
     private boolean defaultShapesFilled;
 
-    /** A flag that controls whether outlines are drawn for shapes. */
+    /**
+     * A flag that controls whether outlines are drawn for shapes.
+     */
     private boolean drawOutlines;
 
     /**
@@ -147,7 +158,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Creates a new renderer.
      *
      * @param lines  lines visible?
-     * @param shapes  shapes visible?
+     * @param shapes shapes visible?
      */
     public XYLineAndShapeRenderer(boolean lines, boolean shapes) {
         this.seriesLinesVisibleMap = new HashMap<>();
@@ -163,7 +174,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
 
         this.drawOutlines = true;
         this.useOutlinePaint = false;  // use item paint for outlines by
-                                       // default, not outline paint
+        // default, not outline paint
 
         this.drawSeriesLineAsPath = false;
     }
@@ -173,7 +184,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * single path.  The default value is {@code false}.
      *
      * @return A boolean.
-     *
      * @see #setDrawSeriesLineAsPath(boolean)
      */
     public boolean getDrawSeriesLineAsPath() {
@@ -185,8 +195,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * single path and sends a {@link RendererChangeEvent} to all registered
      * listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDrawSeriesLineAsPath()
      */
     public void setDrawSeriesLineAsPath(boolean flag) {
@@ -214,9 +223,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the flag used to control whether or not the shape for an item is
      * visible.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return A boolean.
      */
     public boolean getItemLineVisible(int series, int item) {
@@ -231,10 +239,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the flag used to control whether or not the lines for a series
      * are visible.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return The flag (possibly {@code null}).
-     *
      * @see #setSeriesLinesVisible(int, Boolean)
      */
     public Boolean getSeriesLinesVisible(int series) {
@@ -245,9 +251,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the 'lines visible' flag for a series and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
-     * @param flag  the flag ({@code null} permitted).
-     *
+     * @param series the series index (zero-based).
+     * @param flag   the flag ({@code null} permitted).
      * @see #getSeriesLinesVisible(int)
      */
     public void setSeriesLinesVisible(int series, Boolean flag) {
@@ -260,8 +265,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero-based).
-     * @param visible  the flag.
-     *
+     * @param visible the flag.
      * @see #getSeriesLinesVisible(int)
      */
     public void setSeriesLinesVisible(int series, boolean visible) {
@@ -272,7 +276,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the default 'lines visible' attribute.
      *
      * @return The default flag.
-     *
      * @see #setDefaultLinesVisible(boolean)
      */
     public boolean getDefaultLinesVisible() {
@@ -283,8 +286,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the default 'lines visible' flag and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDefaultLinesVisible()
      */
     public void setDefaultLinesVisible(boolean flag) {
@@ -296,7 +298,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the shape used to represent a line in the legend.
      *
      * @return The legend line (never {@code null}).
-     *
      * @see #setLegendLine(Shape)
      */
     public Shape getLegendLine() {
@@ -307,8 +308,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the shape used as a line in each legend item and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param line  the line ({@code null} not permitted).
-     *
+     * @param line the line ({@code null} not permitted).
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
@@ -327,9 +327,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * {@code getSeriesShapesVisible()} method. You can override this method
      * if you require different behaviour.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return A boolean.
      */
     public boolean getItemShapeVisible(int series, int item) {
@@ -344,10 +343,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the flag used to control whether or not the shapes for a series
      * are visible.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return A boolean.
-     *
      * @see #setSeriesShapesVisible(int, Boolean)
      */
     public Boolean getSeriesShapesVisible(int series) {
@@ -359,8 +356,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero-based).
-     * @param visible  the flag.
-     *
+     * @param visible the flag.
      * @see #getSeriesShapesVisible(int)
      */
     public void setSeriesShapesVisible(int series, boolean visible) {
@@ -371,9 +367,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the 'shapes visible' flag for a series and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
-     * @param flag  the flag.
-     *
+     * @param series the series index (zero-based).
+     * @param flag   the flag.
      * @see #getSeriesShapesVisible(int)
      */
     public void setSeriesShapesVisible(int series, Boolean flag) {
@@ -385,7 +380,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the default 'shape visible' attribute.
      *
      * @return The default flag.
-     *
      * @see #setDefaultShapesVisible(boolean)
      */
     public boolean getDefaultShapesVisible() {
@@ -396,8 +390,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the default 'shapes visible' flag and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDefaultShapesVisible()
      */
     public void setDefaultShapesVisible(boolean flag) {
@@ -415,9 +408,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * {@code getSeriesShapesFilled} method. You can override this method
      * if you require different behaviour.
      *
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param series the series index (zero-based).
+     * @param item   the item index (zero-based).
      * @return A boolean.
      */
     public boolean getItemShapeFilled(int series, int item) {
@@ -426,17 +418,15 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             return flag;
         }
         return this.defaultShapesFilled;
-       
+
     }
 
     /**
      * Returns the flag used to control whether or not the shapes for a series
      * are filled.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return A boolean.
-     *
      * @see #setSeriesShapesFilled(int, Boolean)
      */
     public Boolean getSeriesShapesFilled(int series) {
@@ -447,9 +437,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the 'shapes filled' flag for a series and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
-     * @param flag  the flag.
-     *
+     * @param series the series index (zero-based).
+     * @param flag   the flag.
      * @see #getSeriesShapesFilled(int)
      */
     public void setSeriesShapesFilled(int series, boolean flag) {
@@ -460,9 +449,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the 'shapes filled' flag for a series and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
-     * @param flag  the flag.
-     *
+     * @param series the series index (zero-based).
+     * @param flag   the flag.
      * @see #getSeriesShapesFilled(int)
      */
     public void setSeriesShapesFilled(int series, Boolean flag) {
@@ -474,7 +462,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns the default 'shape filled' attribute.
      *
      * @return The default flag.
-     *
      * @see #setDefaultShapesFilled(boolean)
      */
     public boolean getDefaultShapesFilled() {
@@ -485,8 +472,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the default 'shapes filled' flag and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDefaultShapesFilled()
      */
     public void setDefaultShapesFilled(boolean flag) {
@@ -499,7 +485,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * {@code false} otherwise.
      *
      * @return A boolean.
-     *
      * @see #setDrawOutlines(boolean)
      */
     public boolean getDrawOutlines() {
@@ -510,12 +495,11 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Sets the flag that controls whether outlines are drawn for
      * shapes, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
-     * <P>
+     * <p>
      * In some cases, shapes look better if they do NOT have an outline, but
      * this flag allows you to set your own preference.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getDrawOutlines()
      */
     public void setDrawOutlines(boolean flag) {
@@ -532,7 +516,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * effect of this flag.
      *
      * @return A boolean.
-     *
      * @see #setUseFillPaint(boolean)
      * @see #getUseOutlinePaint()
      */
@@ -545,8 +528,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * shapes, and sends a {@link RendererChangeEvent} to all
      * registered listeners.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getUseFillPaint()
      */
     public void setUseFillPaint(boolean flag) {
@@ -560,7 +542,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * use the regular paint.
      *
      * @return A boolean.
-     *
      * @see #setUseOutlinePaint(boolean)
      * @see #getUseFillPaint()
      */
@@ -576,8 +557,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Refer to {@code XYLineAndShapeRendererDemo2.java} to see the
      * effect of this flag.
      *
-     * @param flag  the flag.
-     *
+     * @param flag the flag.
      * @see #getUseOutlinePaint()
      */
     public void setUseOutlinePaint(boolean flag) {
@@ -592,7 +572,9 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      */
     public static class State extends XYItemRendererState {
 
-        /** The path for the current series. */
+        /**
+         * The path for the current series.
+         */
         public GeneralPath seriesPath;
 
         /**
@@ -604,7 +586,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         /**
          * Creates a new state instance.
          *
-         * @param info  the plot rendering info.
+         * @param info the plot rendering info.
          */
         public State(PlotRenderingInfo info) {
             super(info);
@@ -625,7 +607,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
          * Sets a flag that indicates if the last point drawn (in the current
          * series) was 'good' (non-null).
          *
-         * @param good  the flag.
+         * @param good the flag.
          */
         public void setLastPointGood(boolean good) {
             this.lastPointGood = good;
@@ -635,12 +617,12 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
          * This method is called by the {@link XYPlot} at the start of each
          * series pass.  We reset the state for the current series.
          *
-         * @param dataset  the dataset.
-         * @param series  the series index.
-         * @param firstItem  the first item index for this pass.
+         * @param dataset   the dataset.
+         * @param series    the series index.
+         * @param firstItem the first item index for this pass.
          * @param lastItem  the last item index for this pass.
-         * @param pass  the current pass index.
-         * @param passCount  the number of passes.
+         * @param pass      the current pass index.
+         * @param passCount the number of passes.
          */
         @Override
         public void startSeriesPass(XYDataset dataset, int series,
@@ -649,24 +631,23 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             this.lastPointGood = false;
             super.startSeriesPass(dataset, series, firstItem, lastItem, pass,
                     passCount);
-       }
+        }
 
     }
 
     /**
      * Initialises the renderer.
-     * <P>
+     * <p>
      * This method will be called before the first item is rendered, giving the
      * renderer an opportunity to initialise any state information it wants to
      * maintain.  The renderer can do nothing if it chooses.
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area inside the axes.
-     * @param plot  the plot.
-     * @param data  the data.
-     * @param info  an optional info collection object to return data back to
-     *              the caller.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area inside the axes.
+     * @param plot     the plot.
+     * @param data     the data.
+     * @param info     an optional info collection object to return data back to
+     *                 the caller.
      * @return The renderer state.
      */
     @Override
@@ -678,20 +659,20 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Draws the visual representation of a single data item.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param dataArea  the area within which the data is being drawn.
-     * @param info  collects information about the drawing.
-     * @param plot  the plot (can be used to obtain standard color
-     *              information etc).
-     * @param domainAxis  the domain axis.
-     * @param rangeAxis  the range axis.
-     * @param dataset  the dataset.
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     * @param crosshairState  crosshair information for the plot
-     *                        ({@code null} permitted).
-     * @param pass  the pass index.
+     * @param g2             the graphics device.
+     * @param state          the renderer state.
+     * @param dataArea       the area within which the data is being drawn.
+     * @param info           collects information about the drawing.
+     * @param plot           the plot (can be used to obtain standard color
+     *                       information etc).
+     * @param domainAxis     the domain axis.
+     * @param rangeAxis      the range axis.
+     * @param dataset        the dataset.
+     * @param series         the series index (zero-based).
+     * @param item           the item index (zero-based).
+     * @param crosshairState crosshair information for the plot
+     *                       ({@code null} permitted).
+     * @param pass           the pass index.
      */
     @Override
     public void drawItem(Graphics2D g2, XYItemRendererState state,
@@ -710,8 +691,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (this.drawSeriesLineAsPath) {
                     drawPrimaryLineAsPath(state, g2, plot, dataset, pass,
                             series, item, domainAxis, rangeAxis, dataArea);
-                }
-                else {
+                } else {
                     drawPrimaryLine(state, g2, plot, dataset, pass, series,
                             item, domainAxis, rangeAxis, dataArea);
                 }
@@ -735,8 +715,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns {@code true} if the specified pass is the one for drawing
      * lines.
      *
-     * @param pass  the pass.
-     *
+     * @param pass the pass.
      * @return A boolean.
      */
     protected boolean isLinePass(int pass) {
@@ -747,8 +726,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns {@code true} if the specified pass is the one for drawing
      * items.
      *
-     * @param pass  the pass.
-     *
+     * @param pass the pass.
      * @return A boolean.
      */
     protected boolean isItemPass(int pass) {
@@ -759,28 +737,28 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Draws the item (first pass). This method draws the lines
      * connecting the items.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param dataArea  the area within which the data is being drawn.
-     * @param plot  the plot (can be used to obtain standard color
-     *              information etc).
-     * @param domainAxis  the domain axis.
+     * @param g2         the graphics device.
+     * @param state      the renderer state.
+     * @param dataArea   the area within which the data is being drawn.
+     * @param plot       the plot (can be used to obtain standard color
+     *                   information etc).
+     * @param domainAxis the domain axis.
      * @param rangeAxis  the range axis.
-     * @param dataset  the dataset.
-     * @param pass  the pass.
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
+     * @param dataset    the dataset.
+     * @param pass       the pass.
+     * @param series     the series index (zero-based).
+     * @param item       the item index (zero-based).
      */
     protected void drawPrimaryLine(XYItemRendererState state,
-                                   Graphics2D g2,
-                                   XYPlot plot,
-                                   XYDataset dataset,
-                                   int pass,
-                                   int series,
-                                   int item,
-                                   ValueAxis domainAxis,
-                                   ValueAxis rangeAxis,
-                                   Rectangle2D dataArea) {
+            Graphics2D g2,
+            XYPlot plot,
+            XYDataset dataset,
+            int pass,
+            int series,
+            int item,
+            ValueAxis domainAxis,
+            ValueAxis rangeAxis,
+            Rectangle2D dataArea) {
         if (item == 0) {
             return;
         }
@@ -809,7 +787,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
 
         // only draw if we have good values
         if (Double.isNaN(transX0) || Double.isNaN(transY0)
-            || Double.isNaN(transX1) || Double.isNaN(transY1)) {
+                || Double.isNaN(transX1) || Double.isNaN(transY1)) {
             return;
         }
 
@@ -817,8 +795,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         boolean visible;
         if (orientation == PlotOrientation.HORIZONTAL) {
             state.workingLine.setLine(transY0, transX0, transY1, transX1);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             state.workingLine.setLine(transX0, transY0, transX1, transY1);
         }
         visible = LineUtils.clipLine(state.workingLine, dataArea);
@@ -830,14 +807,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Draws the first pass shape.
      *
-     * @param g2  the graphics device.
-     * @param pass  the pass.
-     * @param series  the series index.
-     * @param item  the item index.
+     * @param g2     the graphics device.
+     * @param pass   the pass.
+     * @param series the series index.
+     * @param item   the item index.
      * @param shape  the shape.
      */
     protected void drawFirstPassShape(Graphics2D g2, int pass, int series,
-                                      int item, Shape shape) {
+            int item, Shape shape) {
         g2.setStroke(getItemStroke(series, item));
         g2.setPaint(getItemPaint(series, item));
         g2.draw(shape);
@@ -850,17 +827,17 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * a {@code GeneralPath} is constructed and drawn at the end of
      * the series painting.
      *
-     * @param g2  the graphics device.
-     * @param state  the renderer state.
-     * @param plot  the plot (can be used to obtain standard color information
-     *              etc).
-     * @param dataset  the dataset.
-     * @param pass  the pass.
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     * @param domainAxis  the domain axis.
+     * @param g2         the graphics device.
+     * @param state      the renderer state.
+     * @param plot       the plot (can be used to obtain standard color information
+     *                   etc).
+     * @param dataset    the dataset.
+     * @param pass       the pass.
+     * @param series     the series index (zero-based).
+     * @param item       the item index (zero-based).
+     * @param domainAxis the domain axis.
      * @param rangeAxis  the range axis.
-     * @param dataArea  the area within which the data is being drawn.
+     * @param dataArea   the area within which the data is being drawn.
      */
     protected void drawPrimaryLineAsPath(XYItemRendererState state,
             Graphics2D g2, XYPlot plot, XYDataset dataset, int pass,
@@ -888,8 +865,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             }
             if (s.isLastPointGood()) {
                 s.seriesPath.lineTo(x, y);
-            }
-            else {
+            } else {
                 s.seriesPath.moveTo(x, y);
             }
             s.setLastPointGood(true);
@@ -909,20 +885,20 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * is not {@code null} it will be populated with entity information
      * for points that fall within the data area.
      *
-     * @param g2  the graphics device.
-     * @param plot  the plot (can be used to obtain standard color
-     *              information etc).
-     * @param domainAxis  the domain axis.
-     * @param dataArea  the area within which the data is being drawn.
-     * @param rangeAxis  the range axis.
-     * @param dataset  the dataset.
-     * @param pass  the pass.
-     * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     * @param crosshairState  the crosshair state.
-     * @param entities the entity collection.
+     * @param g2             the graphics device.
+     * @param plot           the plot (can be used to obtain standard color
+     *                       information etc).
+     * @param domainAxis     the domain axis.
+     * @param dataArea       the area within which the data is being drawn.
+     * @param rangeAxis      the range axis.
+     * @param dataset        the dataset.
+     * @param pass           the pass.
+     * @param series         the series index (zero-based).
+     * @param item           the item index (zero-based).
+     * @param crosshairState the crosshair state.
+     * @param entities       the entity collection.
      */
-    protected void drawSecondaryPass(Graphics2D g2, XYPlot plot, 
+    protected void drawSecondaryPass(Graphics2D g2, XYPlot plot,
             XYDataset dataset, int pass, int series, int item,
             ValueAxis domainAxis, Rectangle2D dataArea, ValueAxis rangeAxis,
             CrosshairState crosshairState, EntityCollection entities) {
@@ -947,8 +923,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transY1,
                         transX1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtils.createTranslatedShape(shape, transX1,
                         transY1);
             }
@@ -957,8 +932,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (getItemShapeFilled(series, item)) {
                     if (this.useFillPaint) {
                         g2.setPaint(getItemFillPaint(series, item));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(series, item));
                     }
                     g2.fill(shape);
@@ -966,8 +940,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (this.drawOutlines) {
                     if (getUseOutlinePaint()) {
                         g2.setPaint(getItemOutlinePaint(series, item));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(series, item));
                     }
                     g2.setStroke(getItemOutlineStroke(series, item));
@@ -1004,9 +977,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Returns a legend item for the specified series.
      *
-     * @param datasetIndex  the dataset index (zero-based).
-     * @param series  the series index (zero-based).
-     *
+     * @param datasetIndex the dataset index (zero-based).
+     * @param series       the series index (zero-based).
      * @return A legend item for the series (possibly {@code null}).
      */
     @Override
@@ -1070,7 +1042,6 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * Returns a clone of the renderer.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if the clone cannot be created.
      */
     @Override
@@ -1086,8 +1057,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Tests this renderer for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return {@code true} or {@code false}.
      */
     @Override
@@ -1157,10 +1127,9 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
@@ -1171,9 +1140,8 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
