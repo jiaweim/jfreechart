@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -36,43 +36,38 @@
 
 package org.jfree.data.xy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.jfree.chart.internal.Args;
 import org.jfree.chart.api.PublicCloneable;
-
+import org.jfree.chart.internal.Args;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * A default implementation of the {@link XYDataset} interface that stores
- * data values in arrays of double primitives.
+ * A default implementation of the {@link XYDataset} interface that stores data values in arrays of double primitives.
  *
  * @param <S> the type of the series keys ({@code String} is commonly used).
- * 
  * @since 1.0.2
  */
-public class DefaultXYDataset<S extends Comparable<S>> 
+public class DefaultXYDataset<S extends Comparable<S>>
         extends AbstractXYDataset<S>
-        implements XYDataset<S>, PublicCloneable {
-
+        implements XYDataset<S>, PublicCloneable
+{
     /**
-     * Storage for the series keys.  This list must be kept in sync with the
-     * seriesList.
+     * Storage for the series keys.  This list must be kept in sync with the seriesList.
      */
     private List<S> seriesKeys;
 
     /**
-     * Storage for the series in the dataset.  We use a list because the
-     * order of the series is significant.  This list must be kept in sync
-     * with the seriesKeys list.
+     * Storage for the series in the dataset.  We use a list because the order of the series is significant.  This list
+     * must be kept in sync with the seriesKeys list.
      */
     private List<double[][]> seriesList;
 
     /**
-     * Creates a new {@code DefaultXYDataset} instance, initially
-     * containing no data.
+     * Creates a new {@code DefaultXYDataset} instance, initially containing no data.
      */
     public DefaultXYDataset() {
         this.seriesKeys = new ArrayList<>();
@@ -92,13 +87,9 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the key for a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
      * @return The key for the series.
-     *
-     * @throws IllegalArgumentException if {@code series} is not in the
-     *     specified range.
+     * @throws IllegalArgumentException if {@code series} is not in the specified range.
      */
     @Override
     public S getSeriesKey(int series) {
@@ -107,11 +98,9 @@ public class DefaultXYDataset<S extends Comparable<S>>
     }
 
     /**
-     * Returns the index of the series with the specified key, or -1 if there
-     * is no such series in the dataset.
+     * Returns the index of the series with the specified key, or -1 if there is no such series in the dataset.
      *
-     * @param seriesKey  the series key ({@code null} permitted).
-     *
+     * @param seriesKey the series key ({@code null} permitted).
      * @return The index, or -1.
      */
     @Override
@@ -120,9 +109,8 @@ public class DefaultXYDataset<S extends Comparable<S>>
     }
 
     /**
-     * Returns the order of the domain (x-) values in the dataset.  In this
-     * implementation, we cannot guarantee that the x-values are ordered, so
-     * this method returns {@code DomainOrder.NONE}.
+     * Returns the order of the domain (x-) values in the dataset.  In this implementation, we cannot guarantee that the
+     * x-values are ordered, so this method returns {@code DomainOrder.NONE}.
      *
      * @return {@code DomainOrder.NONE}.
      */
@@ -134,13 +122,9 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the number of items in the specified series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
      * @return The item count.
-     *
-     * @throws IllegalArgumentException if {@code series} is not in the
-     *     specified range.
+     * @throws IllegalArgumentException if {@code series} is not in the specified range.
      */
     @Override
     public int getItemCount(int series) {
@@ -154,18 +138,11 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to {@code getItemCount(series)}).
      * @return The x-value.
-     *
-     * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     * @throws ArrayIndexOutOfBoundsException if {@code series} is not within the specified range.
+     * @throws ArrayIndexOutOfBoundsException if {@code item} is not within the specified range.
      * @see #getX(int, int)
      */
     @Override
@@ -177,18 +154,11 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the x-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to {@code getItemCount(series)}).
      * @return The x-value.
-     *
-     * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     * @throws ArrayIndexOutOfBoundsException if {@code series} is not within the specified range.
+     * @throws ArrayIndexOutOfBoundsException if {@code item} is not within the specified range.
      * @see #getXValue(int, int)
      */
     @Override
@@ -199,18 +169,11 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to {@code getItemCount(series)}).
      * @return The y-value.
-     *
-     * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     * @throws ArrayIndexOutOfBoundsException if {@code series} is not within the specified range.
+     * @throws ArrayIndexOutOfBoundsException if {@code item} is not within the specified range.
      * @see #getY(int, int)
      */
     @Override
@@ -222,18 +185,11 @@ public class DefaultXYDataset<S extends Comparable<S>>
     /**
      * Returns the y-value for an item within a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     * @param item  the item index (in the range {@code 0} to
-     *     {@code getItemCount(series)}).
-     *
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to {@code getItemCount(series)}).
      * @return The y-value.
-     *
-     * @throws ArrayIndexOutOfBoundsException if {@code series} is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if {@code item} is not
-     *     within the specified range.
-     *
+     * @throws ArrayIndexOutOfBoundsException if {@code series} is not within the specified range.
+     * @throws ArrayIndexOutOfBoundsException if {@code item} is not within the specified range.
      * @see #getX(int, int)
      */
     @Override
@@ -242,14 +198,12 @@ public class DefaultXYDataset<S extends Comparable<S>>
     }
 
     /**
-     * Adds a series or if a series with the same key already exists replaces
-     * the data for that series, then sends a {@link DatasetChangeEvent} to
-     * all registered listeners.
+     * Adds a series or if a series with the same key already exists replaces the data for that series, then sends a
+     * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param seriesKey  the series key ({@code null} not permitted).
-     * @param data  the data (must be an array with length 2, containing two
-     *     arrays of equal length, the first containing the x-values and the
-     *     second containing the y-values).
+     * @param seriesKey the series key ({@code null} not permitted).
+     * @param data      the data (must be an array with length 2, containing two arrays of equal length, the first
+     *                  containing the x-values and the second containing the y-values).
      */
     public void addSeries(S seriesKey, double[][] data) {
         if (seriesKey == null) {
@@ -265,14 +219,13 @@ public class DefaultXYDataset<S extends Comparable<S>>
         }
         if (data[0].length != data[1].length) {
             throw new IllegalArgumentException(
-                "The 'data' array must contain two arrays with equal length.");
+                    "The 'data' array must contain two arrays with equal length.");
         }
         int seriesIndex = indexOf(seriesKey);
         if (seriesIndex == -1) {  // add a new series
             this.seriesKeys.add(seriesKey);
             this.seriesList.add(data);
-        }
-        else {  // replace an existing series
+        } else {  // replace an existing series
             this.seriesList.remove(seriesIndex);
             this.seriesList.add(seriesIndex, data);
         }
@@ -280,11 +233,9 @@ public class DefaultXYDataset<S extends Comparable<S>>
     }
 
     /**
-     * Removes a series from the dataset, then sends a
-     * {@link DatasetChangeEvent} to all registered listeners.
+     * Removes a series from the dataset, then sends a {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param seriesKey  the series key ({@code null} not permitted).
-     *
+     * @param seriesKey the series key ({@code null} not permitted).
      */
     public void removeSeries(S seriesKey) {
         int seriesIndex = indexOf(seriesKey);
@@ -296,8 +247,8 @@ public class DefaultXYDataset<S extends Comparable<S>>
     }
 
     /**
-     * Tests this {@code DefaultXYDataset} instance for equality with an
-     * arbitrary object.  This method returns {@code true} if and only if:
+     * Tests this {@code DefaultXYDataset} instance for equality with an arbitrary object.  This method returns
+     * {@code true} if and only if:
      * <ul>
      * <li>{@code obj} is not {@code null};</li>
      * <li>{@code obj} is an instance of {@code DefaultXYDataset};</li>
@@ -305,8 +256,7 @@ public class DefaultXYDataset<S extends Comparable<S>>
      *         exactly the same values.</li>
      * </ul>
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -355,10 +305,8 @@ public class DefaultXYDataset<S extends Comparable<S>>
      * Creates an independent copy of this dataset.
      *
      * @return The cloned dataset.
-     *
-     * @throws CloneNotSupportedException if there is a problem cloning the
-     *     dataset (for instance, if a non-cloneable object is used for a
-     *     series key).
+     * @throws CloneNotSupportedException if there is a problem cloning the dataset (for instance, if a non-cloneable
+     *                                    object is used for a series key).
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -373,7 +321,7 @@ public class DefaultXYDataset<S extends Comparable<S>>
             double[] yy = new double[y.length];
             System.arraycopy(x, 0, xx, 0, x.length);
             System.arraycopy(y, 0, yy, 0, y.length);
-            clone.seriesList.add(i, new double[][] {xx, yy});
+            clone.seriesList.add(i, new double[][]{xx, yy});
         }
         return clone;
     }

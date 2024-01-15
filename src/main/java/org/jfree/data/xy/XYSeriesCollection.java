@@ -56,14 +56,13 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents a collection of {@link XYSeries} objects that can be used as a
- * dataset.
+ * Represents a collection of {@link XYSeries} objects that can be used as a dataset.
  */
 public class XYSeriesCollection<S extends Comparable<S>>
         extends AbstractIntervalXYDataset<S>
         implements IntervalXYDataset<S>, DomainInfo, RangeInfo,
-        VetoableChangeListener, PublicCloneable, Serializable {
-
+        VetoableChangeListener, PublicCloneable, Serializable
+{
     /**
      * For serialization.
      */
@@ -119,12 +118,10 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Adds a series to the collection and sends a {@link DatasetChangeEvent}
-     * to all registered listeners.
+     * Adds a series to the collection and sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param series the series ({@code null} not permitted).
-     * @throws IllegalArgumentException if the key for the series is null or
-     *                                  not unique within the dataset.
+     * @throws IllegalArgumentException if the key for the series is null or not unique within the dataset.
      */
     public void addSeries(XYSeries<S> series) {
         Args.nullNotPermitted(series, "series");
@@ -139,8 +136,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Removes a series from the collection and sends a
-     * {@link DatasetChangeEvent} to all registered listeners.
+     * Removes a series from the collection and sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param series the series index (zero-based).
      */
@@ -153,8 +149,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Removes a series from the collection and sends a
-     * {@link DatasetChangeEvent} to all registered listeners.
+     * Removes a series from the collection and sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param series the series ({@code null} not permitted).
      */
@@ -168,8 +163,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Removes all the series from the collection and sends a
-     * {@link DatasetChangeEvent} to all registered listeners.
+     * Removes all the series from the collection and sends a {@link DatasetChangeEvent} to all registered listeners.
      */
     public void removeAllSeries() {
         // Unregister the collection as a change listener to each series in
@@ -207,8 +201,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Returns the index of the specified series, or -1 if that series is not
-     * present in the dataset.
+     * Returns the index of the specified series, or -1 if that series is not present in the dataset.
      *
      * @param series the series ({@code null} not permitted).
      * @return The series index.
@@ -224,8 +217,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
      *
      * @param series the series index (zero-based).
      * @return The series.
-     * @throws IllegalArgumentException if {@code series} is not in the
-     *                                  range {@code 0} to {@code getSeriesCount() - 1}.
+     * @throws IllegalArgumentException if {@code series} is not in the range {@code 0} to
+     *                                  {@code getSeriesCount() - 1}.
      */
     public XYSeries<S> getSeries(int series) {
         Args.requireInRange(series, "series", 0, this.data.size() - 1);
@@ -237,8 +230,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      *
      * @param key the key ({@code null} not permitted).
      * @return The series with the specified key.
-     * @throws UnknownKeyException if {@code key} is not found in the
-     *                             collection.
+     * @throws UnknownKeyException if {@code key} is not found in the collection.
      * @since 1.0.9
      */
     public XYSeries<S> getSeries(S key) {
@@ -254,11 +246,9 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the key for a series.
      *
-     * @param series the series index (in the range {@code 0} to
-     *               {@code getSeriesCount() - 1}).
+     * @param series the series index (in the range {@code 0} to {@code getSeriesCount() - 1}).
      * @return The key for a series.
-     * @throws IllegalArgumentException if {@code series} is not in the
-     *                                  specified range.
+     * @throws IllegalArgumentException if {@code series} is not in the specified range.
      */
     @Override
     public S getSeriesKey(int series) {
@@ -267,8 +257,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Returns the index of the series with the specified key, or -1 if no
-     * series has that key.
+     * Returns the index of the series with the specified key, or -1 if no series has that key.
      *
      * @param key the key ({@code null} not permitted).
      * @return The index.
@@ -291,8 +280,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
      *
      * @param series the series (zero-based index).
      * @return The item count.
-     * @throws IllegalArgumentException if {@code series} is not in the
-     *                                  range {@code 0} to {@code getSeriesCount() - 1}.
+     * @throws IllegalArgumentException if {@code series} is not in the range {@code 0} to
+     *                                  {@code getSeriesCount() - 1}.
      */
     @Override
     public int getItemCount(int series) {
@@ -426,8 +415,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the minimum x-value in the dataset.
      *
-     * @param includeInterval a flag that determines whether or not the
-     *                        x-interval is taken into account.
+     * @param includeInterval a flag that determines whether or not the x-interval is taken into account.
      * @return The minimum value.
      */
     @Override
@@ -454,8 +442,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the maximum x-value in the dataset.
      *
-     * @param includeInterval a flag that determines whether or not the
-     *                        x-interval is taken into account.
+     * @param includeInterval a flag that determines whether or not the x-interval is taken into account.
      * @return The maximum value.
      */
     @Override
@@ -483,10 +470,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the range of the values in this dataset's domain.
      *
-     * @param includeInterval a flag that determines whether or not the
-     *                        x-interval is taken into account.
-     * @return The range (or {@code null} if the dataset contains no
-     * values).
+     * @param includeInterval a flag that determines whether or not the x-interval is taken into account.
+     * @return The range (or {@code null} if the dataset contains no values).
      */
     @Override
     public Range getDomainBounds(boolean includeInterval) {
@@ -516,8 +501,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Returns the interval width. This is used to calculate the start and end
-     * x-values, if/when the dataset is used as an {@link IntervalXYDataset}.
+     * Returns the interval width. This is used to calculate the start and end x-values, if/when the dataset is used as
+     * an {@link IntervalXYDataset}.
      *
      * @return The interval width.
      */
@@ -526,8 +511,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Sets the interval width and sends a {@link DatasetChangeEvent} to all
-     * registered listeners.
+     * Sets the interval width and sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param width the width (negative values not permitted).
      */
@@ -549,9 +533,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Sets the interval position factor. This controls where the x-value is in
-     * relation to the interval surrounding the x-value (0.0 means the x-value
-     * will be positioned at the start, 0.5 in the middle, and 1.0 at the end).
+     * Sets the interval position factor. This controls where the x-value is in relation to the interval surrounding the
+     * x-value (0.0 means the x-value will be positioned at the start, 0.5 in the middle, and 1.0 at the end).
      *
      * @param factor the factor.
      */
@@ -570,8 +553,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Sets the flag that indicates whether the interval width is automatically
-     * calculated or not.
+     * Sets the flag that indicates whether the interval width is automatically calculated or not.
      *
      * @param b a boolean.
      */
@@ -584,8 +566,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Returns the range of the values in this dataset's range.
      *
      * @param includeInterval ignored.
-     * @return The range (or {@code null} if the dataset contains no
-     * values).
+     * @return The range (or {@code null} if the dataset contains no values).
      */
     @Override
     public Range getRangeBounds(boolean includeInterval) {
@@ -613,8 +594,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the minimum y-value in the dataset.
      *
-     * @param includeInterval a flag that determines whether or not the
-     *                        y-interval is taken into account.
+     * @param includeInterval a flag that determines whether or not the y-interval is taken into account.
      * @return The minimum value.
      */
     @Override
@@ -638,8 +618,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the maximum y-value in the dataset.
      *
-     * @param includeInterval a flag that determines whether or not the
-     *                        y-interval is taken into account.
+     * @param includeInterval a flag that determines whether or not the y-interval is taken into account.
      * @return The maximum value.
      */
     @Override
@@ -661,9 +640,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Receives notification that the key for one of the series in the
-     * collection has changed, and vetos it if the key is already present in
-     * the collection.
+     * Receives notification that the key for one of the series in the collection has changed, and vetos it if the key
+     * is already present in the collection.
      *
      * @param e the event.
      * @since 1.0.14

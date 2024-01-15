@@ -32,19 +32,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
- * A renderer that draws bars on an {@link XYPlot} (requires an
- * {@link XYDataset}).
+ * A renderer that draws bars on an {@link XYPlot} (requires an {@link XYDataset}).
  */
 public class PeakRenderer extends AbstractXYItemRenderer
-        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
+        implements XYItemRenderer, Cloneable, PublicCloneable, Serializable
+{
 
     /**
      * The state class used by this renderer.
      */
-    protected class XYBarRendererState extends XYItemRendererState {
+    protected class XYBarRendererState extends XYItemRendererState
+    {
 
         /**
          * Base for bars against the range axis, in Java 2D space.
@@ -87,7 +90,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     /**
      * width of the peak
      */
-    private double peakWidth;
+    private double defaultPeakWidth;
+    private transient Map<Integer, Double> peakWidths = new HashMap<>();
 
     /**
      * A flag that controls whether or not bar outlines are drawn.
@@ -95,26 +99,22 @@ public class PeakRenderer extends AbstractXYItemRenderer
     private boolean drawBarOutline;
 
     /**
-     * An optional class used to transform gradient paint objects to fit each
-     * bar.
+     * An optional class used to transform gradient paint objects to fit each bar.
      */
     private GradientPaintTransformer gradientPaintTransformer;
 
     /**
-     * The shape used to represent a bar in each legend item (this should never
-     * be {@code null}).
+     * The shape used to represent a bar in each legend item (this should never be {@code null}).
      */
     private transient Shape legendBar;
 
     /**
-     * The fallback position if a positive item label doesn't fit inside the
-     * bar.
+     * The fallback position if a positive item label doesn't fit inside the bar.
      */
     private ItemLabelPosition positiveItemLabelPositionFallback;
 
     /**
-     * The fallback position if a negative item label doesn't fit inside the
-     * bar.
+     * The fallback position if a negative item label doesn't fit inside the bar.
      */
     private ItemLabelPosition negativeItemLabelPositionFallback;
 
@@ -122,21 +122,41 @@ public class PeakRenderer extends AbstractXYItemRenderer
      * The default constructor.
      */
     public PeakRenderer() {
-        this(2.0);
+        this(1.0);
     }
 
     /**
      * Constructs a new renderer.
      *
-     * @param peakWidth the width of each peak
+     * @param defaultPeakWidth the width of each peak
      */
-    public PeakRenderer(double peakWidth) {
+    public PeakRenderer(double defaultPeakWidth) {
         super();
-        this.peakWidth = peakWidth;
+        this.defaultPeakWidth = defaultPeakWidth;
         this.base = 0.0;
         this.gradientPaintTransformer = new StandardGradientPaintTransformer();
         this.drawBarOutline = false;
         this.legendBar = new Rectangle2D.Double(-3.0, -5.0, 6.0, 10.0);
+    }
+
+    /**
+     * REturn the peak width  used to draw peaks by the renderer
+     *
+     * @param series series index (0-based)
+     */
+    public Double getSeriesPeakWidth(int series) {
+        return this.peakWidths.get(series);
+    }
+
+    public void setSeriesPeakWidth(int series, double width) {
+        setSeriesPeakWidth(series, width, true);
+    }
+
+    public void setSeriesPeakWidth(int series, double width, boolean notify) {
+        this.peakWidths.put(series, width);
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -150,9 +170,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the base value for the bars and sends a {@link RendererChangeEvent}
-     * to all registered listeners.  The base value is not used if the dataset's
-     * y-interval is being used to determine the bar length.
+     * Sets the base value for the bars and sends a {@link RendererChangeEvent} to all registered listeners.  The base
+     * value is not used if the dataset's y-interval is being used to determine the bar length.
      *
      * @param base the new base value.
      * @see #getBase()
@@ -167,8 +186,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
      *
      * @param width new peak width
      */
-    public void setPeakWidth(double width) {
-        this.peakWidth = width;
+    public void setDefaultPeakWidth(double width) {
+        this.defaultPeakWidth = width;
         fireChangeEvent();
     }
 
@@ -183,8 +202,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the flag that controls whether or not bar outlines are drawn and
-     * sends a {@link RendererChangeEvent} to all registered listeners.
+     * Sets the flag that controls whether or not bar outlines are drawn and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
      *
      * @param draw the flag.
      * @see #isDrawBarOutline()
@@ -195,8 +214,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the gradient paint transformer (an object used to transform
-     * gradient paint objects to fit each bar).
+     * Returns the gradient paint transformer (an object used to transform gradient paint objects to fit each bar).
      *
      * @return A transformer ({@code null} possible).
      * @see #setGradientPaintTransformer(GradientPaintTransformer)
@@ -206,8 +224,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the gradient paint transformer and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
+     * Sets the gradient paint transformer and sends a {@link RendererChangeEvent} to all registered listeners.
      *
      * @param transformer the transformer ({@code null} permitted).
      * @see #getGradientPaintTransformer()
@@ -220,8 +237,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
     /**
      * Returns the shape used to represent bars in each legend item.
      *
-     * @return The shape used to represent bars in each legend item (never
-     * {@code null}).
+     * @return The shape used to represent bars in each legend item (never {@code null}).
      * @see #setLegendBar(Shape)
      */
     public Shape getLegendBar() {
@@ -229,8 +245,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the shape used to represent bars in each legend item and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
+     * Sets the shape used to represent bars in each legend item and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
      *
      * @param bar the bar shape ({@code null} not permitted).
      * @see #getLegendBar()
@@ -242,8 +258,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the fallback position for positive item labels that don't fit
-     * within a bar.
+     * Returns the fallback position for positive item labels that don't fit within a bar.
      *
      * @return The fallback position ({@code null} possible).
      * @see #setPositiveItemLabelPositionFallback(ItemLabelPosition)
@@ -253,9 +268,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the fallback position for positive item labels that don't fit
-     * within a bar, and sends a {@link RendererChangeEvent} to all registered
-     * listeners.
+     * Sets the fallback position for positive item labels that don't fit within a bar, and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param position the position ({@code null} permitted).
      * @see #getPositiveItemLabelPositionFallback()
@@ -266,8 +280,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the fallback position for negative item labels that don't fit
-     * within a bar.
+     * Returns the fallback position for negative item labels that don't fit within a bar.
      *
      * @return The fallback position ({@code null} possible).
      * @see #setNegativeItemLabelPositionFallback(ItemLabelPosition)
@@ -277,9 +290,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Sets the fallback position for negative item labels that don't fit
-     * within a bar, and sends a {@link RendererChangeEvent} to all registered
-     * listeners.
+     * Sets the fallback position for negative item labels that don't fit within a bar, and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param position the position ({@code null} permitted).
      * @see #getNegativeItemLabelPositionFallback()
@@ -291,17 +303,15 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Initialises the renderer and returns a state object that should be
-     * passed to all subsequent calls to the drawItem() method.  Here we
-     * calculate the Java2D y-coordinate for zero, since all the bars have
-     * their bases fixed at zero.
+     * Initialises the renderer and returns a state object that should be passed to all subsequent calls to the
+     * drawItem() method.  Here we calculate the Java2D y-coordinate for zero, since all the bars have their bases fixed
+     * at zero.
      *
      * @param g2       the graphics device.
      * @param dataArea the area inside the axes.
      * @param plot     the plot.
      * @param dataset  the data.
-     * @param info     an optional info collection object to return data back to
-     *                 the caller.
+     * @param info     an optional info collection object to return data back to the caller.
      * @return A state object.
      */
     @Override
@@ -318,8 +328,8 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns a default legend item for the specified series.  Subclasses
-     * should override this method to generate customised items.
+     * Returns a default legend item for the specified series.  Subclasses should override this method to generate
+     * customised items.
      *
      * @param datasetIndex the dataset index (zero-based).
      * @param series       the series index (zero-based).
@@ -375,6 +385,13 @@ public class PeakRenderer extends AbstractXYItemRenderer
         return result;
     }
 
+    public double lookupSeriesPeakWidth(int series) {
+        Double seriesPeakWidth = getSeriesPeakWidth(series);
+        if (seriesPeakWidth == null)
+            seriesPeakWidth = defaultPeakWidth;
+        return seriesPeakWidth;
+    }
+
     /**
      * Draws the visual representation of a single data item.
      *
@@ -382,15 +399,13 @@ public class PeakRenderer extends AbstractXYItemRenderer
      * @param state          the renderer state.
      * @param dataArea       the area within which the plot is being drawn.
      * @param info           collects information about the drawing.
-     * @param plot           the plot (can be used to obtain standard color
-     *                       information etc).
+     * @param plot           the plot (can be used to obtain standard color information etc).
      * @param domainAxis     the domain axis.
      * @param rangeAxis      the range axis.
      * @param dataset        the dataset.
      * @param series         the series index (zero-based).
      * @param item           the item index (zero-based).
-     * @param crosshairState crosshair information for the plot
-     *                       ({@code null} permitted).
+     * @param crosshairState crosshair information for the plot ({@code null} permitted).
      * @param pass           the pass index.
      */
     @Override
@@ -422,7 +437,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
         RectangleEdge location = plot.getDomainAxisEdge();
         double translatedStartX = domainAxis.valueToJava2D(startX, dataArea, location);
 
-        double translatedWidth = Math.max(1, peakWidth);
+        double translatedWidth = Math.max(lookupSeriesPeakWidth(series), 1);
         double left = translatedStartX - translatedWidth / 2;
 
         // clip top and bottom bounds to data area
@@ -467,8 +482,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
      * @param row    the row index.
      * @param column the column index.
      * @param bar    the bar
-     * @param base   indicates which side of the rectangle is the base of the
-     *               bar.
+     * @param base   indicates which side of the rectangle is the base of the bar.
      */
     public void paintBar(Graphics2D g2, int row, int column, RectangularShape bar, RectangleEdge base) {
 
@@ -495,17 +509,16 @@ public class PeakRenderer extends AbstractXYItemRenderer
 
     /**
      * Draws an item label.  This method is provided as an alternative to
-     * {@link #drawItemLabel(Graphics2D, PlotOrientation, XYDataset, int, int,
-     * double, double, boolean)} so that the bar can be used to calculate the
-     * label anchor point.
+     * {@link #drawItemLabel(Graphics2D, PlotOrientation, XYDataset, int, int, double, double, boolean)} so that the bar
+     * can be used to calculate the label anchor point.
      *
      * @param g2        the graphics device.
      * @param dataset   the dataset.
      * @param series    the series index.
      * @param item      the item index.
      * @param plot      the plot.
-     * @param generator the label generator ({@code null} permitted, in
-     *                  which case the method does nothing, just returns).
+     * @param generator the label generator ({@code null} permitted, in which case the method does nothing, just
+     *                  returns).
      * @param bar       the bar.
      * @param negative  a flag indicating a negative value.
      */
@@ -677,13 +690,11 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the lower and upper bounds (range) of the x-values in the
-     * specified dataset.  Since this renderer uses the x-interval in the
-     * dataset, this is taken into account for the range.
+     * Returns the lower and upper bounds (range) of the x-values in the specified dataset.  Since this renderer uses
+     * the x-interval in the dataset, this is taken into account for the range.
      *
      * @param dataset the dataset ({@code null} permitted).
-     * @return The range ({@code null} if the dataset is
-     * {@code null} or empty).
+     * @return The range ({@code null} if the dataset is {@code null} or empty).
      */
     @Override
     public Range findDomainBounds(XYDataset dataset) {
@@ -691,13 +702,11 @@ public class PeakRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the lower and upper bounds (range) of the y-values in the
-     * specified dataset.  If the renderer is plotting the y-interval from the
-     * dataset, this is taken into account for the range.
+     * Returns the lower and upper bounds (range) of the y-values in the specified dataset.  If the renderer is plotting
+     * the y-interval from the dataset, this is taken into account for the range.
      *
      * @param dataset the dataset ({@code null} permitted).
-     * @return The range ({@code null} if the dataset is
-     * {@code null} or empty).
+     * @return The range ({@code null} if the dataset is {@code null} or empty).
      */
     @Override
     public Range findRangeBounds(XYDataset dataset) {
