@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -36,30 +36,41 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.internal.Args;
+import org.jfree.chart.text.TextAnchor;
+
 import java.io.Serializable;
 import java.util.Objects;
-import org.jfree.chart.text.TextAnchor;
-import org.jfree.chart.internal.Args;
 
 /**
- * The attributes that control the position of the label for each data item on
- * a chart.  Instances of this class are immutable.
+ * The attributes that control the position of the label for each data item on a chart.  Instances of this class are
+ * immutable.
  */
-public class ItemLabelPosition implements Serializable {
-
-    /** For serialization. */
+public class ItemLabelPosition implements Serializable
+{
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 5845390630157034499L;
 
-    /** The item label anchor point. */
+    /**
+     * The item label anchor point.
+     */
     private final ItemLabelAnchor itemLabelAnchor;
 
-    /** The text anchor. */
+    /**
+     * The text anchor.
+     */
     private final TextAnchor textAnchor;
 
-    /** The rotation anchor. */
+    /**
+     * The rotation anchor.
+     */
     private final TextAnchor rotationAnchor;
 
-    /** The rotation angle. */
+    /**
+     * The rotation angle.
+     */
     private final double angle;
 
     /**
@@ -73,29 +84,24 @@ public class ItemLabelPosition implements Serializable {
     /**
      * Creates a new position record (with zero rotation).
      *
-     * @param itemLabelAnchor  the item label anchor ({@code null} not
-     *                         permitted).
-     * @param textAnchor  the text anchor ({@code null} not permitted).
+     * @param itemLabelAnchor the item label anchor ({@code null} not permitted).
+     * @param textAnchor      the text anchor ({@code null} not permitted).
      */
     public ItemLabelPosition(ItemLabelAnchor itemLabelAnchor,
-                             TextAnchor textAnchor) {
+            TextAnchor textAnchor) {
         this(itemLabelAnchor, textAnchor, TextAnchor.CENTER, 0.0);
     }
 
     /**
-     * Creates a new position record.  The item label anchor is a point
-     * relative to the data item (dot, bar or other visual item) on a chart.
-     * The item label is aligned by aligning the text anchor with the
-     * item label anchor.
+     * Creates a new position record.  The item label anchor is a point relative to the data item (dot, bar or other
+     * visual item) on a chart. The item label is aligned by aligning the text anchor with the item label anchor.
      *
-     * @param itemLabelAnchor  the item label anchor ({@code null} not
-     *                         permitted).
-     * @param textAnchor  the text anchor ({@code null} not permitted).
-     * @param rotationAnchor  the rotation anchor ({@code null} not
-     *                        permitted).
-     * @param angle  the rotation angle (in radians).
+     * @param itemLabelAnchor the item label anchor ({@code null} not permitted).
+     * @param textAnchor      the text anchor ({@code null} not permitted).
+     * @param rotationAnchor  the rotation anchor ({@code null} not permitted).
+     * @param angle           the rotation angle (in radians).
      */
-    public ItemLabelPosition(ItemLabelAnchor itemLabelAnchor, 
+    public ItemLabelPosition(ItemLabelAnchor itemLabelAnchor,
             TextAnchor textAnchor, TextAnchor rotationAnchor, double angle) {
 
         Args.nullNotPermitted(itemLabelAnchor, "itemLabelAnchor");
@@ -146,8 +152,7 @@ public class ItemLabelPosition implements Serializable {
     /**
      * Tests this object for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -175,14 +180,14 @@ public class ItemLabelPosition implements Serializable {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         int hash = 5;
         hash = 83 * hash + Objects.hashCode(this.itemLabelAnchor);
         hash = 83 * hash + Objects.hashCode(this.textAnchor);
         hash = 83 * hash + Objects.hashCode(this.rotationAnchor);
         hash = 83 * hash +
                 (int) (Double.doubleToLongBits(this.angle) ^
-                (Double.doubleToLongBits(this.angle) >>> 32));
+                        (Double.doubleToLongBits(this.angle) >>> 32));
         return hash;
     }
 

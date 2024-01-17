@@ -25,6 +25,7 @@ import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
@@ -32,8 +33,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -86,13 +85,6 @@ public class PeakRenderer extends AbstractXYItemRenderer
      * The default base value for the bars.
      */
     private double base;
-
-    /**
-     * width of the peak
-     */
-    private double defaultPeakWidth;
-    private transient Map<Integer, Double> peakWidths = new HashMap<>();
-
     /**
      * A flag that controls whether or not bar outlines are drawn.
      */
@@ -119,44 +111,14 @@ public class PeakRenderer extends AbstractXYItemRenderer
     private ItemLabelPosition negativeItemLabelPositionFallback;
 
     /**
-     * The default constructor.
+     * Constructs a new renderer.
      */
     public PeakRenderer() {
-        this(1.0);
-    }
-
-    /**
-     * Constructs a new renderer.
-     *
-     * @param defaultPeakWidth the width of each peak
-     */
-    public PeakRenderer(double defaultPeakWidth) {
         super();
-        this.defaultPeakWidth = defaultPeakWidth;
         this.base = 0.0;
         this.gradientPaintTransformer = new StandardGradientPaintTransformer();
         this.drawBarOutline = false;
         this.legendBar = new Rectangle2D.Double(-3.0, -5.0, 6.0, 10.0);
-    }
-
-    /**
-     * REturn the peak width  used to draw peaks by the renderer
-     *
-     * @param series series index (0-based)
-     */
-    public Double getSeriesPeakWidth(int series) {
-        return this.peakWidths.get(series);
-    }
-
-    public void setSeriesPeakWidth(int series, double width) {
-        setSeriesPeakWidth(series, width, true);
-    }
-
-    public void setSeriesPeakWidth(int series, double width, boolean notify) {
-        this.peakWidths.put(series, width);
-        if (notify) {
-            fireChangeEvent();
-        }
     }
 
     /**
@@ -178,16 +140,6 @@ public class PeakRenderer extends AbstractXYItemRenderer
      */
     public void setBase(double base) {
         this.base = base;
-        fireChangeEvent();
-    }
-
-    /**
-     * set the width of the peak
-     *
-     * @param width new peak width
-     */
-    public void setDefaultPeakWidth(double width) {
-        this.defaultPeakWidth = width;
         fireChangeEvent();
     }
 
@@ -319,8 +271,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
-        ValueAxis rangeAxis = plot.getRangeAxisForDataset(plot.indexOf(
-                dataset));
+        ValueAxis rangeAxis = plot.getRangeAxisForDataset(plot.indexOf(dataset));
         state.setG2Base(rangeAxis.valueToJava2D(this.base, dataArea,
                 plot.getRangeAxisEdge()));
         return state;
@@ -385,12 +336,7 @@ public class PeakRenderer extends AbstractXYItemRenderer
         return result;
     }
 
-    public double lookupSeriesPeakWidth(int series) {
-        Double seriesPeakWidth = getSeriesPeakWidth(series);
-        if (seriesPeakWidth == null)
-            seriesPeakWidth = defaultPeakWidth;
-        return seriesPeakWidth;
-    }
+    private Line2D line2D = new Line2D.Double();
 
     /**
      * Draws the visual representation of a single data item.
@@ -437,7 +383,10 @@ public class PeakRenderer extends AbstractXYItemRenderer
         RectangleEdge location = plot.getDomainAxisEdge();
         double translatedStartX = domainAxis.valueToJava2D(startX, dataArea, location);
 
-        double translatedWidth = Math.max(lookupSeriesPeakWidth(series), 1);
+        line2D.setLine(translatedStartX, bottom, translatedStartX, top);
+
+        BasicStroke stroke = (BasicStroke) lookupSeriesStroke(series);
+        double translatedWidth = Math.max(stroke.getLineWidth(), 1);
         double left = translatedStartX - translatedWidth / 2;
 
         // clip top and bottom bounds to data area
@@ -445,12 +394,13 @@ public class PeakRenderer extends AbstractXYItemRenderer
         top = Math.min(top, dataArea.getMaxY());
         Rectangle2D bar = new Rectangle2D.Double(left, bottom, translatedWidth, top - bottom);
 
-        RectangleEdge barBase = RectangleEdge.BOTTOM;
+//        RectangleEdge barBase = RectangleEdge.BOTTOM;
 
         if (state.getElementHinting()) {
             beginElementGroup(g2, dataset.getSeriesKey(series), item);
         }
-        paintBar(g2, series, item, bar, barBase);
+        paintPeak(g2, series, item);
+//        paintBar(g2, series, item, bar, barBase);
         if (state.getElementHinting()) {
             endElementGroup(g2);
         }
@@ -481,6 +431,26 @@ public class PeakRenderer extends AbstractXYItemRenderer
      * @param g2     the graphics target.
      * @param row    the row index.
      * @param column the column index.
+     */
+    public void paintPeak(Graphics2D g2, int row, int column) {
+
+        Paint itemPaint = getItemPaint(row, column);
+        GradientPaintTransformer t = getGradientPaintTransformer();
+        if (t != null && itemPaint instanceof GradientPaint) {
+            itemPaint = t.transform((GradientPaint) itemPaint, line2D);
+        }
+        g2.setPaint(itemPaint);
+        g2.setStroke(getSeriesStroke(row));
+
+        g2.draw(line2D);
+    }
+
+    /**
+     * Paints a single bar instance.
+     *
+     * @param g2     the graphics target.
+     * @param row    the row index.
+     * @param column the column index.
      * @param bar    the bar
      * @param base   indicates which side of the rectangle is the base of the bar.
      */
@@ -492,6 +462,11 @@ public class PeakRenderer extends AbstractXYItemRenderer
             itemPaint = t.transform((GradientPaint) itemPaint, bar);
         }
         g2.setPaint(itemPaint);
+        g2.setStroke(getSeriesStroke(row));
+
+        // try to replace fill with draw
+        Line2D line2D = new Line2D.Double(bar.getX(), bar.getY(), bar.getWidth(), bar.getHeight());
+        g2.draw(line2D);
         g2.fill(bar);
 
         // draw the outline...
