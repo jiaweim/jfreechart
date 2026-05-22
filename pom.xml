@@ -8,14 +8,10 @@
 
     <groupId>io.github.jiaweim</groupId>
     <artifactId>jfreechart</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>2.0.0</version>
+    <!--    <packaging>jar</packaging>-->
     <name>JFreeChart-2.0</name>
-
-    <organization>
-        <name>JFree.org</name>
-        <url>https://www.jfree.org/</url>
-    </organization>
+    <url>https://github.com/jiaweim/jfreechart</url>
     <inceptionYear>2001</inceptionYear>
 
     <description>
@@ -42,6 +38,10 @@
             <name>David Gilbert</name>
             <email>dave@jfree.org</email>
         </developer>
+        <developer>
+            <name>Jiawei Mao</name>
+            <email>jiaweiM_philo@hotmail.com</email>
+        </developer>
     </developers>
 
     <licenses>
@@ -60,6 +60,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -80,25 +85,9 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>central</id>
-            <url>https://central.sonatype.com</url>
-        </repository>
-        <snapshotRepository>
-            <id>central</id>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.4.1</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -127,16 +116,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
-                <configuration>
-                    <linksource>true</linksource>
-                    <source>11</source>
-                    <docfilessubdirs>true</docfilessubdirs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.3</version>
             </plugin>
@@ -155,6 +134,36 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.21.0</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version>
+                <configuration>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <linksource>true</linksource>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -163,36 +172,6 @@
             <id>release</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.12.0</version>
-                        <configuration>
-                            <docfilessubdirs>true</docfilessubdirs>
-                            <linksource>true</linksource>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadoc</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.4.0</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>

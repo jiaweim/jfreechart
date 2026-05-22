@@ -1,39 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -------------------------
- * NumberTickUnitSource.java
- * -------------------------
- * (C) Copyright 2014-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- */
-
 package org.jfree.chart.axis;
 
 import java.io.Serializable;
@@ -42,21 +6,29 @@ import java.text.NumberFormat;
 import java.util.Objects;
 
 /**
- * A tick unit source implementation that returns NumberTickUnit instances 
+ * A tick unit source implementation that returns NumberTickUnit instances
  * that are multiples of 1, 2 or 5 times some power of 10.
  */
 public class NumberTickUnitSource implements TickUnitSource, Serializable {
 
-    /** Show integers only? */
+    /**
+     * Show integers only?
+     */
     private final boolean integers;
 
-    /** The power exponent. */
+    /**
+     * The power exponent.
+     */
     private int power;
 
-    /** The factor (1, 2 or 5) */
+    /**
+     * The factor (1, 2 or 5)
+     */
     private int factor;
-    
-    /** The number formatter to use (an override, it can be null). */
+
+    /**
+     * The number formatter to use (an override, it can be null).
+     */
     private final NumberFormat formatter;
 
     /**
@@ -65,22 +37,22 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
     public NumberTickUnitSource() {
         this(false);
     }
-    
+
     /**
      * Creates a new instance.
-     * 
-     * @param integers  show integers only. 
+     *
+     * @param integers show integers only.
      */
     public NumberTickUnitSource(boolean integers) {
         this(integers, null);
     }
-    
+
     /**
      * Creates a new instance.
-     * 
+     *
      * @param integers  show integers only?
-     * @param formatter  a formatter for the axis tick labels ({@code null} 
-     *         permitted).
+     * @param formatter a formatter for the axis tick labels ({@code null}
+     *                  permitted).
      */
     public NumberTickUnitSource(boolean integers, NumberFormat formatter) {
         this.integers = integers;
@@ -88,16 +60,16 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
         this.power = 0;
         this.factor = 1;
     }
-    
+
     @Override
     public TickUnit getLargerTickUnit(TickUnit unit) {
         TickUnit t = getCeilingTickUnit(unit);
         if (t.equals(unit)) {
             next();
-            t = new NumberTickUnit(getTickSize(), getTickLabelFormat(), 
+            t = new NumberTickUnit(getTickSize(), getTickLabelFormat(),
                     getMinorTickCount());
         }
-        return t; 
+        return t;
     }
 
     @Override
@@ -125,10 +97,10 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
                 done = true;
             }
         }
-        return new NumberTickUnit(getTickSize(), getTickLabelFormat(), 
+        return new NumberTickUnit(getTickSize(), getTickLabelFormat(),
                 getMinorTickCount());
     }
-    
+
     private boolean next() {
         if (factor == 1) {
             factor = 2;
@@ -145,7 +117,7 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
             power++;
             factor = 1;
             return true;
-        } 
+        }
         throw new IllegalStateException("We should never get here.");
     }
 
@@ -157,7 +129,7 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
             factor = 5;
             power--;
             return true;
-        } 
+        }
         if (factor == 2) {
             factor = 1;
             return true;
@@ -165,7 +137,7 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
         if (factor == 5) {
             factor = 2;
             return true;
-        } 
+        }
         throw new IllegalStateException("We should never get here.");
     }
 
@@ -173,19 +145,31 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
         return this.factor * Math.pow(10.0, this.power);
     }
 
-    /** Formatter with 4 decimal places. */
+    /**
+     * Formatter with 4 decimal places.
+     */
     private final DecimalFormat dfNeg4 = new DecimalFormat("0.0000");
-    /** Formatter with 3 decimal places. */
+    /**
+     * Formatter with 3 decimal places.
+     */
     private final DecimalFormat dfNeg3 = new DecimalFormat("0.000");
-    /** Formatter with 2 decimal places. */
+    /**
+     * Formatter with 2 decimal places.
+     */
     private final DecimalFormat dfNeg2 = new DecimalFormat("0.00");
-    /** Formatter with 1 decimal place. */
+    /**
+     * Formatter with 1 decimal place.
+     */
     private final DecimalFormat dfNeg1 = new DecimalFormat("0.0");
-    /** Formatter for integers. */
+    /**
+     * Formatter for integers.
+     */
     private final DecimalFormat df0 = new DecimalFormat("#,##0");
-    /** Formatter for general numbers. */
+    /**
+     * Formatter for general numbers.
+     */
     private final DecimalFormat df = new DecimalFormat("#.######E0");
-    
+
     private NumberFormat getTickLabelFormat() {
         if (this.formatter != null) {
             return this.formatter;
@@ -207,7 +191,7 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
         }
         return df;
     }
-    
+
     private int getMinorTickCount() {
         if (factor == 1) {
             return 10;
@@ -216,7 +200,7 @@ public class NumberTickUnitSource implements TickUnitSource, Serializable {
         }
         return 0;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {

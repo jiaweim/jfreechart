@@ -1,53 +1,26 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
- * Other names may be trademarks of their respective owners.]
- *
- * ---------
- * Axis.java
- * ---------
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   Bill Kelemen;
- *                   Nicolas Brodu;
- *                   Peter Kolb (patches 1934255 and 2603321);
- *                   Andrew Mickish (patch 1870189);
- *
- */
-
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.ChartElement;
+import org.jfree.chart.ChartElementVisitor;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.api.RectangleInsets;
+import org.jfree.chart.entity.AxisEntity;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.event.AxisChangeListener;
+import org.jfree.chart.internal.Args;
+import org.jfree.chart.internal.PaintUtils;
+import org.jfree.chart.internal.SerialUtils;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.text.AttributedStringUtils;
+import org.jfree.chart.text.TextAnchor;
+import org.jfree.chart.text.TextUtils;
+import org.jfree.chart.util.AttrStringUtils;
+import org.jspecify.annotations.Nullable;
+
+import javax.swing.event.EventListenerList;
+import java.awt.*;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -62,30 +35,12 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.event.EventListenerList;
-
-import org.jfree.chart.ChartElement;
-import org.jfree.chart.ChartElementVisitor;
-
-import org.jfree.chart.entity.AxisEntity;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.event.AxisChangeListener;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.text.AttributedStringUtils;
-import org.jfree.chart.text.TextUtils;
-import org.jfree.chart.api.RectangleEdge;
-import org.jfree.chart.api.RectangleInsets;
-import org.jfree.chart.text.TextAnchor;
-import org.jfree.chart.util.AttrStringUtils;
-import org.jfree.chart.internal.PaintUtils;
-import org.jfree.chart.internal.Args;
-import org.jfree.chart.internal.SerialUtils;
-
 /**
- * The base class for all axes in JFreeChart.  Subclasses are divided into
- * those that display values ({@link ValueAxis}) and those that display
+ * The base class for all axes in JFreeChart.
+ * <p>
+ * Define common appearance attributes and event notification mechanisms for all coordinate axes.
+ * <p>
+ * Subclasses are divided into those that display values ({@link ValueAxis}) and those that display
  * categories ({@link CategoryAxis}).
  */
 public abstract class Axis implements ChartElement, Cloneable, Serializable {
@@ -301,8 +256,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
     private double fixedDimension;
 
     /**
-     * A reference back to the plot that the axis is assigned to (can be
-     * {@code null}).
+     * A reference back to the plot that the axis is assigned to (can be {@code null}).
      */
     private transient Plot plot;
 
@@ -315,9 +269,9 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * Constructs an axis with the specific label and default values for other
      * attributes.
      *
-     * @param label the axis label ({@code null} permitted).
+     * @param label the axis label.
      */
-    protected Axis(String label) {
+    protected Axis(@Nullable String label) {
 
         this.label = label;
         this.visible = DEFAULT_AXIS_VISIBLE;
@@ -586,7 +540,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @param location the new location ({@code null} not permitted).
      */
     public void setLabelLocation(AxisLabelLocation location) {
-        Args.nullNotPermitted(location, "location");
+        Objects.requireNonNull(location, "location");
         this.labelLocation = location;
         fireChangeEvent();
     }

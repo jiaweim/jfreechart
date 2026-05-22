@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -39,61 +39,80 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.text.TextAnchor;
+import org.jfree.data.Range;
+import org.jspecify.annotations.NonNull;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
-
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.chart.api.RectangleEdge;
-import org.jfree.chart.text.TextAnchor;
-import org.jfree.data.Range;
 
 /**
  * A numerical axis that uses a logarithmic scale.
  */
 public class LogarithmicAxis extends NumberAxis {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 2502918599004103054L;
 
-    /** Useful constant for log(10). */
+    /**
+     * Useful constant for log(10).
+     */
     public static final double LOG10_VALUE = Math.log(10.0);
 
-    /** Smallest arbitrarily-close-to-zero value allowed. */
+    /**
+     * Smallest arbitrarily-close-to-zero value allowed.
+     */
     public static final double SMALL_LOG_VALUE = 1e-100;
 
-    /** Flag set true to allow negative values in data. */
+    /**
+     * Flag set true to allow negative values in data.
+     */
     protected boolean allowNegativesFlag = false;
 
     /**
-     * Flag set true make axis throw exception if any values are &lt;= 0 and 
+     * Flag set true make axis throw exception if any values are &lt;= 0 and
      * 'allowNegativesFlag' is false.
      */
     protected boolean strictValuesFlag = true;
 
-    /** Number formatter for generating numeric strings. */
+    /**
+     * Number formatter for generating numeric strings.
+     */
     protected final NumberFormat numberFormatterObj
-        = NumberFormat.getInstance();
+            = NumberFormat.getInstance();
 
-    /** Flag set true for "1e#"-style tick labels. */
+    /**
+     * Flag set true for "1e#"-style tick labels.
+     */
     protected boolean expTickLabelsFlag = false;
 
-    /** Flag set true for "10^n"-style tick labels. */
+    /**
+     * Flag set true for "10^n"-style tick labels.
+     */
     protected boolean log10TickLabelsFlag = false;
 
-    /** True to make 'autoAdjustRange()' select "10^n" values. */
+    /**
+     * True to make 'autoAdjustRange()' select "10^n" values.
+     */
     protected boolean autoRangeNextLogFlag = false;
 
-    /** Helper flag for log axis processing. */
+    /**
+     * Helper flag for log axis processing.
+     */
     protected boolean smallLogFlag = false;
 
     /**
      * Creates a new axis.
      *
-     * @param label  the axis label.
+     * @param label the axis label.
      */
     public LogarithmicAxis(String label) {
         super(label);
@@ -105,7 +124,7 @@ public class LogarithmicAxis extends NumberAxis {
      * in data, false to be able to plot positive values arbitrarily close to
      * zero.
      *
-     * @param flgVal  the new value of the flag.
+     * @param flgVal the new value of the flag.
      */
     public void setAllowNegativesFlag(boolean flgVal) {
         this.allowNegativesFlag = flgVal;
@@ -152,7 +171,7 @@ public class LogarithmicAxis extends NumberAxis {
      * are used.  The default is to use regular numeric tick labels.
      *
      * @param flgVal true for "1e#"-style tick labels, false for
-     * log10 or regular numeric tick labels.
+     *               log10 or regular numeric tick labels.
      */
     public void setExpTickLabelsFlag(boolean flgVal) {
         this.expTickLabelsFlag = flgVal;
@@ -163,17 +182,17 @@ public class LogarithmicAxis extends NumberAxis {
      * Returns the 'expTickLabelsFlag' flag.
      *
      * @return {@code true} for "1e#"-style tick labels,
-     *         {@code false} for log10 or regular numeric tick labels.
+     * {@code false} for log10 or regular numeric tick labels.
      */
     public boolean getExpTickLabelsFlag() {
-      return this.expTickLabelsFlag;
+        return this.expTickLabelsFlag;
     }
 
     /**
      * Sets the 'log10TickLabelsFlag' flag.  The default value is false.
      *
      * @param flag true for "10^n"-style tick labels, false for "1e#"-style
-     * or regular numeric tick labels.
+     *             or regular numeric tick labels.
      */
     public void setLog10TickLabelsFlag(boolean flag) {
         this.log10TickLabelsFlag = flag;
@@ -183,8 +202,8 @@ public class LogarithmicAxis extends NumberAxis {
      * Returns the 'log10TickLabelsFlag' flag.
      *
      * @return {@code true} for "10^n"-style tick labels,
-     *         {@code false} for "1e#"-style or regular numeric tick
-     *         labels.
+     * {@code false} for "1e#"-style or regular numeric tick
+     * labels.
      */
     public boolean getLog10TickLabelsFlag() {
         return this.log10TickLabelsFlag;
@@ -197,7 +216,7 @@ public class LogarithmicAxis extends NumberAxis {
      * value is false.
      *
      * @param flag {@code true} to make the 'autoAdjustRange()'
-     * method select the next "10^n" values, {@code false} to not.
+     *             method select the next "10^n" values, {@code false} to not.
      */
     public void setAutoRangeNextLogFlag(boolean flag) {
         this.autoRangeNextLogFlag = flag;
@@ -217,10 +236,10 @@ public class LogarithmicAxis extends NumberAxis {
      * Overridden version that calls original and then sets up flag for
      * log axis processing.
      *
-     * @param range  the new range.
+     * @param range the new range.
      */
     @Override
-    public void setRange(Range range) {
+    public void setRange(@NonNull Range range) {
         super.setRange(range);      // call parent method
         setupSmallLogFlag();        // setup flag based on bounds values
     }
@@ -258,9 +277,7 @@ public class LogarithmicAxis extends NumberAxis {
      * given value is less than 10.
      *
      * @param val the value.
-     *
      * @return log<sub>10</sub>(val).
-     *
      * @see #switchedPow10(double)
      */
     protected double switchedLog10(double val) {
@@ -276,9 +293,7 @@ public class LogarithmicAxis extends NumberAxis {
      * given value is less than 1.
      *
      * @param val the value.
-     *
      * @return 10<sup>val</sup>.
-     * 
      * @see #switchedLog10(double)
      */
     public double switchedPow10(double val) {
@@ -293,10 +308,8 @@ public class LogarithmicAxis extends NumberAxis {
      * (0 to 1) scaling factor is added such that at 0 the value is
      * adjusted to 1, resulting in a returned result of 0.
      *
-     * @param val  value for which log10 should be calculated.
-     *
+     * @param val value for which log10 should be calculated.
      * @return An adjusted log<sub>10</sub>(val).
-     *
      * @see #adjustedPow10(double)
      */
     public double adjustedLog10(double val) {
@@ -319,10 +332,8 @@ public class LogarithmicAxis extends NumberAxis {
      * second is that, for values less than 1, a progressive logarithmic
      * offset is subtracted such that at 0 the returned result is also 0.
      *
-     * @param val  value for which power of 10 should be calculated.
-     *
+     * @param val value for which power of 10 should be calculated.
      * @return An adjusted 10<sup>val</sup>.
-     * 
      * @see #adjustedLog10(double)
      */
     public double adjustedPow10(double val) {
@@ -333,8 +344,7 @@ public class LogarithmicAxis extends NumberAxis {
         double res;
         if (val < 1.0) {
             res = (Math.pow(10, val + 1.0) - 10.0) / 9.0; //invert adjustLog10
-        }
-        else {
+        } else {
             res = Math.pow(10, val);
         }
         return negFlag ? (-res) : res;
@@ -347,7 +357,6 @@ public class LogarithmicAxis extends NumberAxis {
      * (i.e., the value returned will be a power of 10: 1, 10, 100, 1000, etc.).
      *
      * @param lower a double value below which a floor will be calcualted.
-     *
      * @return 10<sup>N</sup> with N .. { 1 ... }
      */
     protected double computeLogFloor(double lower) {
@@ -360,29 +369,25 @@ public class LogarithmicAxis extends NumberAxis {
                 logFloor = Math.log(lower) / LOG10_VALUE;
                 logFloor = Math.floor(logFloor);
                 logFloor = Math.pow(10, logFloor);
-            }
-            else if (lower < -10.0) {   //parameter value is < -10
+            } else if (lower < -10.0) {   //parameter value is < -10
                 //calculate log using positive value:
                 logFloor = Math.log(-lower) / LOG10_VALUE;
                 //calculate floor using negative value:
                 logFloor = Math.floor(-logFloor);
                 //calculate power using positive value; then negate
                 logFloor = -Math.pow(10, -logFloor);
-            }
-            else {
+            } else {
                 //parameter value is -10 > val < 10
                 logFloor = Math.floor(lower);   //use as-is
             }
-        }
-        else {
+        } else {
             //negative values not allowed
             if (lower > 0.0) {   //parameter value is > 0
                 // The Math.log() function is based on e not 10.
                 logFloor = Math.log(lower) / LOG10_VALUE;
                 logFloor = Math.floor(logFloor);
                 logFloor = Math.pow(10, logFloor);
-            }
-            else {
+            } else {
                 //parameter value is <= 0
                 logFloor = Math.floor(lower);   //use as-is
             }
@@ -397,7 +402,6 @@ public class LogarithmicAxis extends NumberAxis {
      * (i.e., the value returned will be a power of 10: 1, 10, 100, 1000, etc.).
      *
      * @param upper a double value above which a ceiling will be calcualted.
-     *
      * @return 10<sup>N</sup> with N .. { 1 ... }
      */
     protected double computeLogCeil(double upper) {
@@ -411,8 +415,7 @@ public class LogarithmicAxis extends NumberAxis {
                 logCeil = Math.log(upper) / LOG10_VALUE;
                 logCeil = Math.ceil(logCeil);
                 logCeil = Math.pow(10, logCeil);
-            }
-            else if (upper < -10.0) {
+            } else if (upper < -10.0) {
                 //parameter value is < -10
                 //calculate log using positive value:
                 logCeil = Math.log(-upper) / LOG10_VALUE;
@@ -420,13 +423,11 @@ public class LogarithmicAxis extends NumberAxis {
                 logCeil = Math.ceil(-logCeil);
                 //calculate power using positive value; then negate
                 logCeil = -Math.pow(10, -logCeil);
+            } else {
+                //parameter value is -10 > val < 10
+                logCeil = Math.ceil(upper);     //use as-is
             }
-            else {
-               //parameter value is -10 > val < 10
-               logCeil = Math.ceil(upper);     //use as-is
-            }
-        }
-        else {
+        } else {
             //negative values not allowed
             if (upper > 0.0) {
                 //parameter value is > 0
@@ -434,8 +435,7 @@ public class LogarithmicAxis extends NumberAxis {
                 logCeil = Math.log(upper) / LOG10_VALUE;
                 logCeil = Math.ceil(logCeil);
                 logCeil = Math.pow(10, logCeil);
-            }
-            else {
+            } else {
                 //parameter value is <= 0
                 logCeil = Math.ceil(upper);     //use as-is
             }
@@ -460,11 +460,10 @@ public class LogarithmicAxis extends NumberAxis {
             double lower;
             Range r = vap.getDataRange(this);
             if (r == null) {
-                   //no real data present
+                //no real data present
                 r = getDefaultAutoRange();
                 lower = r.getLowerBound();    //get lower bound value
-            }
-            else {
+            } else {
                 //actual data is present
                 lower = r.getLowerBound();    //get lower bound value
                 if (this.strictValuesFlag
@@ -478,7 +477,7 @@ public class LogarithmicAxis extends NumberAxis {
             //apply lower margin by decreasing lower bound:
             final double lowerMargin;
             if (lower > 0.0 && (lowerMargin = getLowerMargin()) > 0.0) {
-                   //lower bound and margin OK; get log10 of lower bound
+                //lower bound and margin OK; get log10 of lower bound
                 final double logLower = (Math.log(lower) / LOG10_VALUE);
                 double logAbs;      //get absolute value of log10 value
                 if ((logAbs = Math.abs(logLower)) < 1.0) {
@@ -501,10 +500,10 @@ public class LogarithmicAxis extends NumberAxis {
 
             double upper = r.getUpperBound();
 
-             //apply upper margin by increasing upper bound:
+            //apply upper margin by increasing upper bound:
             final double upperMargin;
             if (upper > 0.0 && (upperMargin = getUpperMargin()) > 0.0) {
-                   //upper bound and margin OK; get log10 of upper bound
+                //upper bound and margin OK; get log10 of upper bound
                 final double logUpper = (Math.log(upper) / LOG10_VALUE);
                 double logAbs;      //get absolute value of log10 value
                 if ((logAbs = Math.abs(logUpper)) < 1.0) {
@@ -523,14 +522,13 @@ public class LogarithmicAxis extends NumberAxis {
                 expVal = Math.pow(10, expVal);      //create multiplier value
                 //multiply, round up, and divide for bound value:
                 upper = (expVal > 0.0) ? Math.ceil(upper * expVal) / expVal
-                    : Math.ceil(upper);
-            }
-            else {
+                        : Math.ceil(upper);
+            } else {
                 //negatives allowed or upper bound not between 0 & 1
                 //if flag then change to log version of highest value to
                 // make range begin at a 10^n value; else use nearest int
                 upper = (this.autoRangeNextLogFlag) ? computeLogCeil(upper)
-                    : Math.ceil(upper);
+                        : Math.ceil(upper);
             }
             // ensure the autorange is at least <minRange> in size...
             double minRange = getAutoRangeMinimumSize();
@@ -543,7 +541,7 @@ public class LogarithmicAxis extends NumberAxis {
                     double absUpper = Math.abs(upper);
                     //need to account for case where upper==0.0
                     double adjVal = (absUpper > SMALL_LOG_VALUE) ? absUpper
-                        / 100.0 : 0.01;
+                            / 100.0 : 0.01;
                     upper = (upper + lower + adjVal) / 2;
                     lower = (upper + lower - adjVal) / 2;
                 }
@@ -560,15 +558,14 @@ public class LogarithmicAxis extends NumberAxis {
      * Note that it is possible for the coordinate to fall outside the
      * plotArea.
      *
-     * @param value  the data value.
-     * @param plotArea  the area for plotting the data.
-     * @param edge  the axis location.
-     *
+     * @param value    the data value.
+     * @param plotArea the area for plotting the data.
+     * @param edge     the axis location.
      * @return The Java2D coordinate.
      */
     @Override
     public double valueToJava2D(double value, Rectangle2D plotArea,
-                                RectangleEdge edge) {
+            RectangleEdge edge) {
 
         Range range = getRange();
         double axisMin = switchedLog10(range.getLowerBound());
@@ -579,8 +576,7 @@ public class LogarithmicAxis extends NumberAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = plotArea.getMinX();
             max = plotArea.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             min = plotArea.getMaxY();
             max = plotArea.getMinY();
         }
@@ -590,8 +586,7 @@ public class LogarithmicAxis extends NumberAxis {
         if (isInverted()) {
             return max - (((value - axisMin) / (axisMax - axisMin))
                     * (max - min));
-        }
-        else {
+        } else {
             return min + (((value - axisMin) / (axisMax - axisMin))
                     * (max - min));
         }
@@ -603,15 +598,14 @@ public class LogarithmicAxis extends NumberAxis {
      * value, assuming that the axis runs along one edge of the specified
      * plotArea.
      *
-     * @param java2DValue  the coordinate in Java2D space.
-     * @param plotArea  the area in which the data is plotted.
-     * @param edge  the axis location.
-     *
+     * @param java2DValue the coordinate in Java2D space.
+     * @param plotArea    the area in which the data is plotted.
+     * @param edge        the axis location.
      * @return The data value.
      */
     @Override
     public double java2DToValue(double java2DValue, Rectangle2D plotArea,
-                                RectangleEdge edge) {
+            RectangleEdge edge) {
 
         Range range = getRange();
         double axisMin = switchedLog10(range.getLowerBound());
@@ -622,8 +616,7 @@ public class LogarithmicAxis extends NumberAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             plotMin = plotArea.getX();
             plotMax = plotArea.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             plotMin = plotArea.getMaxY();
             plotMax = plotArea.getMinY();
         }
@@ -631,8 +624,7 @@ public class LogarithmicAxis extends NumberAxis {
         if (isInverted()) {
             return switchedPow10(axisMax - ((java2DValue - plotMin)
                     / (plotMax - plotMin)) * (axisMax - axisMin));
-        }
-        else {
+        } else {
             return switchedPow10(axisMin + ((java2DValue - plotMin)
                     / (plotMax - plotMin)) * (axisMax - axisMin));
         }
@@ -641,8 +633,8 @@ public class LogarithmicAxis extends NumberAxis {
     /**
      * Zooms in on the current range.
      *
-     * @param lowerPercent  the new lower bound.
-     * @param upperPercent  the new upper bound.
+     * @param lowerPercent the new lower bound.
+     * @param upperPercent the new upper bound.
      */
     @Override
     public void zoomRange(double lowerPercent, double upperPercent) {
@@ -654,8 +646,7 @@ public class LogarithmicAxis extends NumberAxis {
             adjusted = new Range(
                     switchedPow10(startLog + (lengthLog * (1 - upperPercent))),
                     switchedPow10(startLog + (lengthLog * (1 - lowerPercent))));
-        }
-        else {
+        } else {
             adjusted = new Range(
                     switchedPow10(startLog + (lengthLog * lowerPercent)),
                     switchedPow10(startLog + (lengthLog * upperPercent)));
@@ -668,10 +659,9 @@ public class LogarithmicAxis extends NumberAxis {
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area in which the plot should be drawn.
-     * @param edge  the location of the axis.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area in which the plot should be drawn.
+     * @param edge     the location of the axis.
      * @return A list of ticks.
      */
     @Override
@@ -683,8 +673,8 @@ public class LogarithmicAxis extends NumberAxis {
 
         //get lower bound value:
         double lowerBoundVal = range.getLowerBound();
-              //if small log values and lower bound value too small
-              // then set to a small value (don't allow <= 0):
+        //if small log values and lower bound value too small
+        // then set to a small value (don't allow <= 0):
         if (this.smallLogFlag && lowerBoundVal < SMALL_LOG_VALUE) {
             lowerBoundVal = SMALL_LOG_VALUE;
         }
@@ -699,8 +689,8 @@ public class LogarithmicAxis extends NumberAxis {
 
         if (iBegCount == iEndCount && iBegCount > 0
                 && Math.pow(10, iBegCount) > lowerBoundVal) {
-              //only 1 power of 10 value, it's > 0 and its resulting
-              // tick value will be larger than lower bound of data
+            //only 1 power of 10 value, it's > 0 and its resulting
+            // tick value will be larger than lower bound of data
             --iBegCount;       //decrement to generate more ticks
         }
 
@@ -715,66 +705,62 @@ public class LogarithmicAxis extends NumberAxis {
                     //small log values in use; create numeric value for tick
                     currentTickValue = Math.pow(10, i) + (Math.pow(10, i) * j);
                     if (this.expTickLabelsFlag
-                        || (i < 0 && currentTickValue > 0.0
-                        && currentTickValue < 1.0)) {
+                            || (i < 0 && currentTickValue > 0.0
+                            && currentTickValue < 1.0)) {
                         //showing "1e#"-style ticks or negative exponent
                         // generating tick value between 0 & 1; show fewer
                         if (j == 0 || (i > -4 && j < 2)
-                                   || currentTickValue >= upperBoundVal) {
-                          //first tick of series, or not too small a value and
-                          // one of first 3 ticks, or last tick to be displayed
+                                || currentTickValue >= upperBoundVal) {
+                            //first tick of series, or not too small a value and
+                            // one of first 3 ticks, or last tick to be displayed
                             // set exact number of fractional digits to be shown
                             // (no effect if showing "1e#"-style ticks):
                             this.numberFormatterObj
-                                .setMaximumFractionDigits(-i);
-                               //create tick label (force use of fmt obj):
+                                    .setMaximumFractionDigits(-i);
+                            //create tick label (force use of fmt obj):
                             tickLabel = makeTickLabel(currentTickValue, true);
-                        }
-                        else {    //no tick label to be shown
+                        } else {    //no tick label to be shown
                             tickLabel = "";
                         }
-                    }
-                    else {     //tick value not between 0 & 1
-                               //show tick label if it's the first or last in
-                               // the set, or if it's 1-5; beyond that show
-                               // fewer as the values get larger:
+                    } else {     //tick value not between 0 & 1
+                        //show tick label if it's the first or last in
+                        // the set, or if it's 1-5; beyond that show
+                        // fewer as the values get larger:
                         tickLabel = (j < 1 || (i < 1 && j < 5) || (j < 4 - i)
-                                         || currentTickValue >= upperBoundVal)
-                                         ? makeTickLabel(currentTickValue) : "";
+                                || currentTickValue >= upperBoundVal)
+                                ? makeTickLabel(currentTickValue) : "";
                     }
-                }
-                else { //not small log values in use; allow for values <= 0
+                } else { //not small log values in use; allow for values <= 0
                     if (zeroTickFlag) {   //if did zero tick last iter then
                         --j;              //decrement to do 1.0 tick now
                     }     //calculate power-of-ten value for tick:
                     currentTickValue = (i >= 0)
-                        ? Math.pow(10, i) + (Math.pow(10, i) * j)
-                        : -(Math.pow(10, -i) - (Math.pow(10, -i - 1) * j));
+                            ? Math.pow(10, i) + (Math.pow(10, i) * j)
+                            : -(Math.pow(10, -i) - (Math.pow(10, -i - 1) * j));
                     if (!zeroTickFlag) {  // did not do zero tick last iteration
                         if (Math.abs(currentTickValue - 1.0) < 0.0001
-                            && lowerBoundVal <= 0.0 && upperBoundVal >= 0.0) {
+                                && lowerBoundVal <= 0.0 && upperBoundVal >= 0.0) {
                             //tick value is 1.0 and 0.0 is within data range
                             currentTickValue = 0.0;     //set tick value to zero
                             zeroTickFlag = true;        //indicate zero tick
                         }
-                    }
-                    else {     //did zero tick last iteration
+                    } else {     //did zero tick last iteration
                         zeroTickFlag = false;         //clear flag
                     }               //create tick label string:
-                               //show tick label if "1e#"-style and it's one
-                               // of the first two, if it's the first or last
-                               // in the set, or if it's 1-5; beyond that
-                               // show fewer as the values get larger:
+                    //show tick label if "1e#"-style and it's one
+                    // of the first two, if it's the first or last
+                    // in the set, or if it's 1-5; beyond that
+                    // show fewer as the values get larger:
                     tickLabel = ((this.expTickLabelsFlag && j < 2)
-                                || j < 1
-                                || (i < 1 && j < 5) || (j < 4 - i)
-                                || currentTickValue >= upperBoundVal)
-                                   ? makeTickLabel(currentTickValue) : "";
+                            || j < 1
+                            || (i < 1 && j < 5) || (j < 4 - i)
+                            || currentTickValue >= upperBoundVal)
+                            ? makeTickLabel(currentTickValue) : "";
                 }
 
                 if (currentTickValue > upperBoundVal) {
                     return ticks;   // if past highest data value then exit
-                                    // method
+                    // method
                 }
 
                 if (currentTickValue >= lowerBoundVal - SMALL_LOG_VALUE) {
@@ -787,23 +773,20 @@ public class LogarithmicAxis extends NumberAxis {
                         rotationAnchor = TextAnchor.CENTER_RIGHT;
                         if (edge == RectangleEdge.TOP) {
                             angle = Math.PI / 2.0;
-                        }
-                        else {
+                        } else {
                             angle = -Math.PI / 2.0;
                         }
-                    }
-                    else {
+                    } else {
                         if (edge == RectangleEdge.TOP) {
                             anchor = TextAnchor.BOTTOM_CENTER;
                             rotationAnchor = TextAnchor.BOTTOM_CENTER;
-                        }
-                        else {
+                        } else {
                             anchor = TextAnchor.TOP_CENTER;
                             rotationAnchor = TextAnchor.TOP_CENTER;
                         }
                     }
 
-                    Tick tick = new NumberTick(currentTickValue, tickLabel, 
+                    Tick tick = new NumberTick(currentTickValue, tickLabel,
                             anchor, rotationAnchor, angle);
                     ticks.add(tick);
                 }
@@ -817,10 +800,9 @@ public class LogarithmicAxis extends NumberAxis {
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2  the graphics device.
-     * @param dataArea  the area in which the plot should be drawn.
-     * @param edge  the location of the axis.
-     *
+     * @param g2       the graphics device.
+     * @param dataArea the area in which the plot should be drawn.
+     * @param edge     the location of the axis.
      * @return A list of ticks.
      */
     @Override
@@ -846,8 +828,8 @@ public class LogarithmicAxis extends NumberAxis {
 
         if (iBegCount == iEndCount && iBegCount > 0
                 && Math.pow(10, iBegCount) > lowerBoundVal) {
-              //only 1 power of 10 value, it's > 0 and its resulting
-              // tick value will be larger than lower bound of data
+            //only 1 power of 10 value, it's > 0 and its resulting
+            // tick value will be larger than lower bound of data
             --iBegCount;       //decrement to generate more ticks
         }
 
@@ -871,51 +853,45 @@ public class LogarithmicAxis extends NumberAxis {
                         if (this.log10TickLabelsFlag) {
                             //if flag then
                             tickLabel = "10^" + i;   //create "log10"-type label
-                        }
-                        else {    //not "log10"-type label
+                        } else {    //not "log10"-type label
                             if (this.expTickLabelsFlag) {
                                 //if flag then
                                 tickLabel = "1e" + i;  //create "1e#"-type label
-                            }
-                            else {    //not "1e#"-type label
+                            } else {    //not "1e#"-type label
                                 if (i >= 0) {   // if positive exponent then
-                                                // make integer
+                                    // make integer
                                     NumberFormat format
-                                        = getNumberFormatOverride();
+                                            = getNumberFormatOverride();
                                     if (format != null) {
                                         tickLabel = format.format(tickVal);
-                                    }
-                                    else {
+                                    } else {
                                         tickLabel = Long.toString((long)
                                                 Math.rint(tickVal));
                                     }
-                                }
-                                else {
+                                } else {
                                     //negative exponent; create fractional value
                                     //set exact number of fractional digits to
                                     // be shown:
                                     this.numberFormatterObj
-                                        .setMaximumFractionDigits(-i);
+                                            .setMaximumFractionDigits(-i);
                                     //create tick label:
                                     tickLabel = this.numberFormatterObj.format(
                                             tickVal);
                                 }
                             }
                         }
-                    }
-                    else {   //not first tick to be displayed
+                    } else {   //not first tick to be displayed
                         tickLabel = "";     //no tick label
                     }
-                }
-                else { //not small log values in use; allow for values <= 0
+                } else { //not small log values in use; allow for values <= 0
                     if (zeroTickFlag) {      //if did zero tick last iter then
                         --j;
                     }               //decrement to do 1.0 tick now
                     tickVal = (i >= 0) ? Math.pow(10, i) + (Math.pow(10, i) * j)
-                             : -(Math.pow(10, -i) - (Math.pow(10, -i - 1) * j));
+                            : -(Math.pow(10, -i) - (Math.pow(10, -i - 1) * j));
                     if (j == 0) {  //first tick of group
                         if (!zeroTickFlag) {     // did not do zero tick last
-                                                 // iteration
+                            // iteration
                             if (i > iBegCount && i < iEndCount
                                     && Math.abs(tickVal - 1.0) < 0.0001) {
                                 // not first or last tick on graph and value
@@ -923,41 +899,35 @@ public class LogarithmicAxis extends NumberAxis {
                                 tickVal = 0.0;        //change value to 0.0
                                 zeroTickFlag = true;  //indicate zero tick
                                 tickLabel = "0";      //create label for tick
-                            }
-                            else {
+                            } else {
                                 //first or last tick on graph or value is 1.0
                                 //create label for tick:
                                 if (this.log10TickLabelsFlag) {
-                                       //create "log10"-type label
+                                    //create "log10"-type label
                                     tickLabel = (((i < 0) ? "-" : "")
                                             + "10^" + Math.abs(i));
-                                }
-                                else {
+                                } else {
                                     if (this.expTickLabelsFlag) {
-                                           //create "1e#"-type label
+                                        //create "1e#"-type label
                                         tickLabel = (((i < 0) ? "-" : "")
                                                 + "1e" + Math.abs(i));
-                                    }
-                                    else {
+                                    } else {
                                         NumberFormat format
-                                            = getNumberFormatOverride();
+                                                = getNumberFormatOverride();
                                         if (format != null) {
                                             tickLabel = format.format(tickVal);
-                                        }
-                                        else {
-                                            tickLabel =  Long.toString(
+                                        } else {
+                                            tickLabel = Long.toString(
                                                     (long) Math.rint(tickVal));
                                         }
                                     }
                                 }
                             }
-                        }
-                        else {     // did zero tick last iteration
+                        } else {     // did zero tick last iteration
                             tickLabel = "";         //no label
                             zeroTickFlag = false;   //clear flag
                         }
-                    }
-                    else {       // not first tick of group
+                    } else {       // not first tick of group
                         tickLabel = "";           //no label
                         zeroTickFlag = false;     //make sure flag cleared
                     }
@@ -977,25 +947,22 @@ public class LogarithmicAxis extends NumberAxis {
                             anchor = TextAnchor.BOTTOM_CENTER;
                             rotationAnchor = TextAnchor.BOTTOM_CENTER;
                             angle = -Math.PI / 2.0;
-                        }
-                        else {
+                        } else {
                             anchor = TextAnchor.BOTTOM_CENTER;
                             rotationAnchor = TextAnchor.BOTTOM_CENTER;
                             angle = Math.PI / 2.0;
                         }
-                    }
-                    else {
+                    } else {
                         if (edge == RectangleEdge.LEFT) {
                             anchor = TextAnchor.CENTER_RIGHT;
                             rotationAnchor = TextAnchor.CENTER_RIGHT;
-                        }
-                        else {
+                        } else {
                             anchor = TextAnchor.CENTER_LEFT;
                             rotationAnchor = TextAnchor.CENTER_LEFT;
                         }
                     }
                     //create tick object and add to list:
-                    ticks.add(new NumberTick(tickVal, tickLabel, anchor, 
+                    ticks.add(new NumberTick(tickVal, tickLabel, anchor,
                             rotationAnchor, angle));
                 }
             }
@@ -1006,10 +973,9 @@ public class LogarithmicAxis extends NumberAxis {
     /**
      * Converts the given value to a tick label string.
      *
-     * @param val the value to convert.
+     * @param val          the value to convert.
      * @param forceFmtFlag true to force the number-formatter object
-     * to be used.
-     *
+     *                     to be used.
      * @return The tick label string.
      */
     protected String makeTickLabel(double val, boolean forceFmtFlag) {
@@ -1023,8 +989,8 @@ public class LogarithmicAxis extends NumberAxis {
 
     /**
      * Converts the given value to a tick label string.
-     * @param val the value to convert.
      *
+     * @param val the value to convert.
      * @return The tick label string.
      */
     protected String makeTickLabel(double val) {
