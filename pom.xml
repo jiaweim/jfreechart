@@ -6,12 +6,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <name>JFreeChart-2.0</name>
-
+    <groupId>io.github.jiaweim</groupId>
     <artifactId>jfreechart</artifactId>
-    <groupId>org.jfree</groupId>
     <version>2.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>JFreeChart-2.0</name>
 
     <organization>
         <name>JFree.org</name>
@@ -20,27 +19,29 @@
     <inceptionYear>2001</inceptionYear>
 
     <description>
-        JFreeChart is a class library, written in Java, for generating charts. 
+        JFreeChart is a class library, written in Java, for generating charts.
         Utilising the Java2D API, it supports a wide range of chart types including
         bar charts, pie charts, line charts, XY-plots, time series plots, Sankey charts
         and more.
     </description>
 
-    <url>https://www.jfree.org/jfreechart/</url>
     <issueManagement>
-        <url>https://github.com/jfree/jfreechart/issues</url>
+        <url>https://github.com/jiaweim/jfreechart/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
+
     <scm>
-        <connection>scm:git:git:https://github.com/jfree/jfreechart.git</connection>
-        <url>https://github.com/jfree/jfreechart</url>
+        <connection>scm:git:https://github.com/jiaweim/jfreechart.git</connection>
+        <developerConnection>scm:git:git@github.com:jiaweim/jfreechartl.git</developerConnection>
+        <url>https://github.com/jiaweim/jfreechart</url>
+        <tag>main</tag>
     </scm>
 
     <developers>
-      <developer>
-        <name>David Gilbert</name>
-        <email>dave@jfree.org</email>
-      </developer>
+        <developer>
+            <name>David Gilbert</name>
+            <email>dave@jfree.org</email>
+        </developer>
     </developers>
 
     <licenses>
@@ -52,10 +53,10 @@
     </licenses>
 
     <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.release.level>11</project.release.level>
-        <project.source.level>11</project.source.level>
-        <project.target.level>11</project.target.level>
     </properties>
 
     <dependencies>
@@ -88,8 +89,8 @@
             <id>central</id>
             <url>https://central.sonatype.com/repository/maven-snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>    
-    
+    </distributionManagement>
+
     <build>
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
@@ -111,10 +112,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
                 <configuration>
-                    <release>${project.release.level}</release>
-                    <source>${project.source.level}</source>
-                    <target>${project.target.level}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>                
+                    <release>${maven.compiler.release}</release>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
@@ -148,7 +149,7 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <version>3.1.4</version>
             </plugin>
-          
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -157,32 +158,15 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.5.3</version>
-            </plugin>
-                
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.6.0</version>
-            </plugin>
-
-        </plugins>
-    </reporting>
-
     <profiles>
-        <profile> 
+        <profile>
             <id>release</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.11.2</version>
+                        <version>3.12.0</version>
                         <configuration>
                             <docfilessubdirs>true</docfilessubdirs>
                             <linksource>true</linksource>
@@ -199,7 +183,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.3.1</version>
+                        <version>3.4.0</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -212,7 +196,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.7</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -226,10 +210,10 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.7.0</version>
+                        <version>0.10.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <publishingServerId>central</publishingServerId>
+                            <publishingServerId>maven-jiawei</publishingServerId>
                         </configuration>
                     </plugin>
                 </plugins>
