@@ -2577,7 +2577,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     protected Graphics2D createSVGGraphics2D(int w, int h) {
         try {
             Class<?> svgGraphics2d = Class.forName("org.jfree.svg.SVGGraphics2D");
-            Constructor<?> ctor = svgGraphics2d.getConstructor(int.class, int.class);
+            Constructor<?> ctor = svgGraphics2d.getConstructor(double.class, double.class);
             return (Graphics2D) ctor.newInstance(w, h);
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException |
                  IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {

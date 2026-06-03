@@ -24,6 +24,9 @@ import java.nio.file.Path;
  */
 public interface ShowChart {
 
+    ChartTheme DEFAULT_THEME = new StandardChartTheme("PDK");
+
+
     /**
      * Display the specified chart.
      *

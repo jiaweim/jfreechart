@@ -4,6 +4,7 @@ import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.api.RectangleEdge;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.legend.LegendTitle;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -31,7 +32,7 @@ public class LineChart extends Chart {
     private final XYPlot plot_;
 
     public LineChart() {
-        super(new XYPlot<>());
+        super(null, null, new XYPlot<>(), false);
         this.plot_ = (XYPlot) getPlot();
         domainAxis_ = new NumberAxis();
         rangeAxis_ = new NumberAxis();
@@ -40,6 +41,8 @@ public class LineChart extends Chart {
         plot_.setDomainAxis(domainAxis_);
         plot_.setRangeAxis(rangeAxis_);
         plot_.setRenderer(renderer_);
+
+        DEFAULT_THEME.apply(this);
     }
 
     /**
@@ -138,6 +141,19 @@ public class LineChart extends Chart {
     }
 
     /**
+     * Configure chart to generate tool tips
+     *
+     * @param addTooltip true if generate tool tips
+     * @return this
+     */
+    public LineChart addTooltips(boolean addTooltip) {
+        if (addTooltip) {
+            renderer_.setDefaultToolTipGenerator(new StandardXYToolTipGenerator());
+        }
+        return this;
+    }
+
+    /**
      * Add a XYPointer Annotation
      *
      * @param label           annotation text
@@ -152,6 +168,7 @@ public class LineChart extends Chart {
     public LineChart addPointerAnnotation(String label, double x, double y,
             double angle, double labelOffset,
             TextAnchor textAnchor, Color backgroundColor) {
+
         XYPointerAnnotation annotation = new XYPointerAnnotation(label, x, y, angle);
         annotation.setLabelOffset(labelOffset);
         annotation.setTextAnchor(textAnchor);
@@ -195,6 +212,20 @@ public class LineChart extends Chart {
         return this;
     }
 
+    /**
+     * Sets the flag that indicates whether the axis range, if
+     * automatically calculated, is forced to include zero.
+     * <p>
+     * If the flag is changed to {@code true}, the axis range is
+     * recalculated.
+     *
+     * @param yAxisIncludesZero the new value of the flag.
+     */
+    public LineChart rangeAxisAutoRangeIncludesZero(boolean yAxisIncludesZero) {
+        rangeAxis_.setAutoRangeIncludesZero(yAxisIncludesZero);
+        return this;
+    }
+
     static void main() {
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
         XYSeries<String> series = new XYSeries<>("TIC");
@@ -205,9 +236,9 @@ public class LineChart extends Chart {
 
         LineChart chart = new LineChart();
         chart.dataset(dataset)
-                .title("色谱图")
+                .title("Chromatogram")
                 .domainAxisName("Time (min)")
-                .rangeAxisName("强度");
+                .rangeAxisName("Intensity");
         chart.show();
     }
 }
