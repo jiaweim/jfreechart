@@ -1,43 +1,9 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * --------------
- * DataUtils.java
- * --------------
- * (C) Copyright 2003-present, by David Gilbert and contributors.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   Peter Kolb (patch 2511330);
- */
-
 package org.jfree.data;
 
-import java.util.Arrays;
 import org.jfree.chart.internal.Args;
 import org.jfree.data.general.DatasetUtils;
+
+import java.util.Arrays;
 
 /**
  * Utility methods for use with some of the data classes (but not the datasets,
@@ -55,9 +21,8 @@ public abstract class DataUtils {
      * match (two values that qre both NaN or both INF are considered equal
      * in this test).
      *
-     * @param a  the first array ({@code null} permitted).
-     * @param b  the second array ({@code null} permitted).
-     *
+     * @param a the first array ({@code null} permitted).
+     * @param b the second array ({@code null} permitted).
      * @return A boolean.
      */
     public static boolean equal(double[][] a, double[][] b) {
@@ -81,8 +46,7 @@ public abstract class DataUtils {
     /**
      * Returns a clone of the specified array.
      *
-     * @param source  the source array ({@code null} not permitted).
-     *
+     * @param source the source array ({@code null} not permitted).
      * @return A clone of the array.
      */
     public static double[][] clone(double[][] source) {
@@ -102,9 +66,8 @@ public abstract class DataUtils {
      * Returns the total of the values in one column of the supplied data
      * table.
      *
-     * @param data  the table of values ({@code null} not permitted).
-     * @param column  the column index (zero-based).
-     *
+     * @param data   the table of values ({@code null} not permitted).
+     * @param column the column index (zero-based).
      * @return The total of the values in the specified column.
      */
     public static double calculateColumnTotal(Values2D data, int column) {
@@ -124,14 +87,13 @@ public abstract class DataUtils {
      * Returns the total of the values in one column of the supplied data
      * table by taking only the row numbers in the array into account.
      *
-     * @param data  the table of values ({@code null} not permitted).
-     * @param column  the column index (zero-based).
+     * @param data      the table of values ({@code null} not permitted).
+     * @param column    the column index (zero-based).
      * @param validRows the array with valid rows (zero-based).
-     *
      * @return The total of the valid values in the specified column.
      */
     public static double calculateColumnTotal(Values2D data, int column,
-             int[] validRows) {
+            int[] validRows) {
         Args.nullNotPermitted(data, "data");
         double total = 0.0;
         int rowCount = data.getRowCount();
@@ -150,9 +112,8 @@ public abstract class DataUtils {
      * Returns the total of the values in one row of the supplied data
      * table.
      *
-     * @param data  the table of values ({@code null} not permitted).
+     * @param data the table of values ({@code null} not permitted).
      * @param row  the row index (zero-based).
-     *
      * @return The total of the values in the specified row.
      */
     public static double calculateRowTotal(Values2D data, int row) {
@@ -172,14 +133,13 @@ public abstract class DataUtils {
      * Returns the total of the values in one row of the supplied data
      * table by taking only the column numbers in the array into account.
      *
-     * @param data  the table of values ({@code null} not permitted).
-     * @param row  the row index (zero-based).
+     * @param data      the table of values ({@code null} not permitted).
+     * @param row       the row index (zero-based).
      * @param validCols the array with valid cols (zero-based).
-     *
      * @return The total of the valid values in the specified row.
      */
     public static double calculateRowTotal(Values2D data, int row,
-             int[] validCols) {
+            int[] validCols) {
         Args.nullNotPermitted(data, "data");
         double total = 0.0;
         int colCount = data.getColumnCount();
@@ -198,8 +158,7 @@ public abstract class DataUtils {
      * Constructs an array of {@code Number} objects from an array of
      * {@code double} primitives.
      *
-     * @param data  the data ({@code null} not permitted).
-     *
+     * @param data the data ({@code null} not permitted).
      * @return An array of {@code double}.
      */
     public static Number[] createNumberArray(double[] data) {
@@ -215,8 +174,7 @@ public abstract class DataUtils {
      * Constructs an array of arrays of {@code Number} objects from a
      * corresponding structure containing {@code double} primitives.
      *
-     * @param data  the data ({@code null} not permitted).
-     *
+     * @param data the data ({@code null} not permitted).
      * @return An array of {@code double}.
      */
     public static Number[][] createNumberArray2D(double[][] data) {
@@ -235,9 +193,8 @@ public abstract class DataUtils {
      * <p>
      * The percentages are values between 0.0 and 1.0 (where 1.0 = 100%).
      *
-     * @param <K> the key type.
-     * @param data  the data ({@code null} not permitted).
-     *
+     * @param <K>  the key type.
+     * @param data the data ({@code null} not permitted).
      * @return The cumulative percentages.
      */
     public static <K extends Comparable<K>> KeyedValues<K> getCumulativePercentages(KeyedValues<K> data) {

@@ -1,5 +1,6 @@
 package org.jfree.chart;
 
+import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.api.RectangleEdge;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.NumberAxis;
@@ -7,6 +8,10 @@ import org.jfree.chart.legend.LegendTitle;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.text.TextAnchor;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jspecify.annotations.Nullable;
 
 import java.awt.*;
@@ -104,6 +109,56 @@ public class LineChart extends Chart {
         return this;
     }
 
+    /**
+     * Set the dataset to plot
+     *
+     * @param dataset {@link XYDataset}
+     * @return this
+     */
+    public LineChart dataset(XYDataset dataset) {
+        plot_.setDataset(dataset);
+        return this;
+    }
+
+    /**
+     * Add a new dataset to the plot
+     *
+     * @param index   index of the dataset
+     * @param dataset {@link XYDataset} instance
+     * @return this
+     */
+    public LineChart addDataset(int index, XYDataset dataset) {
+        XYDataset preDataset = plot_.getDataset(index);
+        if (preDataset != null) {
+            throw new IllegalStateException("Dataset with index " + index + " already exists!");
+        }
+        plot_.setDataset(index, dataset);
+        plot_.setRenderer(index, new XYLineAndShapeRenderer(true, false));
+        return this;
+    }
+
+    /**
+     * Add a XYPointer Annotation
+     *
+     * @param label           annotation text
+     * @param x               the x-coordinate (measured against the chart's domain axis).
+     * @param y               the y-coordinate (measured against the chart's range axis).
+     * @param angle           the angle of the arrow's line (in radians).
+     * @param labelOffset     the label offset (distance between arrows and annotation text)
+     * @param textAnchor      the text anchor (the point on the text bounding rectangle that is aligned to the (x, y) coordinate of the annotation)
+     * @param backgroundColor the background paint for the annotation
+     * @return this
+     */
+    public LineChart addPointerAnnotation(String label, double x, double y,
+            double angle, double labelOffset,
+            TextAnchor textAnchor, Color backgroundColor) {
+        XYPointerAnnotation annotation = new XYPointerAnnotation(label, x, y, angle);
+        annotation.setLabelOffset(labelOffset);
+        annotation.setTextAnchor(textAnchor);
+        annotation.setBackgroundPaint(backgroundColor);
+        plot_.addAnnotation(annotation);
+        return this;
+    }
 
 
     /**
@@ -116,5 +171,43 @@ public class LineChart extends Chart {
     public LineChart seriesLineWidth(int series, float width) {
         renderer_.setSeriesStroke(series, new BasicStroke(width));
         return this;
+    }
+
+    /**
+     * Set X Axis title
+     *
+     * @param xAxisTitle x axis title
+     * @return this
+     */
+    public LineChart domainAxisName(String xAxisTitle) {
+        domainAxis_.setLabel(xAxisTitle);
+        return this;
+    }
+
+    /**
+     * Set Y Axis title
+     *
+     * @param yAxisTitle y axis title
+     * @return this
+     */
+    public LineChart rangeAxisName(String yAxisTitle) {
+        rangeAxis_.setLabel(yAxisTitle);
+        return this;
+    }
+
+    static void main() {
+        XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
+        XYSeries<String> series = new XYSeries<>("TIC");
+        double[] x = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};
+        double[] y = {100.0, 250.0, 500.0, 800.0, 600.0, 300.0, 150.0, 50.0};
+        series.add(x, y);
+        dataset.addSeries(series);
+
+        LineChart chart = new LineChart();
+        chart.dataset(dataset)
+                .title("色谱图")
+                .domainAxisName("Time (min)")
+                .rangeAxisName("强度");
+        chart.show();
     }
 }

@@ -1,39 +1,12 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -----------------------
- * XYSeriesCollection.java
- * -----------------------
- * (C) Copyright 2001-present, by David Gilbert and Contributors.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   Aaron Metzger;
- */
-
 package org.jfree.data.xy;
+
+import org.jfree.chart.api.PublicCloneable;
+import org.jfree.chart.internal.Args;
+import org.jfree.chart.internal.CloneUtils;
+import org.jfree.chart.internal.HashUtils;
+import org.jfree.data.*;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.Series;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
@@ -46,36 +19,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.jfree.chart.internal.HashUtils;
-import org.jfree.chart.internal.Args;
-import org.jfree.chart.internal.CloneUtils;
-import org.jfree.chart.api.PublicCloneable;
-import org.jfree.data.DomainInfo;
-import org.jfree.data.DomainOrder;
-import org.jfree.data.Range;
-import org.jfree.data.RangeInfo;
-import org.jfree.data.UnknownKeyException;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.Series;
-
 /**
  * Represents a collection of {@link XYSeries} objects that can be used as a
  * dataset.
  *
  * @param <S> the series key type.
  */
-public class XYSeriesCollection<S extends Comparable<S>> 
+public class XYSeriesCollection<S extends Comparable<S>>
         extends AbstractIntervalXYDataset<S>
-        implements IntervalXYDataset<S>, DomainInfo, RangeInfo, 
+        implements IntervalXYDataset<S>, DomainInfo, RangeInfo,
         VetoableChangeListener, PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -7590013825931496766L;
 
-    /** The series that are included in the collection. */
+    /**
+     * The series that are included in the collection.
+     */
     private List<XYSeries<S>> data;
 
-    /** The interval delegate (used to calculate the start and end x-values). */
+    /**
+     * The interval delegate (used to calculate the start and end x-values).
+     */
     private IntervalXYDelegate intervalDelegate;
 
     /**
@@ -88,7 +55,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Constructs a dataset and populates it with a single series.
      *
-     * @param series  the series ({@code null} ignored).
+     * @param series the series ({@code null} ignored).
      */
     public XYSeriesCollection(XYSeries<S> series) {
         super();
@@ -122,17 +89,16 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Adds a series to the collection and sends a {@link DatasetChangeEvent}
      * to all registered listeners.
      *
-     * @param series  the series ({@code null} not permitted).
-     * 
+     * @param series the series ({@code null} not permitted).
      * @throws IllegalArgumentException if the key for the series is null or
-     *     not unique within the dataset.
+     *                                  not unique within the dataset.
      */
     public void addSeries(XYSeries<S> series) {
         Args.nullNotPermitted(series, "series");
         if (getSeriesIndex(series.getKey()) >= 0) {
             throw new IllegalArgumentException(
-                "This dataset already contains a series with the key " 
-                + series.getKey());
+                    "This dataset already contains a series with the key "
+                            + series.getKey());
         }
         this.data.add(series);
         series.addChangeListener(this);
@@ -143,7 +109,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Removes a series from the collection and sends a
      * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (zero-based).
+     * @param series the series index (zero-based).
      */
     public void removeSeries(int series) {
         Args.requireInRange(series, "series", 0, this.data.size() - 1);
@@ -157,7 +123,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Removes a series from the collection and sends a
      * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param series  the series ({@code null} not permitted).
+     * @param series the series ({@code null} not permitted).
      */
     public void removeSeries(XYSeries<S> series) {
         Args.nullNotPermitted(series, "series");
@@ -211,10 +177,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Returns the index of the specified series, or -1 if that series is not
      * present in the dataset.
      *
-     * @param series  the series ({@code null} not permitted).
-     *
+     * @param series the series ({@code null} not permitted).
      * @return The series index.
-     *
      * @since 1.0.6
      */
     public int indexOf(XYSeries<S> series) {
@@ -225,12 +189,10 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns a series from the collection.
      *
-     * @param series  the series index (zero-based).
-     *
+     * @param series the series index (zero-based).
      * @return The series.
-     *
      * @throws IllegalArgumentException if {@code series} is not in the
-     *     range {@code 0} to {@code getSeriesCount() - 1}.
+     *                                  range {@code 0} to {@code getSeriesCount() - 1}.
      */
     public XYSeries<S> getSeries(int series) {
         Args.requireInRange(series, "series", 0, this.data.size() - 1);
@@ -240,13 +202,10 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns a series from the collection.
      *
-     * @param key  the key ({@code null} not permitted).
-     *
+     * @param key the key ({@code null} not permitted).
      * @return The series with the specified key.
-     *
      * @throws UnknownKeyException if {@code key} is not found in the
-     *         collection.
-     *
+     *                             collection.
      * @since 1.0.9
      */
     public XYSeries<S> getSeries(S key) {
@@ -262,13 +221,11 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the key for a series.
      *
-     * @param series  the series index (in the range {@code 0} to
-     *     {@code getSeriesCount() - 1}).
-     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
      * @return The key for a series.
-     *
      * @throws IllegalArgumentException if {@code series} is not in the
-     *     specified range.
+     *                                  specified range.
      */
     @Override
     public S getSeriesKey(int series) {
@@ -279,11 +236,9 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the index of the series with the specified key, or -1 if no
      * series has that key.
-     * 
-     * @param key  the key ({@code null} not permitted).
-     * 
+     *
+     * @param key the key ({@code null} not permitted).
      * @return The index.
-     * 
      * @since 1.0.14
      */
     public int getSeriesIndex(S key) {
@@ -301,12 +256,10 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the number of items in the specified series.
      *
-     * @param series  the series (zero-based index).
-     *
+     * @param series the series (zero-based index).
      * @return The item count.
-     *
      * @throws IllegalArgumentException if {@code series} is not in the
-     *     range {@code 0} to {@code getSeriesCount() - 1}.
+     *                                  range {@code 0} to {@code getSeriesCount() - 1}.
      */
     @Override
     public int getItemCount(int series) {
@@ -317,9 +270,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the x-value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The value.
      */
     @Override
@@ -331,9 +283,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the starting X value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The starting X value.
      */
     @Override
@@ -344,9 +295,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the ending X value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The ending X value.
      */
     @Override
@@ -357,9 +307,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the y-value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
+     * @param series the series (zero-based index).
      * @param index  the index of the item of interest (zero-based).
-     *
      * @return The value (possibly {@code null}).
      */
     @Override
@@ -371,9 +320,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the starting Y value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The starting Y value.
      */
     @Override
@@ -384,9 +332,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the ending Y value for the specified series and item.
      *
-     * @param series  the series (zero-based index).
-     * @param item  the item (zero-based index).
-     *
+     * @param series the series (zero-based index).
+     * @param item   the item (zero-based index).
      * @return The ending Y value.
      */
     @Override
@@ -397,8 +344,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Tests this collection for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -420,7 +366,6 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Returns a clone of this instance.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if there is a problem.
      */
     @Override
@@ -448,9 +393,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the minimum x-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether the
-     *                         x-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether the
+     *                        x-interval is taken into account.
      * @return The minimum value.
      */
     @Override
@@ -465,8 +409,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
             double lowX = series.getMinX();
             if (Double.isNaN(result)) {
                 result = lowX;
-            }
-            else {
+            } else {
                 if (!Double.isNaN(lowX)) {
                     result = Math.min(result, lowX);
                 }
@@ -478,17 +421,15 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the maximum x-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether the
-     *                         x-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether the
+     *                        x-interval is taken into account.
      * @return The maximum value.
      */
     @Override
     public double getDomainUpperBound(boolean includeInterval) {
         if (includeInterval) {
             return this.intervalDelegate.getDomainUpperBound(true);
-        }
-        else {
+        } else {
             double result = Double.NaN;
             int seriesCount = getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
@@ -496,8 +437,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
                 double hiX = series.getMaxX();
                 if (Double.isNaN(result)) {
                     result = hiX;
-                }
-                else {
+                } else {
                     if (!Double.isNaN(hiX)) {
                         result = Math.max(result, hiX);
                     }
@@ -510,18 +450,16 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the range of the values in this dataset's domain.
      *
-     * @param includeInterval  a flag that determines whether the
-     *                         x-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether the
+     *                        x-interval is taken into account.
      * @return The range (or {@code null} if the dataset contains no
-     *     values).
+     * values).
      */
     @Override
     public Range getDomainBounds(boolean includeInterval) {
         if (includeInterval) {
             return this.intervalDelegate.getDomainBounds(true);
-        }
-        else {
+        } else {
             double lower = Double.POSITIVE_INFINITY;
             double upper = Double.NEGATIVE_INFINITY;
             int seriesCount = getSeriesCount();
@@ -538,8 +476,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
             }
             if (lower > upper) {
                 return null;
-            }
-            else {
+            } else {
                 return new Range(lower, upper);
             }
         }
@@ -559,7 +496,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Sets the interval width and sends a {@link DatasetChangeEvent} to all
      * registered listeners.
      *
-     * @param width  the width (negative values not permitted).
+     * @param width the width (negative values not permitted).
      */
     public void setIntervalWidth(double width) {
         if (width < 0.0) {
@@ -583,7 +520,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * relation to the interval surrounding the x-value (0.0 means the x-value
      * will be positioned at the start, 0.5 in the middle, and 1.0 at the end).
      *
-     * @param factor  the factor.
+     * @param factor the factor.
      */
     public void setIntervalPositionFactor(double factor) {
         this.intervalDelegate.setIntervalPositionFactor(factor);
@@ -603,7 +540,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
      * Sets the flag that indicates whether the interval width is automatically
      * calculated or not.
      *
-     * @param b  a boolean.
+     * @param b a boolean.
      */
     public void setAutoWidth(boolean b) {
         this.intervalDelegate.setAutoWidth(b);
@@ -613,10 +550,9 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the range of the values in this dataset's range.
      *
-     * @param includeInterval  ignored.
-     *
+     * @param includeInterval ignored.
      * @return The range (or {@code null} if the dataset contains no
-     *     values).
+     * values).
      */
     @Override
     public Range getRangeBounds(boolean includeInterval) {
@@ -636,8 +572,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
         }
         if (lower > upper) {
             return null;
-        }
-        else {
+        } else {
             return new Range(lower, upper);
         }
     }
@@ -645,9 +580,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the minimum y-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether the
-     *                         y-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether the
+     *                        y-interval is taken into account.
      * @return The minimum value.
      */
     @Override
@@ -659,8 +593,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
             double lowY = series.getMinY();
             if (Double.isNaN(result)) {
                 result = lowY;
-            }
-            else {
+            } else {
                 if (!Double.isNaN(lowY)) {
                     result = Math.min(result, lowY);
                 }
@@ -672,9 +605,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Returns the maximum y-value in the dataset.
      *
-     * @param includeInterval  a flag that determines whether the
-     *                         y-interval is taken into account.
-     *
+     * @param includeInterval a flag that determines whether the
+     *                        y-interval is taken into account.
      * @return The maximum value.
      */
     @Override
@@ -686,8 +618,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
             double hiY = series.getMaxY();
             if (Double.isNaN(result)) {
                 result = hiY;
-            }
-            else {
+            } else {
                 if (!Double.isNaN(hiY)) {
                     result = Math.max(result, hiY);
                 }
@@ -697,12 +628,11 @@ public class XYSeriesCollection<S extends Comparable<S>>
     }
 
     /**
-     * Receives notification that the key for one of the series in the 
-     * collection has changed, and vetos it if the key is already present in 
+     * Receives notification that the key for one of the series in the
+     * collection has changed, and vetos it if the key is already present in
      * the collection.
-     * 
-     * @param e  the event.
-     * 
+     *
+     * @param e the event.
      * @since 1.0.14
      */
     @Override
@@ -712,7 +642,7 @@ public class XYSeriesCollection<S extends Comparable<S>>
         if (!"Key".equals(e.getPropertyName())) {
             return;
         }
-        
+
         // to be defensive, let's check that the source series does in fact
         // belong to this collection
         Series<S> s = (Series) e.getSource();
@@ -730,9 +660,8 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Provides serialization support.
      *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
+     * @param stream the output stream.
+     * @throws IOException if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -741,10 +670,9 @@ public class XYSeriesCollection<S extends Comparable<S>>
     /**
      * Provides serialization support.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O error.
+     * @throws ClassNotFoundException if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {

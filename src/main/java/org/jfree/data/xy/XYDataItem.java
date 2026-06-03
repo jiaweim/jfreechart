@@ -1,45 +1,10 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * ---------------
- * XYDataItem.java
- * ---------------
- * (C) Copyright 2003-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- */
-
 package org.jfree.data.xy;
+
+import org.jfree.chart.internal.Args;
+import org.jspecify.annotations.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import org.jfree.chart.internal.Args;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
@@ -47,22 +12,28 @@ import org.jfree.chart.internal.Args;
  */
 public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 2751513470325494890L;
 
-    /** The x-value ({@code null} not permitted). */
+    /**
+     * The x-value ({@code null} not permitted).
+     */
     private Number x;
 
-    /** The y-value. */
+    /**
+     * The y-value.
+     */
     private Number y;
 
     /**
      * Constructs a new data item.
      *
-     * @param x  the x-value ({@code null} NOT permitted).
-     * @param y  the y-value ({@code null} permitted).
+     * @param x the x-value ({@code null} NOT permitted).
+     * @param y the y-value ({@code null} permitted).
      */
-    public XYDataItem(Number x, Number y) {
+    public XYDataItem(@NonNull Number x, Number y) {
         Args.nullNotPermitted(x, "x");
         this.x = x;
         this.y = y;
@@ -71,8 +42,8 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
     /**
      * Constructs a new data item.
      *
-     * @param x  the x-value.
-     * @param y  the y-value.
+     * @param x the x-value.
+     * @param y the y-value.
      */
     public XYDataItem(double x, double y) {
         this(Double.valueOf(x), Double.valueOf(y));
@@ -91,7 +62,6 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * Returns the x-value as a double primitive.
      *
      * @return The x-value.
-     *
      * @see #getX()
      * @see #getYValue()
      */
@@ -113,7 +83,6 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * Returns the y-value as a double primitive.
      *
      * @return The y-value.
-     *
      * @see #getY()
      * @see #getXValue()
      */
@@ -129,7 +98,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * Sets the y-value for this data item.  Note that there is no
      * corresponding method to change the x-value.
      *
-     * @param y  the new y-value.
+     * @param y the new y-value.
      */
     public void setY(double y) {
         setY(Double.valueOf(y));
@@ -139,7 +108,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * Sets the y-value for this data item.  Note that there is no
      * corresponding method to change the x-value.
      *
-     * @param y  the new y-value ({@code null} permitted).
+     * @param y the new y-value ({@code null} permitted).
      */
     public void setY(Number y) {
         this.y = y;
@@ -148,28 +117,19 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
     /**
      * Returns an integer indicating the order of this object relative to
      * another object.
-     * <P>
+     * <p>
      * For the order we consider only the x-value:
      * negative == "less-than", zero == "equal", positive == "greater-than".
      *
-     * @param other  the data item being compared to.
-     *
+     * @param other the data item being compared to.
      * @return An integer indicating the order of this data pair object
-     *      relative to another object.
+     * relative to another object.
      */
     @Override
     public int compareTo(XYDataItem other) {
         int result;
         double compare = this.x.doubleValue() - other.getX().doubleValue();
-        if (compare > 0.0) {
-            result = 1;
-        } else {
-            if (compare < 0.0) {
-                result = -1;
-            } else {
-                result = 0;
-            }
-        }
+        result = Double.compare(compare, 0.0);
         return result;
     }
 
@@ -183,8 +143,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
         Object clone = null;
         try {
             clone = super.clone();
-        }
-        catch (CloneNotSupportedException e) { // won't get here...
+        } catch (CloneNotSupportedException e) { // won't get here...
             e.printStackTrace();
         }
         return clone;
@@ -193,9 +152,8 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
     /**
      * Tests if this object is equal to another.
      *
-     * @param obj  the object to test against for equality ({@code null}
-     *             permitted).
-     *
+     * @param obj the object to test against for equality ({@code null}
+     *            permitted).
      * @return A boolean.
      */
     @Override

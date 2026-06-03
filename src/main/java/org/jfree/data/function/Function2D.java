@@ -1,45 +1,11 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * ---------------
- * Function2D.java
- * ---------------
- * (C) Copyright 2002-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- * Changes:
- * --------
- * 01-Oct-2002 : Version 1 (DG);
- * 20-Jan-2005 : Minor Javadoc update (DG);
- *
- */
-
 package org.jfree.data.function;
+
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jspecify.annotations.NonNull;
+
+import java.util.Objects;
 
 /**
  * A function of the form {@code y = f(x)}.
@@ -49,10 +15,53 @@ public interface Function2D {
     /**
      * Returns the value of the function ('y') for a given input ('x').
      *
-     * @param x  the x-value.
-     *
+     * @param x the x-value.
      * @return The function value.
      */
     double getValue(double x);
 
+    /**
+     * Creates an {@link XYDataset} by sampling the specified function over a
+     * fixed range.
+     *
+     * @param start     the start value for the range.
+     * @param end       the end value for the range.
+     * @param samples   the number of sample points (must be &gt; 1).
+     * @param seriesKey the key to give the resulting series.
+     * @param <S>       the type for the series keys.
+     * @return A dataset.
+     */
+    default <S extends Comparable<S>> XYDataset<S> sample(double start, double end, int samples, @NonNull S seriesKey) {
+        XYSeries<S> series = sampleSeries(start, end, samples, seriesKey);
+        return new XYSeriesCollection<>(series);
+    }
+
+    /**
+     * Create aqn {@link XYSeries} by sampling this function over a fixed range.
+     *
+     * @param start     the start value for the range.
+     * @param end       the end value for the range.
+     * @param samples   the number of sample points (must be &gt; 1).
+     * @param seriesKey the key to give the resulting series.
+     * @param <S>       the type for the series keys.
+     * @return A series.
+     */
+    default <S extends Comparable<S>> XYSeries<S> sampleSeries(double start, double end, int samples, @NonNull S seriesKey) {
+        Objects.requireNonNull(seriesKey);
+
+        if (start >= end) {
+            throw new IllegalArgumentException("Requires 'start' < 'end'.");
+        }
+        if (samples < 2) {
+            throw new IllegalArgumentException("Requires 'samples' > 1");
+        }
+
+        XYSeries<S> series = new XYSeries<>(seriesKey);
+        double step = (end - start) / (samples - 1);
+        for (int i = 0; i < samples; i++) {
+            double x = start + (step * i);
+            series.add(x, getValue(x));
+        }
+        return series;
+    }
 }

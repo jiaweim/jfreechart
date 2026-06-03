@@ -1383,6 +1383,13 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
     }
 
     /**
+     * Display this chart.
+     */
+    public void show() {
+        show(this);
+    }
+
+    /**
      * Tests this chart for equality with another object.
      *
      * @param obj the object ({@code null} permitted).
