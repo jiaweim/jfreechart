@@ -1,47 +1,11 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * ---------------------------
- * DefaultDrawingSupplier.java
- * ---------------------------
- * (C) Copyright 2003-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   Jeremy Bowman;
- *
- */
+package org.jfree.chart.plot;
 
- package org.jfree.chart.plot;
+import org.jfree.chart.ChartColor;
+import org.jfree.chart.api.PublicCloneable;
+import org.jfree.chart.internal.SerialUtils;
+import org.jfree.chart.internal.ShapeUtils;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Polygon;
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -49,10 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
-import org.jfree.chart.ChartColor;
-import org.jfree.chart.api.PublicCloneable;
-import org.jfree.chart.internal.SerialUtils;
-import org.jfree.chart.internal.ShapeUtils;
 
 
 /**
@@ -63,69 +23,107 @@ import org.jfree.chart.internal.ShapeUtils;
 public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
         PublicCloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = -7339847061039422538L;
 
-    /** The default fill paint sequence. */
+    /**
+     * The default fill paint sequence.
+     */
     public static final Paint[] DEFAULT_PAINT_SEQUENCE
             = ChartColor.createDefaultPaintArray();
 
-    /** The default outline paint sequence. */
-    public static final Paint[] DEFAULT_OUTLINE_PAINT_SEQUENCE = new Paint[] {
+    /**
+     * The default outline paint sequence.
+     */
+    public static final Paint[] DEFAULT_OUTLINE_PAINT_SEQUENCE = new Paint[]{
             Color.LIGHT_GRAY};
 
-    /** The default fill paint sequence. */
-    public static final Paint[] DEFAULT_FILL_PAINT_SEQUENCE = new Paint[] {
+    /**
+     * The default fill paint sequence.
+     */
+    public static final Paint[] DEFAULT_FILL_PAINT_SEQUENCE = new Paint[]{
             Color.WHITE};
 
-    /** The default stroke sequence. */
-    public static final Stroke[] DEFAULT_STROKE_SEQUENCE = new Stroke[] {
+    /**
+     * The default stroke sequence.
+     */
+    public static final Stroke[] DEFAULT_STROKE_SEQUENCE = new Stroke[]{
             new BasicStroke(1.0f, BasicStroke.CAP_SQUARE,
                     BasicStroke.JOIN_BEVEL)};
 
-    /** The default outline stroke sequence. */
+    /**
+     * The default outline stroke sequence.
+     */
     public static final Stroke[] DEFAULT_OUTLINE_STROKE_SEQUENCE
-            = new Stroke[] {new BasicStroke(1.0f, BasicStroke.CAP_SQUARE,
-                    BasicStroke.JOIN_BEVEL)};
+            = new Stroke[]{new BasicStroke(1.0f, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL)};
 
-    /** The default shape sequence. */
+    /**
+     * The default shape sequence.
+     */
     public static final Shape[] DEFAULT_SHAPE_SEQUENCE
             = createStandardSeriesShapes();
 
-    /** The paint sequence. */
+    /**
+     * The paint sequence.
+     */
     private transient Paint[] paintSequence;
 
-    /** The current paint index. */
+    /**
+     * The current paint index.
+     */
     private int paintIndex;
 
-    /** The outline paint sequence. */
+    /**
+     * The outline paint sequence.
+     */
     private transient Paint[] outlinePaintSequence;
 
-    /** The current outline paint index. */
+    /**
+     * The current outline paint index.
+     */
     private int outlinePaintIndex;
 
-    /** The fill paint sequence. */
+    /**
+     * The fill paint sequence.
+     */
     private final transient Paint[] fillPaintSequence;
 
-    /** The current fill paint index. */
+    /**
+     * The current fill paint index.
+     */
     private int fillPaintIndex;
 
-    /** The stroke sequence. */
+    /**
+     * The stroke sequence.
+     */
     private transient Stroke[] strokeSequence;
 
-    /** The current stroke index. */
+    /**
+     * The current stroke index.
+     */
     private int strokeIndex;
 
-    /** The outline stroke sequence. */
+    /**
+     * The outline stroke sequence.
+     */
     private transient Stroke[] outlineStrokeSequence;
 
-    /** The current outline stroke index. */
+    /**
+     * The current outline stroke index.
+     */
     private int outlineStrokeIndex;
 
-    /** The shape sequence. */
+    /**
+     * The shape sequence.
+     */
     private transient Shape[] shapeSequence;
 
-    /** The current shape index. */
+    /**
+     * The current shape index.
+     */
     private int shapeIndex;
 
     /**
@@ -135,27 +133,26 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     public DefaultDrawingSupplier() {
 
         this(DEFAULT_PAINT_SEQUENCE, DEFAULT_FILL_PAINT_SEQUENCE,
-             DEFAULT_OUTLINE_PAINT_SEQUENCE,
-             DEFAULT_STROKE_SEQUENCE,
-             DEFAULT_OUTLINE_STROKE_SEQUENCE,
-             DEFAULT_SHAPE_SEQUENCE);
-
+                DEFAULT_OUTLINE_PAINT_SEQUENCE,
+                DEFAULT_STROKE_SEQUENCE,
+                DEFAULT_OUTLINE_STROKE_SEQUENCE,
+                DEFAULT_SHAPE_SEQUENCE);
     }
 
     /**
      * Creates a new supplier.
      *
-     * @param paintSequence  the fill paint sequence.
+     * @param paintSequence         the fill paint sequence.
      * @param outlinePaintSequence  the outline paint sequence.
-     * @param strokeSequence  the stroke sequence.
-     * @param outlineStrokeSequence  the outline stroke sequence.
-     * @param shapeSequence  the shape sequence.
+     * @param strokeSequence        the stroke sequence.
+     * @param outlineStrokeSequence the outline stroke sequence.
+     * @param shapeSequence         the shape sequence.
      */
     public DefaultDrawingSupplier(Paint[] paintSequence,
-                                  Paint[] outlinePaintSequence,
-                                  Stroke[] strokeSequence,
-                                  Stroke[] outlineStrokeSequence,
-                                  Shape[] shapeSequence) {
+            Paint[] outlinePaintSequence,
+            Stroke[] strokeSequence,
+            Stroke[] outlineStrokeSequence,
+            Shape[] shapeSequence) {
 
         this.paintSequence = paintSequence;
         this.fillPaintSequence = DEFAULT_FILL_PAINT_SEQUENCE;
@@ -169,12 +166,12 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     /**
      * Creates a new supplier.
      *
-     * @param paintSequence  the paint sequence.
-     * @param fillPaintSequence  the fill paint sequence.
+     * @param paintSequence         the paint sequence.
+     * @param fillPaintSequence     the fill paint sequence.
      * @param outlinePaintSequence  the outline paint sequence.
-     * @param strokeSequence  the stroke sequence.
-     * @param outlineStrokeSequence  the outline stroke sequence.
-     * @param shapeSequence  the shape sequence.
+     * @param strokeSequence        the stroke sequence.
+     * @param outlineStrokeSequence the outline stroke sequence.
+     * @param shapeSequence         the shape sequence.
      */
     public DefaultDrawingSupplier(Paint[] paintSequence,
             Paint[] fillPaintSequence, Paint[] outlinePaintSequence,
@@ -197,7 +194,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     @Override
     public Paint getNextPaint() {
         Paint result
-            = this.paintSequence[this.paintIndex % this.paintSequence.length];
+                = this.paintSequence[this.paintIndex % this.paintSequence.length];
         this.paintIndex++;
         return result;
     }
@@ -328,8 +325,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     /**
      * Tests this object for equality with another object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -379,9 +375,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     /**
      * A utility method for testing the equality of two arrays of shapes.
      *
-     * @param s1  the first array ({@code null} permitted).
-     * @param s2  the second array ({@code null} permitted).
-     *
+     * @param s1 the first array ({@code null} permitted).
+     * @param s2 the second array ({@code null} permitted).
      * @return A boolean.
      */
     private boolean equalShapes(Shape[] s1, Shape[] s2) {
@@ -405,8 +400,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     /**
      * Handles serialization.
      *
-     * @param stream  the output stream.
-     *
+     * @param stream the output stream.
      * @throws IOException if there is an I/O problem.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
@@ -447,13 +441,12 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
     /**
      * Restores a serialized object.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException if there is an I/O problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O problem.
      * @throws ClassNotFoundException if there is a problem loading a class.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
 
         int paintCount = stream.readInt();
@@ -492,36 +485,33 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * Helper method to avoid lots of explicit casts in getShape().  Returns
      * an array containing the provided doubles cast to ints.
      *
-     * @param a  x
-     * @param b  y
-     * @param c  z
-     *
+     * @param a x
+     * @param b y
+     * @param c z
      * @return int[3] with converted params.
      */
     private static int[] intArray(double a, double b, double c) {
-        return new int[] {(int) a, (int) b, (int) c};
+        return new int[]{(int) a, (int) b, (int) c};
     }
 
     /**
      * Helper method to avoid lots of explicit casts in getShape().  Returns
      * an array containing the provided doubles cast to ints.
      *
-     * @param a  x
-     * @param b  y
-     * @param c  z
-     * @param d  t
-     *
+     * @param a x
+     * @param b y
+     * @param c z
+     * @param d t
      * @return int[4] with converted params.
      */
     private static int[] intArray(double a, double b, double c, double d) {
-        return new int[] {(int) a, (int) b, (int) c, (int) d};
+        return new int[]{(int) a, (int) b, (int) c, (int) d};
     }
 
     /**
      * Returns a clone.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if a component of the supplier does
      *                                    not support cloning.
      */
