@@ -51,7 +51,7 @@ import java.util.EventListener;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.TestUtils;
@@ -721,10 +721,10 @@ public class CategoryPlotTest {
     @Test
     public void testSerialization3() {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
-        JFreeChart chart = ChartFactory.createBarChart(
+        Chart chart = ChartFactory.createBarChart(
                 "Test Chart", "Category Axis", "Value Axis", dataset,
                 PlotOrientation.VERTICAL, true, true, false);
-        JFreeChart chart2 = TestUtils.serialised(chart);
+        Chart chart2 = TestUtils.serialised(chart);
 
         // now check that the chart is usable...
         try {
@@ -741,14 +741,14 @@ public class CategoryPlotTest {
     @Test
     public void testSerialization4() {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
-        JFreeChart chart = ChartFactory.createBarChart(
+        Chart chart = ChartFactory.createBarChart(
                 "Test Chart", "Category Axis", "Value Axis",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         @SuppressWarnings("unchecked")
         CategoryPlot<String, String> plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(2.2, 3.3), Layer.BACKGROUND);
-        JFreeChart chart2 = TestUtils.serialised(chart);
+        Chart chart2 = TestUtils.serialised(chart);
         assertEquals(chart, chart2);
 
         // now check that the chart is usable...
@@ -877,7 +877,7 @@ public class CategoryPlotTest {
     @Test
     public void test1654215() {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
-        JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",
+        Chart chart = ChartFactory.createLineChart("Title", "X", "Y",
                 dataset, PlotOrientation.VERTICAL, true, false, false);
         @SuppressWarnings("unchecked")
         CategoryPlot<String, String> plot = (CategoryPlot) chart.getPlot();

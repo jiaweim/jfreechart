@@ -53,10 +53,10 @@ import org.jfree.chart.internal.SerialUtils;
  * A structure for storing rendering information from one call to the
  * JFreeChart.draw() method.
  * <P>
- * An instance of the {@link JFreeChart} class can draw itself within an
+ * An instance of the {@link Chart} class can draw itself within an
  * arbitrary rectangle on any {@code Graphics2D}.  It is assumed that
  * client code will sometimes render the same chart in more than one view, so
- * the {@link JFreeChart} instance does not retain any information about its
+ * the {@link Chart} instance does not retain any information about its
  * rendered dimensions.  This information can be useful sometimes, so you have
  * the option to collect the information at each call to
  * {@code JFreeChart.draw()}, by passing an instance of this

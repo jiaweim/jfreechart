@@ -38,7 +38,7 @@ package org.jfree.chart.event;
 
 import java.util.EventObject;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.internal.Args;
 
 /**
@@ -50,7 +50,7 @@ public class ChartChangeEvent extends EventObject {
     private ChartChangeEventType type;
 
     /** The chart that generated the event. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Creates a new chart change event.
@@ -69,7 +69,7 @@ public class ChartChangeEvent extends EventObject {
      *                axis etc., {@code null} not permitted).
      * @param chart  the chart that generated the event.
      */
-    public ChartChangeEvent(Object source, JFreeChart chart) {
+    public ChartChangeEvent(Object source, Chart chart) {
         this(source, chart, ChartChangeEventType.GENERAL);
     }
 
@@ -81,7 +81,7 @@ public class ChartChangeEvent extends EventObject {
      * @param chart  the chart that generated the event.
      * @param type  the type of event ({@code null} not permitted).
      */
-    public ChartChangeEvent(Object source, JFreeChart chart,
+    public ChartChangeEvent(Object source, Chart chart,
             ChartChangeEventType type) {
         super(source);
         Args.nullNotPermitted(type, "type");
@@ -94,7 +94,7 @@ public class ChartChangeEvent extends EventObject {
      *
      * @return The chart that generated the change event.
      */
-    public JFreeChart getChart() {
+    public Chart getChart() {
         return this.chart;
     }
 
@@ -103,7 +103,7 @@ public class ChartChangeEvent extends EventObject {
      *
      * @param chart  the chart that generated the event.
      */
-    public void setChart(JFreeChart chart) {
+    public void setChart(Chart chart) {
         this.chart = chart;
     }
 

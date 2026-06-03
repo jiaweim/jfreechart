@@ -38,7 +38,7 @@ package org.jfree.chart.renderer.xy;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
@@ -196,7 +196,7 @@ public class XYAreaRendererTest {
             XYPlot<String> plot = new XYPlot<>(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYAreaRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -234,7 +234,7 @@ public class XYAreaRendererTest {
         XYPlot<String> plot = new XYPlot<>(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

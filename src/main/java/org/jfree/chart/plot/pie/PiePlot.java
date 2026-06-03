@@ -44,7 +44,7 @@
 
 package org.jfree.chart.plot.pie;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.api.RectangleAnchor;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.api.Rotation;
@@ -2076,7 +2076,7 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
         if (!DatasetUtils.isEmptyOrNull(this.dataset)) {
             Graphics2D savedG2 = g2;
             boolean suppressShadow = Boolean.TRUE.equals(g2.getRenderingHint(
-                    JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION));
+                    Chart.KEY_SUPPRESS_SHADOW_GENERATION));
             BufferedImage dataImage = null;
             if (this.shadowGenerator != null && !suppressShadow) {
                 dataImage = new BufferedImage((int) area.getWidth(),

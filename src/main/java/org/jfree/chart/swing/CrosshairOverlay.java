@@ -50,7 +50,7 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.Crosshair;
@@ -223,7 +223,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
         Shape savedClip = g2.getClip();
         Rectangle2D dataArea = chartPanel.getScreenDataArea();
         g2.clip(dataArea);
-        JFreeChart chart = chartPanel.getChart();
+        Chart chart = chartPanel.getChart();
         XYPlot plot = (XYPlot) chart.getPlot();
         ValueAxis xAxis = plot.getDomainAxis();
         RectangleEdge xAxisEdge = plot.getDomainAxisEdge();

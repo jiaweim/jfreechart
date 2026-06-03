@@ -41,7 +41,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -67,7 +67,7 @@ public class StackedXYAreaRenderer2Test {
     @Test
     public void testDrawWithEmptyDataset() {
         boolean success;
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart("title", "x",
+        Chart chart = ChartFactory.createStackedXYAreaChart("title", "x",
                 "y", new DefaultTableXYDataset<String>(), PlotOrientation.VERTICAL,
                 true, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
@@ -153,7 +153,7 @@ public class StackedXYAreaRenderer2Test {
     public void testFindRangeBounds() {
         TableXYDataset<String> dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart(
+        Chart chart = ChartFactory.createStackedXYAreaChart(
                 "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
                 false, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();

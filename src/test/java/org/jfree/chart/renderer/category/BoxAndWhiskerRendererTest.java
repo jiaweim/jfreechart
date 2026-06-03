@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.CategoryAxis;
@@ -181,7 +181,7 @@ public class BoxAndWhiskerRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -215,7 +215,7 @@ public class BoxAndWhiskerRendererTest {
         dataset.add(values, "row", "column");
         CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, new CategoryAxis("x"),
                 new NumberAxis("y"), new BoxAndWhiskerRenderer());
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         boolean success;
 
         try {
@@ -260,7 +260,7 @@ public class BoxAndWhiskerRendererTest {
         CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, new CategoryAxis("x"),
                 new NumberAxis("y"), new BoxAndWhiskerRenderer());
         plot.setOrientation(PlotOrientation.HORIZONTAL);
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         boolean success;
 
         try {
@@ -296,7 +296,7 @@ public class BoxAndWhiskerRendererTest {
         BoxAndWhiskerRenderer r = new BoxAndWhiskerRenderer();
         CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, new CategoryAxis("x"),
                 new NumberAxis("y"), r);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
+        /*JFreeChart chart =*/ new Chart(plot);
         LegendItem li = r.getLegendItem(0, 0);
         assertNotNull(li);
         r.setSeriesVisibleInLegend(0, Boolean.FALSE);
@@ -321,7 +321,7 @@ public class BoxAndWhiskerRendererTest {
         CategoryPlot<String, String> plot = new CategoryPlot<>(dataset0, new CategoryAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, dataset1);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
+        /*JFreeChart chart =*/ new Chart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("R5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());
@@ -343,7 +343,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -369,7 +369,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -395,7 +395,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -421,7 +421,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -447,7 +447,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -472,7 +472,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
         }
@@ -496,7 +496,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;
@@ -522,7 +522,7 @@ public class BoxAndWhiskerRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new BoxAndWhiskerRenderer());
             ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
             success = true;

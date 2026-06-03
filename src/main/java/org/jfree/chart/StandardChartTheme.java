@@ -272,7 +272,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     public static ChartTheme createLegacyTheme() {
         StandardChartTheme theme = new StandardChartTheme("Legacy") {
             @Override
-            public void apply(JFreeChart chart) {
+            public void apply(Chart chart) {
                 // do nothing at all
             }
         };
@@ -1033,7 +1033,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param chart  the chart ({@code null} not permitted).
      */
     @Override
-    public void apply(JFreeChart chart) {
+    public void apply(Chart chart) {
         Args.nullNotPermitted(chart, "chart");
         TextTitle title = chart.getTitle();
         if (title != null) {

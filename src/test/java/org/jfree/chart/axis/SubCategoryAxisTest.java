@@ -43,7 +43,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -130,7 +130,7 @@ public class SubCategoryAxisTest {
      */
     @Test
     public void test2275695() {
-        JFreeChart chart = ChartFactory.createStackedBarChart("Test",
+        Chart chart = ChartFactory.createStackedBarChart("Test",
                 "Category", "Value", null, PlotOrientation.VERTICAL,
                 true, false, false);
         CategoryPlot<?, ?> plot = (CategoryPlot) chart.getPlot();

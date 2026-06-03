@@ -42,7 +42,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 
 import org.jfree.chart.plot.pie.PiePlot;
 import org.jfree.chart.plot.Plot;
@@ -101,7 +101,7 @@ public class MouseWheelHandler implements MouseWheelListener, Serializable {
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        JFreeChart chart = this.chartPanel.getChart();
+        Chart chart = this.chartPanel.getChart();
         if (chart == null) {
             return;
         }

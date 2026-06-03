@@ -1,0 +1,95 @@
+package org.jfree.chart;
+
+import com.orsonpdf.PDFDocument;
+import com.orsonpdf.PDFGraphics2D;
+import com.orsonpdf.Page;
+import org.jfree.chart.swing.ApplicationFrame;
+import org.jfree.chart.swing.ChartPanel;
+import org.jfree.chart.swing.UIUtils;
+import org.jfree.svg.SVGGraphics2D;
+import org.jfree.svg.SVGUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.nio.file.Path;
+
+/**
+ * Add display and save functions for the chart.
+ *
+ * @author Jiawei Mao
+ * @version 1.0.0
+ * @since 03 Jun 2026, 9:05 AM
+ */
+public interface ShowChart {
+
+    /**
+     * Display the specified chart.
+     *
+     * @param chart {@link Chart} to show.
+     */
+    default void show(Chart chart) {
+        SwingUtilities.invokeLater(() -> {
+            ApplicationFrame frame = new ApplicationFrame(chart.getTitle().getText());
+            ChartPanel panel = new ChartPanel(chart);
+            panel.setMouseWheelEnabled(true);
+            frame.setContentPane(panel);
+            frame.pack();
+            UIUtils.centerFrameOnScreen(frame);
+            frame.setVisible(true);
+        });
+    }
+
+    /**
+     * Save the chart in the specified format.
+     *
+     * @param chart  {@link Chart} to save.
+     * @param file   target {@link Path} to save.
+     * @param format {@link FileFormat}.
+     * @param width  chart width.
+     * @param height chart height.
+     */
+    default void save(Chart chart, Path file, FileFormat format, int width, int height) {
+        if (format == FileFormat.SVG) {
+            SVGGraphics2D g2 = new SVGGraphics2D(width, height);
+            // we suppress shadow generation, because SVG is a vector format and
+            // the shadow effect is applied via bitmap effects...
+            g2.setRenderingHint(Chart.KEY_SUPPRESS_SHADOW_GENERATION, true);
+            Rectangle2D drawArea = new Rectangle2D.Double(0, 0, width, height);
+            chart.draw(g2, drawArea);
+            String svgElement = g2.getSVGElement();
+            try {
+                SVGUtils.writeToSVG(file.toFile(), svgElement);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (format == FileFormat.PNG) {
+            try {
+                ChartUtils.saveChartAsPNG(file.toFile(), chart, width, height);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (format == FileFormat.JPEG) {
+            try {
+                ChartUtils.saveChartAsJPEG(file.toFile(), chart, width, height);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (format == FileFormat.PDF) {
+            PDFDocument doc = new PDFDocument();
+            Rectangle2D rect = new Rectangle(width, height);
+            Page page = doc.createPage(rect);
+            PDFGraphics2D g2 = page.getGraphics2D();
+
+            // we suppress shadow generation, because PDF is a vector format and
+            // the shadow effect is applied via bitmap effects...
+            g2.setRenderingHint(Chart.KEY_SUPPRESS_SHADOW_GENERATION, true);
+            Rectangle2D drawArea = new Rectangle2D.Double(0, 0, width, height);
+            chart.draw(g2, drawArea);
+            doc.writeToFile(file.toFile());
+        } else {
+            throw new UnsupportedOperationException("Unsupported file format");
+        }
+    }
+}

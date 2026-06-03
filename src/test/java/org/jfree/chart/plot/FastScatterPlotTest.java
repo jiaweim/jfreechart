@@ -41,7 +41,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Stroke;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
@@ -203,7 +203,7 @@ public class FastScatterPlotTest {
             ValueAxis rangeAxis = new NumberAxis("Y");
             FastScatterPlot plot = new FastScatterPlot(data, domainAxis,
                     rangeAxis);
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

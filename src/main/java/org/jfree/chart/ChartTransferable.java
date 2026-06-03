@@ -55,7 +55,7 @@ public class ChartTransferable implements Transferable {
             "image/x-java-image; class=java.awt.Image", "Image");    
     
     /** The chart. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /** The width of the chart on the clipboard. */
     private final int width;
@@ -94,7 +94,7 @@ public class ChartTransferable implements Transferable {
      * @param width  the chart width.
      * @param height  the chart height.
      */
-    public ChartTransferable(JFreeChart chart, int width, int height) {
+    public ChartTransferable(Chart chart, int width, int height) {
         this(chart, width, height, true);
     }
 
@@ -106,7 +106,7 @@ public class ChartTransferable implements Transferable {
      * @param height  the chart height.
      * @param cloneData  clone the dataset(s)?
      */
-    public ChartTransferable(JFreeChart chart, int width, int height,
+    public ChartTransferable(Chart chart, int width, int height,
             boolean cloneData) {
         this(chart, width, height, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE,
                 true);
@@ -126,7 +126,7 @@ public class ChartTransferable implements Transferable {
      * @param maxDrawH  the maximum drawing height.
      * @param cloneData  clone the dataset(s)?
      */
-    public ChartTransferable(JFreeChart chart, int width, int height,
+    public ChartTransferable(Chart chart, int width, int height,
             int minDrawW, int minDrawH, int maxDrawW, int maxDrawH,
             boolean cloneData) {
 
@@ -134,7 +134,7 @@ public class ChartTransferable implements Transferable {
         // between putting this instance on the system clipboard and
         // actually having the getTransferData() method called...
         try {
-            this.chart = (JFreeChart) chart.clone();
+            this.chart = (Chart) chart.clone();
         }
         catch (CloneNotSupportedException e) {
             this.chart = chart;
@@ -207,7 +207,7 @@ public class ChartTransferable implements Transferable {
      *
      * @return  A chart image.
      */
-    private BufferedImage createBufferedImage(JFreeChart chart, int w, int h,
+    private BufferedImage createBufferedImage(Chart chart, int w, int h,
             int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
 
         BufferedImage image = new BufferedImage(w, h,

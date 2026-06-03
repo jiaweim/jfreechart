@@ -36,7 +36,7 @@
 
 package org.jfree.chart.event;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.internal.Args;
 
 /**
@@ -51,7 +51,7 @@ public class ChartProgressEvent extends java.util.EventObject {
     private int percent;
 
     /** The chart that generated the event. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Creates a new chart change event.
@@ -62,7 +62,7 @@ public class ChartProgressEvent extends java.util.EventObject {
      * @param type  the type of event ({@code null} not permitted).
      * @param percent  the percentage of completion.
      */
-    public ChartProgressEvent(Object source, JFreeChart chart, 
+    public ChartProgressEvent(Object source, Chart chart,
             ChartProgressEventType type, int percent) {
         super(source);
         Args.nullNotPermitted(type, "type");
@@ -76,7 +76,7 @@ public class ChartProgressEvent extends java.util.EventObject {
      *
      * @return The chart that generated the change event.
      */
-    public JFreeChart getChart() {
+    public Chart getChart() {
         return this.chart;
     }
 
@@ -85,7 +85,7 @@ public class ChartProgressEvent extends java.util.EventObject {
      *
      * @param chart  the chart that generated the event.
      */
-    public void setChart(JFreeChart chart) {
+    public void setChart(Chart chart) {
         this.chart = chart;
     }
 

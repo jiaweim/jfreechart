@@ -36,7 +36,7 @@
 
 package org.jfree.chart.renderer.xy;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -146,7 +146,7 @@ public class XYStepRendererTest {
             XYPlot<String> plot = new XYPlot<>(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYStepRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -180,7 +180,7 @@ public class XYStepRendererTest {
             XYPlot<String> plot = new XYPlot<>(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYStepRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

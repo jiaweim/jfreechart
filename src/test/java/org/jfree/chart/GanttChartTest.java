@@ -66,7 +66,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GanttChartTest  {
 
     /** A chart. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Common test setup.
@@ -101,7 +101,7 @@ public class GanttChartTest  {
      */
     @Test
     public void testDrawWithNullInfo2() {
-        JFreeChart chart = createGanttChart();
+        Chart chart = createGanttChart();
         CategoryPlot<String, String> plot = (CategoryPlot) chart.getPlot();
         plot.setDataset(createDataset());
         /* BufferedImage img =*/ chart.createBufferedImage(300, 200, null);
@@ -155,7 +155,7 @@ public class GanttChartTest  {
      *
      * @return The chart.
      */
-    private static JFreeChart createGanttChart() {
+    private static Chart createGanttChart() {
         return ChartFactory.createGanttChart("Gantt Chart", "Domain", "Range",
                null, true, true, true);
     }

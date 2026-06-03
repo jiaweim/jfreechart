@@ -42,7 +42,7 @@ import java.awt.GradientPaint;
 import java.awt.Stroke;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -139,7 +139,7 @@ public class StackedXYAreaRendererTest {
     public void testFindRangeBounds() {
         TableXYDataset<String> dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart(
+        Chart chart = ChartFactory.createStackedXYAreaChart(
                 "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
                 false, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
@@ -174,7 +174,7 @@ public class StackedXYAreaRendererTest {
             XYPlot<String> plot = new XYPlot<>(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new StackedXYAreaRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -209,7 +209,7 @@ public class StackedXYAreaRendererTest {
             XYPlot<String> plot = new XYPlot<>(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
                     renderer);
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

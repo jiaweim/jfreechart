@@ -42,7 +42,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PolarPlot;
@@ -80,7 +80,7 @@ public class PolarChartPanel extends ChartPanel {
      *
      * @param chart  the chart.
      */
-    public PolarChartPanel(JFreeChart chart) {
+    public PolarChartPanel(Chart chart) {
         this(chart, true);
     }
 
@@ -90,7 +90,7 @@ public class PolarChartPanel extends ChartPanel {
      * @param chart  the chart.
      * @param useBuffer  buffered?
      */
-    public PolarChartPanel(JFreeChart chart, boolean useBuffer) {
+    public PolarChartPanel(Chart chart, boolean useBuffer) {
         super(chart, useBuffer);
         checkChart(chart);
         setMinimumDrawWidth(200);
@@ -105,7 +105,7 @@ public class PolarChartPanel extends ChartPanel {
      * @param chart  The chart.
      */
     @Override
-    public void setChart(JFreeChart chart) {
+    public void setChart(Chart chart) {
         checkChart(chart);
         super.setChart(chart);
     }
@@ -204,7 +204,7 @@ public class PolarChartPanel extends ChartPanel {
      *
      * @param chart  the chart.
      */
-    private void checkChart(JFreeChart chart) {
+    private void checkChart(Chart chart) {
         Plot plot = chart.getPlot();
         if (!(plot instanceof PolarPlot)) {
             throw new IllegalArgumentException("plot is not a PolarPlot");

@@ -38,7 +38,7 @@ package org.jfree.chart.renderer.category;
 
 import java.awt.Color;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -138,7 +138,7 @@ public class LayeredBarRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new LayeredBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

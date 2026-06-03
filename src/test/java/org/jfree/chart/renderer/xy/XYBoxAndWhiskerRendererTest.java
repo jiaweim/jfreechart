@@ -44,7 +44,7 @@ import java.awt.image.BufferedImage;
 import java.util.Date;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.internal.CloneUtils;
 import org.jfree.chart.api.PublicCloneable;
@@ -150,7 +150,7 @@ public class XYBoxAndWhiskerRendererTest {
         DefaultBoxAndWhiskerXYDataset<String> d1 = new DefaultBoxAndWhiskerXYDataset<>("Series");
         d1.add(new Date(1L), new BoxAndWhiskerItem(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 
                 null, null, null));
-        JFreeChart chart = ChartFactory.createBoxAndWhiskerChart("Title", "X",
+        Chart chart = ChartFactory.createBoxAndWhiskerChart("Title", "X",
                 "Y", d1, true);
         try {
             BufferedImage image = new BufferedImage(400, 200,

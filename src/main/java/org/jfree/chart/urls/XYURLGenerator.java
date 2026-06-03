@@ -1,48 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -------------------
- * XYURLGenerator.java
- * -------------------
- * (C) Copyright 2002-2008, by Richard Atkinson and Contributors.
- *
- * Original Author:  Richard Atkinson;
- * Contributors:     David Gilbert;
- *
- * Changes:
- * --------
- * 05-Aug-2002 : Version 1, contributed by Richard Atkinson;
- * 09-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 20-Jan-2005 : Minor Javadoc update (DG);
- * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
- * 13-Dec-2007 : Updated API docs (DG);
- *
- */
-
 package org.jfree.chart.urls;
 
 import org.jfree.data.xy.XYDataset;
@@ -59,12 +14,11 @@ public interface XYURLGenerator {
      * Generates a URL for a particular item within a series. As a guideline,
      * the URL should be valid within the context of an XHTML 1.0 document.
      *
-     * @param dataset  the dataset ({@code null} not permitted).
+     * @param dataset the dataset ({@code null} not permitted).
      * @param series  the series index (zero-based).
-     * @param item  the item index (zero-based).
-     *
+     * @param item    the item index (zero-based).
      * @return A string containing the generated URL (possibly
-     *         {@code null}).
+     * {@code null}).
      */
     String generateURL(XYDataset dataset, int series, int item);
 

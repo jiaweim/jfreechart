@@ -42,7 +42,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -132,7 +132,7 @@ public class CombinedDomainCategoryPlotTest implements ChartChangeListener {
     @Test
     public void testNotification() {
         CombinedDomainCategoryPlot plot = createPlot();
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         chart.addChangeListener(this);
         CategoryPlot<String, String> subplot1 = plot.getSubplots().get(0);
         NumberAxis yAxis = (NumberAxis) subplot1.getRangeAxis();

@@ -55,7 +55,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -87,7 +87,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     private static final long serialVersionUID = -355377800470807389L;
 
     /** The chart object that draws the individual pie charts. */
-    private JFreeChart pieChart;
+    private Chart pieChart;
 
     /** The dataset. */
     private CategoryDataset dataset;
@@ -127,7 +127,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
         setDataset(dataset);
         PiePlot piePlot = new PiePlot(null);
         piePlot.setIgnoreNullValues(true);
-        this.pieChart = new JFreeChart(piePlot);
+        this.pieChart = new Chart(piePlot);
         this.pieChart.removeLegend();
         this.dataExtractOrder = TableOrder.BY_COLUMN;
         this.pieChart.setBackgroundPaint(null);
@@ -180,9 +180,9 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *
      * @return The pie chart (never {@code null}).
      *
-     * @see #setPieChart(JFreeChart)
+     * @see #setPieChart(Chart)
      */
-    public JFreeChart getPieChart() {
+    public Chart getPieChart() {
         return this.pieChart;
     }
 
@@ -194,7 +194,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *
      * @see #getPieChart()
      */
-    public void setPieChart(JFreeChart pieChart) {
+    public void setPieChart(Chart pieChart) {
         Args.nullNotPermitted(pieChart, "pieChart");
         if (!(pieChart.getPlot() instanceof PiePlot)) {
             throw new IllegalArgumentException("The 'pieChart' argument must "
@@ -597,7 +597,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         MultiplePiePlot clone = (MultiplePiePlot) super.clone();
-        clone.pieChart = (JFreeChart) this.pieChart.clone();
+        clone.pieChart = (Chart) this.pieChart.clone();
         clone.sectionPaints = new HashMap(this.sectionPaints);
         clone.legendItemShape = CloneUtils.clone(this.legendItemShape);
         return clone;

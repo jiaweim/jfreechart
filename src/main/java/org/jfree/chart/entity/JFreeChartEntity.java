@@ -42,7 +42,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.internal.HashUtils;
 import org.jfree.chart.internal.Args;
 import org.jfree.chart.internal.SerialUtils;
@@ -57,7 +57,7 @@ public class JFreeChartEntity extends ChartEntity {
             //same as for ChartEntity!
 
     /** The chart. */
-    private final JFreeChart chart;
+    private final Chart chart;
 
     /**
      * Creates a new chart entity.
@@ -65,7 +65,7 @@ public class JFreeChartEntity extends ChartEntity {
      * @param area  the area ({@code null} not permitted).
      * @param chart  the chart ({@code null} not permitted).
      */
-    public JFreeChartEntity(Shape area, JFreeChart chart) {
+    public JFreeChartEntity(Shape area, Chart chart) {
         // defer argument checks...
         this(area, chart, null);
     }
@@ -77,7 +77,7 @@ public class JFreeChartEntity extends ChartEntity {
      * @param chart  the chart ({@code null} not permitted).
      * @param toolTipText  the tool tip text ({@code null} permitted).
      */
-    public JFreeChartEntity(Shape area, JFreeChart chart, String toolTipText) {
+    public JFreeChartEntity(Shape area, Chart chart, String toolTipText) {
         // defer argument checks...
         this(area, chart, toolTipText, null);
     }
@@ -91,7 +91,7 @@ public class JFreeChartEntity extends ChartEntity {
      * @param urlText  the URL text for HTML image maps ({@code null}
      *                 permitted).
      */
-    public JFreeChartEntity(Shape area, JFreeChart chart, String toolTipText,
+    public JFreeChartEntity(Shape area, Chart chart, String toolTipText,
             String urlText) {
         super(area, toolTipText, urlText);
         Args.nullNotPermitted(chart, "chart");
@@ -103,7 +103,7 @@ public class JFreeChartEntity extends ChartEntity {
      *
      * @return The chart (never {@code null}).
      */
-    public JFreeChart getChart() {
+    public Chart getChart() {
         return this.chart;
     }
 

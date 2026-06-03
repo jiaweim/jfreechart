@@ -36,7 +36,7 @@
 
 package org.jfree.chart.swing.editor;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.internal.Args;
 
 /**
@@ -83,7 +83,7 @@ public class ChartEditorManager {
      *
      * @return The chart editor.
      */
-    public static ChartEditor getChartEditor(JFreeChart chart) {
+    public static ChartEditor getChartEditor(Chart chart) {
         return factory.createEditor(chart);
     }
 }

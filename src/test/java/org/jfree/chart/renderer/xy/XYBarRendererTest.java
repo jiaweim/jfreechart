@@ -39,7 +39,7 @@ package org.jfree.chart.renderer.xy;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
@@ -226,7 +226,7 @@ public class XYBarRendererTest {
     public void testFindDomainBounds() {
         XYSeriesCollection<String> dataset
                 = RendererXYPackageUtils.createTestXYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYBarChart("Test Chart", "X",
+        Chart chart = ChartFactory.createXYBarChart("Test Chart", "X",
                 false, "Y", dataset, PlotOrientation.VERTICAL, false, false,
                 false);
         XYPlot<String> plot = (XYPlot) chart.getPlot();
@@ -351,7 +351,7 @@ public class XYBarRendererTest {
         XYPlot<String> plot = new XYPlot<>(new XYBarDataset<>(d1, 1.0),
                 new NumberAxis("x"), new NumberAxis("y"), r);
         plot.setDataset(1, new XYBarDataset<>(d2, 2.0));
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

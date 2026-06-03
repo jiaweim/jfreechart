@@ -51,7 +51,7 @@ import java.util.EventListener;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.TestUtils;
@@ -739,9 +739,9 @@ public class XYPlotTest {
     public void testSerialization3() {
 
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
+        Chart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
-        JFreeChart chart2 = TestUtils.serialised(chart);
+        Chart chart2 = TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         try {
             chart2.createBufferedImage(300, 200);
@@ -759,14 +759,14 @@ public class XYPlotTest {
     public void testSerialization4() {
 
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
+        Chart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
         plot.addRangeMarker(new ValueMarker(4.0), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(5.0, 6.0), Layer.BACKGROUND);
-        JFreeChart chart2 = TestUtils.serialised(chart);
+        Chart chart2 = TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         try {
             chart2.createBufferedImage(300, 200);
@@ -987,7 +987,7 @@ public class XYPlotTest {
     @Test
     public void test1654215() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
+        Chart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
                 dataset, PlotOrientation.VERTICAL, true, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
         plot.setRenderer(1, new XYLineAndShapeRenderer());
@@ -1010,7 +1010,7 @@ public class XYPlotTest {
     @Test
     public void testDrawRangeGridlines() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
+        Chart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
                 dataset, PlotOrientation.VERTICAL, true, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
         plot.setRenderer(null);
@@ -1035,7 +1035,7 @@ public class XYPlotTest {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
         dataset.addSeries("Series 1", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         dataset.addSeries("Series 2", new double[][] {{}, {}});
-        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
+        Chart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
                 dataset, PlotOrientation.VERTICAL, true, false, false);
         try {
             BufferedImage image = new BufferedImage(200 , 100,

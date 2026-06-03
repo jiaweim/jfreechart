@@ -64,7 +64,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BarChartTest {
 
     /** A chart. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Common test setup.
@@ -154,7 +154,7 @@ public class BarChartTest {
      *
      * @return The chart.
      */
-    private static JFreeChart createBarChart() {
+    private static Chart createBarChart() {
         Number[][] data = new Integer[][] {{-3, -2}, {-1, 1}, {2, 3}};
         CategoryDataset<String, String> dataset 
                 = DatasetUtils.createCategoryDataset("S", "C", data);

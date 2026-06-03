@@ -41,7 +41,7 @@ import java.awt.GradientPaint;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.TestUtils;
@@ -174,7 +174,7 @@ public class MultiplePiePlotTest implements PlotChangeListener {
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         LegendItemCollection legendItems = plot.getLegendItems();
         assertEquals(2, legendItems.getItemCount());
         LegendItem item1 = legendItems.get(0);

@@ -39,7 +39,7 @@ package org.jfree.chart.renderer.category;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -140,7 +140,7 @@ public class StatisticalBarRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -164,7 +164,7 @@ public class StatisticalBarRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -189,7 +189,7 @@ public class StatisticalBarRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             plot.setOrientation(PlotOrientation.HORIZONTAL);
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -213,7 +213,7 @@ public class StatisticalBarRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }
@@ -238,7 +238,7 @@ public class StatisticalBarRendererTest {
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             plot.setOrientation(PlotOrientation.HORIZONTAL);
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

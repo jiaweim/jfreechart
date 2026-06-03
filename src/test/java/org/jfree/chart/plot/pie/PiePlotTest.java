@@ -48,7 +48,7 @@ import java.awt.image.BufferedImage;
 import java.text.AttributedString;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.labels.PieSectionLabelGenerator;
@@ -582,7 +582,7 @@ public class PiePlotTest {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         dataset.setValue("L1", 12.0);
         dataset.setValue("L2", 11.0);
-        JFreeChart chart = ChartFactory.createPieChart("Test", dataset, true,
+        Chart chart = ChartFactory.createPieChart("Test", dataset, true,
                 false, false);
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setLegendLabelGenerator(new NullLegendLabelGenerator());

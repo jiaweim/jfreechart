@@ -54,7 +54,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 
@@ -273,7 +273,7 @@ class DefaultTitleEditor extends JPanel implements ActionListener {
      *
      * @param chart  the chart whose title is to be modified.
      */
-    public void setTitleProperties(JFreeChart chart) {
+    public void setTitleProperties(Chart chart) {
         if (this.showTitle) {
             TextTitle title = chart.getTitle();
             if (title == null) {

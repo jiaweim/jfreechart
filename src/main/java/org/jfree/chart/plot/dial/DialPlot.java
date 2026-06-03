@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Objects;
 import org.jfree.chart.ChartElementVisitor;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
@@ -512,7 +512,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
 
 
     /**
-     * Draws the plot.  This method is usually called by the {@link JFreeChart}
+     * Draws the plot.  This method is usually called by the {@link Chart}
      * instance that manages the plot.
      *
      * @param g2  the graphics target.

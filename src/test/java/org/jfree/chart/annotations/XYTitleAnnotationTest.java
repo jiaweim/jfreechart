@@ -36,7 +36,7 @@
 
 package org.jfree.chart.annotations;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -146,7 +146,7 @@ public class XYTitleAnnotationTest {
                     new XYLineAndShapeRenderer());
             plot.addAnnotation(new XYTitleAnnotation(5.0, 6.0, 
                     new TextTitle("Hello World!")));
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200, null);
         }
         catch (NullPointerException e) {

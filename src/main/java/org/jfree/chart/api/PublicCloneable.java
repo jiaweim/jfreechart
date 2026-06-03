@@ -35,11 +35,11 @@
 
 package org.jfree.chart.api;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 
 /**
  * An interface that exposes the clone() method.  In order to support the 
- * cloning of {@link JFreeChart} instances, it is advisable to implement this
+ * cloning of {@link Chart} instances, it is advisable to implement this
  * interface for custom plots, renderers and other chart components.  If
  * this interface is not implemented, cloning will still be attempted via 
  * reflection.

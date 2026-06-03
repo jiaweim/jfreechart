@@ -36,7 +36,7 @@
 
 package org.jfree.chart.renderer.category;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -132,7 +132,7 @@ public class IntervalBarRendererTest {
             CategoryPlot<String, String> plot = new CategoryPlot<>(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     renderer);
-            JFreeChart chart = new JFreeChart(plot);
+            Chart chart = new Chart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
         }

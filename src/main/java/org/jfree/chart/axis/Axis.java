@@ -25,10 +25,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.text.AttributedString;
 import java.util.Arrays;
 import java.util.EventListener;
@@ -1599,6 +1596,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @param stream the output stream.
      * @throws IOException if there is an I/O error.
      */
+    @Serial
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         SerialUtils.writeAttributedString(this.attributedLabel, stream);
@@ -1617,6 +1615,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @throws IOException            if there is an I/O error.
      * @throws ClassNotFoundException if there is a classpath problem.
      */
+    @Serial
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();

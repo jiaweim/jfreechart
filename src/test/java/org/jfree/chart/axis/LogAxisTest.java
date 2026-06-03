@@ -40,7 +40,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -156,7 +156,7 @@ public class LogAxisTest {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
-        JFreeChart chart = ChartFactory.createBarChart("Test", "Categories",
+        Chart chart = ChartFactory.createBarChart("Test", "Categories",
                 "Value", dataset);
         CategoryPlot<?, ?> plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
@@ -175,7 +175,7 @@ public class LogAxisTest {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
-        JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
+        Chart chart = ChartFactory.createLineChart("Test", "Categories",
                 "Value", dataset, PlotOrientation.VERTICAL, false, false,
                 false);
         @SuppressWarnings("unchecked")
@@ -206,7 +206,7 @@ public class LogAxisTest {
         series.add(3.0, 3.0);
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
+        Chart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
                 dataset);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
@@ -227,7 +227,7 @@ public class LogAxisTest {
         series.add(3.0, 3.0);
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
+        Chart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
                 dataset);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");

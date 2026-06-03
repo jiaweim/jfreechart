@@ -40,7 +40,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -134,7 +134,7 @@ public class StackedXYBarRendererTest {
     public void testFindDomainBounds() {
         TableXYDataset<String> dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart(
+        Chart chart = ChartFactory.createStackedXYAreaChart(
                 "Test Chart", "X", "Y", dataset,
                 PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();
@@ -155,7 +155,7 @@ public class StackedXYBarRendererTest {
     public void testFindRangeBounds() {
         TableXYDataset<String> dataset
                 = RendererXYPackageUtils.createTestTableXYDataset();
-        JFreeChart chart = ChartFactory.createStackedXYAreaChart(
+        Chart chart = ChartFactory.createStackedXYAreaChart(
                 "Test Chart", "X", "Y", dataset,
                 PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot) chart.getPlot();

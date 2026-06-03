@@ -1,39 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * ------------------
- * LineChartTest.java
- * ------------------
- * (C) Copyright 2005-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- */
-
 package org.jfree.chart;
 
 import org.jfree.chart.axis.ValueAxis;
@@ -48,24 +12,25 @@ import org.jfree.chart.urls.StandardCategoryURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Some tests for a line chart.
  */
-public class LineChartTest  {
+public class LineChartTest {
 
-    /** A chart. */
-    private JFreeChart chart;
+    /**
+     * A chart.
+     */
+    private Chart chart;
 
     /**
      * Common test setup.
@@ -81,11 +46,11 @@ public class LineChartTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        BufferedImage image = new BufferedImage(200 , 100,
+        BufferedImage image = new BufferedImage(200, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                 null);
+                null);
         g2.dispose();
     }
 
@@ -96,23 +61,23 @@ public class LineChartTest  {
     public void testReplaceDataset() {
 
         // create a dataset...
-        Number[][] data = new Integer[][] {{-30, -20}, {-10, 10}, {20, 30}};
+        Number[][] data = new Integer[][]{{-30, -20}, {-10, 10}, {20, 30}};
 
-        CategoryDataset<String, String> newData 
+        CategoryDataset<String, String> newData
                 = DatasetUtils.createCategoryDataset("S", "C", data);
 
         LocalListener l = new LocalListener();
         this.chart.addChangeListener(l);
-        
+
         @SuppressWarnings("unchecked")
         CategoryPlot<String, String> plot = (CategoryPlot) this.chart.getPlot();
         plot.setDataset(newData);
         assertTrue(l.flag);
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
-        assertTrue(range.getLowerBound() <= -30, 
+        assertTrue(range.getLowerBound() <= -30,
                 "Expecting the lower bound of the range to be around -30: " + range.getLowerBound());
-        assertTrue(range.getUpperBound() >= 30, 
+        assertTrue(range.getUpperBound() >= 30,
                 "Expecting the upper bound of the range to be around 30: " + range.getUpperBound());
     }
 
@@ -151,9 +116,9 @@ public class LineChartTest  {
      *
      * @return The chart.
      */
-    private static JFreeChart createLineChart() {
-        Number[][] data = new Integer[][] {{-3, -2}, {-1, 1}, {2, 3}};
-        CategoryDataset<String,String> dataset 
+    private static Chart createLineChart() {
+        Number[][] data = new Integer[][]{{-3, -2}, {-1, 1}, {2, 3}};
+        CategoryDataset<String, String> dataset
                 = DatasetUtils.createCategoryDataset("S", "C", data);
         return ChartFactory.createLineChart("Line Chart", "Domain", "Range",
                 dataset);
@@ -165,13 +130,15 @@ public class LineChartTest  {
      */
     static class LocalListener implements ChartChangeListener {
 
-        /** A flag. */
+        /**
+         * A flag.
+         */
         private boolean flag;
 
         /**
          * Event handler.
          *
-         * @param event  the event.
+         * @param event the event.
          */
         @Override
         public void chartChanged(ChartChangeEvent event) {

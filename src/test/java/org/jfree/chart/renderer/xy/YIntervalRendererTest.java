@@ -36,7 +36,7 @@
 
 package org.jfree.chart.renderer.xy;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.annotations.XYTextAnnotation;
@@ -233,7 +233,7 @@ public class YIntervalRendererTest {
         YIntervalRenderer r = new YIntervalRenderer();
         XYPlot<String> plot = new XYPlot<>(d1, new NumberAxis("x"), new NumberAxis("y"), r);
         plot.setDataset(1, d2);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
+        /*JFreeChart chart =*/ new Chart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

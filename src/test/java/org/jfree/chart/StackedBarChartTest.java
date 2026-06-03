@@ -63,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StackedBarChartTest {
 
     /** A chart. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Common test setup.
@@ -150,7 +150,7 @@ public class StackedBarChartTest {
      *
      * @return The chart.
      */
-    private static JFreeChart createChart() {
+    private static Chart createChart() {
         Number[][] data = new Integer[][] {{-3, -2}, {-1, 1}, {2, 3}};
         CategoryDataset<String, String> dataset 
                 = DatasetUtils.createCategoryDataset("S", "C", data);

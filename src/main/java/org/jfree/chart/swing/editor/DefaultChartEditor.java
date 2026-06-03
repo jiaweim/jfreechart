@@ -53,7 +53,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.title.Title;
@@ -89,7 +89,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
      *
      * @param chart  the chart, whichs properties should be changed.
      */
-    public DefaultChartEditor(JFreeChart chart) {
+    public DefaultChartEditor(Chart chart) {
         setLayout(new BorderLayout());
 
         JPanel other = new JPanel(new BorderLayout());
@@ -257,7 +257,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
      * @param chart  the chart.
      */
     @Override
-    public void updateChart(JFreeChart chart) {
+    public void updateChart(Chart chart) {
         this.titleEditor.setTitleProperties(chart);
         this.plotEditor.updatePlotProperties(chart.getPlot());
         chart.setAntiAlias(getAntiAlias());

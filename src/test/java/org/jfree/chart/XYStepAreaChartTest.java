@@ -62,7 +62,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class XYStepAreaChartTest {
 
     /** A chart. */
-    private JFreeChart chart;
+    private Chart chart;
 
     /**
      * Common test setup.
@@ -136,7 +136,7 @@ public class XYStepAreaChartTest {
      *
      * @return The chart.
      */
-    private static JFreeChart createChart() {
+    private static Chart createChart() {
         XYSeries<String> series1 = new XYSeries<>("Series 1");
         series1.add(1.0, 1.0);
         series1.add(2.0, 2.0);

@@ -43,7 +43,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
@@ -135,7 +135,7 @@ public class CombinedRangeXYPlotTest implements ChartChangeListener {
     @Test
     public void testNotification() {
         CombinedRangeXYPlot<String> plot = createPlot();
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         chart.addChangeListener(this);
         XYPlot<String> subplot1 = plot.getSubplots().get(0);
         NumberAxis xAxis = (NumberAxis) subplot1.getDomainAxis();

@@ -71,7 +71,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import org.jfree.chart.ChartElementVisitor;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.annotations.CategoryAnnotation;
@@ -3348,7 +3348,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
         Graphics2D savedG2 = g2;
         BufferedImage dataImage = null;
         boolean suppressShadow = Boolean.TRUE.equals(g2.getRenderingHint(
-                JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION));
+                Chart.KEY_SUPPRESS_SHADOW_GENERATION));
         if (this.shadowGenerator != null && !suppressShadow) {
             dataImage = new BufferedImage((int) dataArea.getWidth(),
                     (int)dataArea.getHeight(), BufferedImage.TYPE_INT_ARGB);

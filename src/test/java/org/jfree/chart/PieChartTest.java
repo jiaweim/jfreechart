@@ -57,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PieChartTest  {
 
     /** A chart. */
-    private JFreeChart pieChart;
+    private Chart pieChart;
 
     /**
      * Common test setup.
@@ -87,7 +87,7 @@ public class PieChartTest  {
      *
      * @return The pie chart.
      */
-    private static JFreeChart createPieChart() {
+    private static Chart createPieChart() {
         DefaultPieDataset<String> data = new DefaultPieDataset<>();
         data.setValue("Java", 43.2);
         data.setValue("Visual Basic", 0.0);

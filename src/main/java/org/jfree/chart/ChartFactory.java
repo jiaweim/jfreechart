@@ -74,7 +74,6 @@ import org.jfree.data.xy.*;
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -97,7 +96,7 @@ public abstract class ChartFactory {
      * @return The chart theme.
      *
      * @see #setChartTheme(ChartTheme)
-     * @see ChartUtils#applyCurrentTheme(JFreeChart)
+     * @see ChartUtils#applyCurrentTheme(Chart)
      */
     public static ChartTheme getChartTheme() {
         return currentTheme;
@@ -110,7 +109,7 @@ public abstract class ChartFactory {
      * @param theme  the theme ({@code null} not permitted).
      *
      * @see #getChartTheme()
-     * @see ChartUtils#applyCurrentTheme(JFreeChart)
+     * @see ChartUtils#applyCurrentTheme(Chart)
      */
     public static void setChartTheme(ChartTheme theme) {
         Args.nullNotPermitted(theme, "theme");
@@ -138,7 +137,7 @@ public abstract class ChartFactory {
      *
      * @return A pie chart.
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset,
+    public static Chart createPieChart(String title, PieDataset dataset,
             boolean legend, boolean tooltips, Locale locale) {
 
         PiePlot plot = new PiePlot(dataset);
@@ -147,7 +146,7 @@ public abstract class ChartFactory {
         if (tooltips) {
             plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -165,7 +164,7 @@ public abstract class ChartFactory {
      *
      * @return A pie chart.
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset) {
+    public static Chart createPieChart(String title, PieDataset dataset) {
         return createPieChart(title, dataset, true, true, false);
     }
     
@@ -183,7 +182,7 @@ public abstract class ChartFactory {
      *
      * @return A pie chart.
      */
-    public static JFreeChart createPieChart(String title, PieDataset dataset,
+    public static Chart createPieChart(String title, PieDataset dataset,
             boolean legend, boolean tooltips, boolean urls) {
 
         PiePlot plot = new PiePlot(dataset);
@@ -195,7 +194,7 @@ public abstract class ChartFactory {
         if (urls) {
             plot.setURLGenerator(new StandardPieURLGenerator());
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -239,7 +238,7 @@ public abstract class ChartFactory {
      *
      * @return A pie chart.
      */
-    public static JFreeChart createPieChart(String title, PieDataset<String> dataset,
+    public static Chart createPieChart(String title, PieDataset<String> dataset,
             PieDataset<String> previousDataset, int percentDiffForMaxScale,
             boolean greenForIncrease, boolean legend, boolean tooltips,
             Locale locale, boolean subTitle, boolean showDifference) {
@@ -302,8 +301,8 @@ public abstract class ChartFactory {
             plot.setDataset(series);
         }
 
-        JFreeChart chart =  new JFreeChart(title,
-                JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+        Chart chart =  new Chart(title,
+                Chart.DEFAULT_TITLE_FONT, plot, legend);
 
         if (subTitle) {
             TextTitle subtitle = new TextTitle("Bright " + (greenForIncrease 
@@ -355,7 +354,7 @@ public abstract class ChartFactory {
      *
      * @return A pie chart.
      */
-    public static JFreeChart createPieChart(String title, PieDataset<String> dataset,
+    public static Chart createPieChart(String title, PieDataset<String> dataset,
             PieDataset<String> previousDataset, int percentDiffForMaxScale,
             boolean greenForIncrease, boolean legend, boolean tooltips, 
             boolean urls, boolean subTitle, boolean showDifference) {
@@ -421,7 +420,7 @@ public abstract class ChartFactory {
             plot.setDataset(series);
         }
 
-        JFreeChart chart =  new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+        Chart chart =  new Chart(title, Chart.DEFAULT_TITLE_FONT, plot, legend);
 
         if (subTitle) {
             TextTitle subtitle = new TextTitle("Bright " + (greenForIncrease 
@@ -449,7 +448,7 @@ public abstract class ChartFactory {
      *
      * @return A ring chart.
      */
-    public static JFreeChart createRingChart(String title, PieDataset dataset,
+    public static Chart createRingChart(String title, PieDataset dataset,
             boolean legend, boolean tooltips, Locale locale) {
 
         RingPlot plot = new RingPlot(dataset);
@@ -458,7 +457,7 @@ public abstract class ChartFactory {
         if (tooltips) {
             plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -478,7 +477,7 @@ public abstract class ChartFactory {
      *
      * @return A ring chart.
      */
-    public static JFreeChart createRingChart(String title, PieDataset dataset,
+    public static Chart createRingChart(String title, PieDataset dataset,
             boolean legend, boolean tooltips, boolean urls) {
 
         RingPlot plot = new RingPlot(dataset);
@@ -490,7 +489,7 @@ public abstract class ChartFactory {
         if (urls) {
             plot.setURLGenerator(new StandardPieURLGenerator());
         }
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -512,7 +511,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createMultiplePieChart(String title,
+    public static Chart createMultiplePieChart(String title,
             CategoryDataset dataset, TableOrder order, boolean legend,
             boolean tooltips, boolean urls) {
 
@@ -535,7 +534,7 @@ public abstract class ChartFactory {
             pp.setURLGenerator(urlGenerator);
         }
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -558,7 +557,7 @@ public abstract class ChartFactory {
      *
      * @return A bar chart.
      */
-    public static JFreeChart createBarChart(String title,
+    public static Chart createBarChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
         return createBarChart(title, categoryAxisLabel, valueAxisLabel, dataset,
@@ -585,7 +584,7 @@ public abstract class ChartFactory {
      *
      * @return A bar chart.
      */
-    public static JFreeChart createBarChart(String title,
+    public static Chart createBarChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -622,7 +621,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -645,7 +644,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked bar chart.
      */
-    public static JFreeChart createStackedBarChart(String title,
+    public static Chart createStackedBarChart(String title,
             String domainAxisLabel, String rangeAxisLabel,
             CategoryDataset dataset) {
         return createStackedBarChart(title, domainAxisLabel, rangeAxisLabel,
@@ -673,7 +672,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked bar chart.
      */
-    public static JFreeChart createStackedBarChart(String title,
+    public static Chart createStackedBarChart(String title,
             String domainAxisLabel, String rangeAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -696,7 +695,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -718,7 +717,7 @@ public abstract class ChartFactory {
      *
      * @return An area chart.
      */
-    public static JFreeChart createAreaChart(String title,
+    public static Chart createAreaChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
         return createAreaChart(title, categoryAxisLabel, valueAxisLabel,
@@ -745,7 +744,7 @@ public abstract class ChartFactory {
      *
      * @return An area chart.
      */
-    public static JFreeChart createAreaChart(String title,
+    public static Chart createAreaChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -769,7 +768,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -792,7 +791,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked area chart.
      */
-    public static JFreeChart createStackedAreaChart(String title,
+    public static Chart createStackedAreaChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
         return createStackedAreaChart(title, categoryAxisLabel, valueAxisLabel,
@@ -820,7 +819,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked area chart.
      */
-    public static JFreeChart createStackedAreaChart(String title,
+    public static Chart createStackedAreaChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -843,7 +842,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -865,7 +864,7 @@ public abstract class ChartFactory {
      *
      * @return A line chart.
      */
-    public static JFreeChart createLineChart(String title,
+    public static Chart createLineChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset) {
         return createLineChart(title, categoryAxisLabel, valueAxisLabel,
@@ -892,7 +891,7 @@ public abstract class ChartFactory {
      *
      * @return A line chart.
      */
-    public static JFreeChart createLineChart(String title,
+    public static Chart createLineChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -913,7 +912,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -936,7 +935,7 @@ public abstract class ChartFactory {
      *
      * @return A Gantt chart.
      */
-    public static JFreeChart createGanttChart(String title,
+    public static Chart createGanttChart(String title,
             String categoryAxisLabel, String dateAxisLabel,
             IntervalCategoryDataset dataset) {
         return createGanttChart(title, categoryAxisLabel, dateAxisLabel,
@@ -962,7 +961,7 @@ public abstract class ChartFactory {
      *
      * @return A Gantt chart.
      */
-    public static JFreeChart createGanttChart(String title,
+    public static Chart createGanttChart(String title,
             String categoryAxisLabel, String dateAxisLabel,
             IntervalCategoryDataset dataset, boolean legend, boolean tooltips,
             boolean urls) {
@@ -984,7 +983,7 @@ public abstract class ChartFactory {
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, dateAxis,
                 renderer);
         plot.setOrientation(PlotOrientation.HORIZONTAL);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1011,7 +1010,7 @@ public abstract class ChartFactory {
      *
      * @return A waterfall chart.
      */
-    public static JFreeChart createWaterfallChart(String title,
+    public static Chart createWaterfallChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -1054,7 +1053,7 @@ public abstract class ChartFactory {
         baseline.setPaint(Color.BLACK);
         plot.addRangeMarker(baseline, Layer.FOREGROUND);
         plot.setOrientation(orientation);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1075,7 +1074,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createPolarChart(String title, XYDataset dataset,
+    public static Chart createPolarChart(String title, XYDataset dataset,
             boolean legend, boolean tooltips, boolean urls) {
 
         PolarPlot plot = new PolarPlot();
@@ -1086,8 +1085,8 @@ public abstract class ChartFactory {
         rangeAxis.setTickLabelInsets(new RectangleInsets(0.0, 0.0, 0.0, 0.0));
         plot.setAxis(rangeAxis);
         plot.setRenderer(new DefaultPolarItemRenderer());
-        JFreeChart chart = new JFreeChart(
-                title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+        Chart chart = new Chart(
+                title, Chart.DEFAULT_TITLE_FONT, plot, legend);
         currentTheme.apply(chart);
         return chart;
 
@@ -1107,7 +1106,7 @@ public abstract class ChartFactory {
      *
      * @return A scatter plot.
      */
-    public static JFreeChart createScatterPlot(String title, String xAxisLabel,
+    public static Chart createScatterPlot(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset) {
         return createScatterPlot(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);
@@ -1132,7 +1131,7 @@ public abstract class ChartFactory {
      *
      * @return A scatter plot.
      */
-    public static JFreeChart createScatterPlot(String title, String xAxisLabel,
+    public static Chart createScatterPlot(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1159,7 +1158,7 @@ public abstract class ChartFactory {
         plot.setRenderer(renderer);
         plot.setOrientation(orientation);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1182,7 +1181,7 @@ public abstract class ChartFactory {
      *
      * @return An XY bar chart.
      */
-    public static JFreeChart createXYBarChart(String title, String xAxisLabel,
+    public static Chart createXYBarChart(String title, String xAxisLabel,
             boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
         return createXYBarChart(title, xAxisLabel, dateAxis, yAxisLabel,
                 dataset, PlotOrientation.VERTICAL, true, true, false);
@@ -1209,7 +1208,7 @@ public abstract class ChartFactory {
      *
      * @return An XY bar chart.
      */
-    public static JFreeChart createXYBarChart(String title, String xAxisLabel,
+    public static Chart createXYBarChart(String title, String xAxisLabel,
             boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset,
             PlotOrientation orientation, boolean legend, boolean tooltips,
             boolean urls) {
@@ -1244,7 +1243,7 @@ public abstract class ChartFactory {
         XYPlot plot = new XYPlot(dataset, domainAxis, valueAxis, renderer);
         plot.setOrientation(orientation);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1268,7 +1267,7 @@ public abstract class ChartFactory {
      * 
      * @param <S> the type for series keys.
      */
-    public static <S extends Comparable<S>> JFreeChart createXYAreaChart(
+    public static <S extends Comparable<S>> Chart createXYAreaChart(
             String title,String xAxisLabel, String yAxisLabel, 
             XYDataset<S> dataset) {
         return createXYAreaChart(title, xAxisLabel, yAxisLabel, dataset, 
@@ -1297,7 +1296,7 @@ public abstract class ChartFactory {
      * 
      * @return An XY area chart.
      */
-    public static <S extends Comparable<S>> JFreeChart createXYAreaChart(
+    public static <S extends Comparable<S>> Chart createXYAreaChart(
             String title, String xAxisLabel,
             String yAxisLabel, XYDataset<S> dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
@@ -1322,7 +1321,7 @@ public abstract class ChartFactory {
 
         plot.setRenderer(new XYAreaRenderer(XYAreaRenderer.AREA, tipGenerator,
                 urlGenerator));
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1342,7 +1341,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked XY area chart.
      */
-    public static JFreeChart createStackedXYAreaChart(String title,
+    public static Chart createStackedXYAreaChart(String title,
             String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
         return createStackedXYAreaChart(title, xAxisLabel, yAxisLabel,
                 dataset, PlotOrientation.VERTICAL, true, true, false);
@@ -1366,7 +1365,7 @@ public abstract class ChartFactory {
      *
      * @return A stacked XY area chart.
      */
-    public static JFreeChart createStackedXYAreaChart(String title,
+    public static Chart createStackedXYAreaChart(String title,
             String xAxisLabel, String yAxisLabel, TableXYDataset dataset,
             PlotOrientation orientation, boolean legend, boolean tooltips,
             boolean urls) {
@@ -1394,7 +1393,7 @@ public abstract class ChartFactory {
 
         plot.setRangeAxis(yAxis);  // forces recalculation of the axis range
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1412,7 +1411,7 @@ public abstract class ChartFactory {
      *
      * @return The chart.
      */
-    public static JFreeChart createXYLineChart(String title,
+    public static Chart createXYLineChart(String title,
             String xAxisLabel, String yAxisLabel, XYDataset dataset) {
         return createXYLineChart(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);
@@ -1434,7 +1433,7 @@ public abstract class ChartFactory {
      *
      * @return The chart.
      */
-    public static JFreeChart createXYLineChart(String title, String xAxisLabel,
+    public static Chart createXYLineChart(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1451,8 +1450,8 @@ public abstract class ChartFactory {
         if (urls) {
             renderer.setURLGenerator(new StandardXYURLGenerator());
         }
-        JFreeChart chart = null;
-        chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = null;
+        chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1469,7 +1468,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createXYStepChart(String title, String xAxisLabel,
+    public static Chart createXYStepChart(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset) {
         return createXYStepChart(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);
@@ -1490,7 +1489,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createXYStepChart(String title, String xAxisLabel,
+    public static Chart createXYStepChart(String title, String xAxisLabel,
             String yAxisLabel, XYDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1516,7 +1515,7 @@ public abstract class ChartFactory {
         plot.setOrientation(orientation);
         plot.setDomainCrosshairVisible(false);
         plot.setRangeCrosshairVisible(false);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1533,7 +1532,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createXYStepAreaChart(String title,
+    public static Chart createXYStepAreaChart(String title,
             String xAxisLabel, String yAxisLabel, XYDataset dataset) {
         return createXYStepAreaChart(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);   
@@ -1554,7 +1553,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createXYStepAreaChart(String title, 
+    public static Chart createXYStepAreaChart(String title,
             String xAxisLabel, String yAxisLabel, XYDataset dataset,
             PlotOrientation orientation, boolean legend, boolean tooltips,
             boolean urls) {
@@ -1582,7 +1581,7 @@ public abstract class ChartFactory {
         plot.setOrientation(orientation);
         plot.setDomainCrosshairVisible(false);
         plot.setRangeCrosshairVisible(false);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1606,7 +1605,7 @@ public abstract class ChartFactory {
      *
      * @return A time series chart.
      */
-    public static JFreeChart createTimeSeriesChart(String title, 
+    public static Chart createTimeSeriesChart(String title,
             String timeAxisLabel, String valueAxisLabel, XYDataset dataset) {
         return createTimeSeriesChart(title, timeAxisLabel, valueAxisLabel, 
                 dataset, true, true, false);
@@ -1633,7 +1632,7 @@ public abstract class ChartFactory {
      *
      * @return A time series chart.
      */
-    public static JFreeChart createTimeSeriesChart(String title,
+    public static Chart createTimeSeriesChart(String title,
             String timeAxisLabel, String valueAxisLabel, XYDataset dataset,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1661,7 +1660,7 @@ public abstract class ChartFactory {
         renderer.setURLGenerator(urlGenerator);
         plot.setRenderer(renderer);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1681,7 +1680,7 @@ public abstract class ChartFactory {
      *
      * @return A candlestick chart.
      */
-    public static JFreeChart createCandlestickChart(String title,
+    public static Chart createCandlestickChart(String title,
             String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
             boolean legend) {
 
@@ -1689,7 +1688,7 @@ public abstract class ChartFactory {
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, null);
         plot.setRenderer(new CandlestickRenderer());
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1709,7 +1708,7 @@ public abstract class ChartFactory {
      *
      * @return A high-low-open-close chart.
      */
-    public static JFreeChart createHighLowChart(String title,
+    public static Chart createHighLowChart(String title,
             String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
             boolean legend) {
 
@@ -1718,7 +1717,7 @@ public abstract class ChartFactory {
         HighLowRenderer renderer = new HighLowRenderer();
         renderer.setDefaultToolTipGenerator(new HighLowItemLabelGenerator());
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1738,7 +1737,7 @@ public abstract class ChartFactory {
      *
      * @return A bubble chart.
      */
-    public static JFreeChart createBubbleChart(String title, String xAxisLabel,
+    public static Chart createBubbleChart(String title, String xAxisLabel,
             String yAxisLabel, XYZDataset dataset) {
         return createBubbleChart(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);
@@ -1762,7 +1761,7 @@ public abstract class ChartFactory {
      *
      * @return A bubble chart.
      */
-    public static JFreeChart createBubbleChart(String title, String xAxisLabel,
+    public static Chart createBubbleChart(String title, String xAxisLabel,
             String yAxisLabel, XYZDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1785,7 +1784,7 @@ public abstract class ChartFactory {
         plot.setRenderer(renderer);
         plot.setOrientation(orientation);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1804,7 +1803,7 @@ public abstract class ChartFactory {
      * 
      * @return A chart.
      */
-    public static JFreeChart createHistogram(String title,
+    public static Chart createHistogram(String title,
             String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset) {
         return createHistogram(title, xAxisLabel, yAxisLabel, dataset,
                 PlotOrientation.VERTICAL, true, true, false);
@@ -1827,7 +1826,7 @@ public abstract class ChartFactory {
      *
      * @return The chart.
      */
-    public static JFreeChart createHistogram(String title,
+    public static Chart createHistogram(String title,
             String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset,
             PlotOrientation orientation, boolean legend, boolean tooltips,
             boolean urls) {
@@ -1849,7 +1848,7 @@ public abstract class ChartFactory {
         plot.setOrientation(orientation);
         plot.setDomainZeroBaselineVisible(true);
         plot.setRangeZeroBaselineVisible(true);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1870,7 +1869,7 @@ public abstract class ChartFactory {
      *
      * @return A box and whisker chart.
      */
-    public static JFreeChart createBoxAndWhiskerChart(String title,
+    public static Chart createBoxAndWhiskerChart(String title,
             String categoryAxisLabel, String valueAxisLabel,
             BoxAndWhiskerCategoryDataset dataset, boolean legend) {
 
@@ -1883,7 +1882,7 @@ public abstract class ChartFactory {
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1902,7 +1901,7 @@ public abstract class ChartFactory {
      *
      * @return A box and whisker chart.
      */
-    public static JFreeChart createBoxAndWhiskerChart(String title,
+    public static Chart createBoxAndWhiskerChart(String title,
             String timeAxisLabel, String valueAxisLabel,
             BoxAndWhiskerXYDataset dataset, boolean legend) {
 
@@ -1911,7 +1910,7 @@ public abstract class ChartFactory {
         valueAxis.setAutoRangeIncludesZero(false);
         XYBoxAndWhiskerRenderer renderer = new XYBoxAndWhiskerRenderer(10.0);
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1931,7 +1930,7 @@ public abstract class ChartFactory {
      *
      * @return A wind plot.
      */
-    public static JFreeChart createWindPlot(String title, String xAxisLabel,
+    public static Chart createWindPlot(String title, String xAxisLabel,
             String yAxisLabel, WindDataset dataset, boolean legend,
             boolean tooltips, boolean urls) {
 
@@ -1947,7 +1946,7 @@ public abstract class ChartFactory {
             renderer.setURLGenerator(new StandardXYURLGenerator());
         }
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;
@@ -1967,7 +1966,7 @@ public abstract class ChartFactory {
      *
      * @return A wafer map chart.
      */
-    public static JFreeChart createWaferMapChart(String title,
+    public static Chart createWaferMapChart(String title,
             WaferMapDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
 
@@ -1976,7 +1975,7 @@ public abstract class ChartFactory {
         WaferMapRenderer renderer = new WaferMapRenderer();
         plot.setRenderer(renderer);
 
-        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
+        Chart chart = new Chart(title, Chart.DEFAULT_TITLE_FONT,
                 plot, legend);
         currentTheme.apply(chart);
         return chart;

@@ -37,7 +37,7 @@
 package org.jfree.chart.swing;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
@@ -95,7 +95,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
      */
     @Test
     public void testSetChart() {
-        JFreeChart chart = new JFreeChart(new XYPlot<String>());
+        Chart chart = new Chart(new XYPlot<String>());
         ChartPanel panel = new ChartPanel(chart);
         panel.setChart(null);
         assertNull(panel.getChart());
@@ -148,7 +148,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoom() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         chart.addChangeListener(this);
@@ -164,7 +164,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomInBoth() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         chart.addChangeListener(this);
@@ -180,7 +180,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomOutBoth() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         chart.addChangeListener(this);
@@ -196,7 +196,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_restoreAutoBounds() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         chart.addChangeListener(this);
@@ -212,7 +212,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomInDomain() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setDomainAxis(1, new NumberAxis("X2"));
@@ -230,7 +230,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomInRange() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setRangeAxis(1, new NumberAxis("X2"));
@@ -248,7 +248,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomOutDomain() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setDomainAxis(1, new NumberAxis("X2"));
@@ -266,7 +266,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_zoomOutRange() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setRangeAxis(1, new NumberAxis("X2"));
@@ -284,7 +284,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_restoreAutoDomainBounds() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setDomainAxis(1, new NumberAxis("X2"));
@@ -302,7 +302,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void test2502355_restoreAutoRangeBounds() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         XYPlot<?> plot = (XYPlot<?>) chart.getPlot();
         plot.setRangeAxis(1, new NumberAxis("X2"));
@@ -320,7 +320,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
     @Test
     public void testSetMouseWheelEnabled() {
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         panel.setMouseWheelEnabled(true);
@@ -340,7 +340,7 @@ public class ChartPanelTest implements ChartChangeListener, ChartMouseListener {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
 
         DefaultXYDataset<String> dataset = new DefaultXYDataset<>();
-        JFreeChart chart = ChartFactory.createXYLineChart("TestChart", "X",
+        Chart chart = ChartFactory.createXYLineChart("TestChart", "X",
                 "Y", dataset, PlotOrientation.VERTICAL, false, false, false);
         ChartPanel panel = new ChartPanel(chart);
         panel.setZoomFillPaint(Color.MAGENTA);

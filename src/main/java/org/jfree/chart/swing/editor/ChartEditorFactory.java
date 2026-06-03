@@ -36,7 +36,7 @@
 
 package org.jfree.chart.swing.editor;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 
 /**
  * A factory for creating new {@link ChartEditor} instances.
@@ -50,6 +50,6 @@ public interface ChartEditorFactory {
      *
      * @return A chart editor.
      */
-    ChartEditor createEditor(JFreeChart chart);
+    ChartEditor createEditor(Chart chart);
 
 }

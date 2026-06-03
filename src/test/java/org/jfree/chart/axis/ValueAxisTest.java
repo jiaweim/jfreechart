@@ -45,7 +45,7 @@ import java.awt.image.BufferedImage;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -209,7 +209,7 @@ public class ValueAxisTest {
         series.add(200.0, 2.2);
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>(series);
         dataset.setIntervalWidth(0.0);
-        JFreeChart chart = ChartFactory.createScatterPlot("Title", "X", "Y", 
+        Chart chart = ChartFactory.createScatterPlot("Title", "X", "Y",
                 dataset);
         ValueAxis domainAxis = ((XYPlot) chart.getPlot()).getDomainAxis();
         Range r = domainAxis.getRange();
@@ -227,7 +227,7 @@ public class ValueAxisTest {
     @Test
     public void test3555275() {
         DefaultCategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
-        JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",
+        Chart chart = ChartFactory.createLineChart("Title", "X", "Y",
                 dataset, PlotOrientation.VERTICAL, true, false, false);
         CategoryPlot<String, String> plot = (CategoryPlot) chart.getPlot();
         plot.setInsets(RectangleInsets.ZERO_INSETS);

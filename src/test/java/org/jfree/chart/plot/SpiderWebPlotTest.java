@@ -45,7 +45,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.Chart;
 import org.jfree.chart.legend.LegendItem;
 import org.jfree.chart.legend.LegendItemCollection;
 import org.jfree.chart.TestUtils;
@@ -289,7 +289,7 @@ public class SpiderWebPlotTest {
         dataset.addValue(15.0, "S1", "C4");
         dataset.addValue(25.0, "S1", "C5");
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
@@ -313,7 +313,7 @@ public class SpiderWebPlotTest {
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
-        JFreeChart chart = new JFreeChart(plot);
+        Chart chart = new Chart(plot);
         LegendItemCollection legendItems = plot.getLegendItems();
         assertEquals(2, legendItems.getItemCount());
         LegendItem item1 = legendItems.get(0);

@@ -88,7 +88,7 @@ import org.jfree.data.ItemKey;
  * <b>Subclassing</b>
  * If you create your own renderer that is a subclass of this, you should take
  * care to ensure that the renderer implements cloning correctly, to ensure
- * that {@link JFreeChart} instances that use your renderer are also
+ * that {@link Chart} instances that use your renderer are also
  * cloneable.  It is recommended that you also implement the 
  * {@link PublicCloneable} interface to provide simple access to the clone 
  * method.
