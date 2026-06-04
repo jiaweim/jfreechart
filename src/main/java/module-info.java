@@ -8,6 +8,7 @@ module org.jfree.chart {
     exports pdk.chart.annotations;
     exports pdk.chart.api;
     exports pdk.chart.axis;
+    exports pdk.chart.color;
     exports pdk.chart.date;
     exports pdk.chart.entity;
     exports pdk.chart.event;

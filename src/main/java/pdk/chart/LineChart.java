@@ -18,6 +18,7 @@ import pdk.chart.plot.PlotOrientation;
 import pdk.chart.plot.XYPlot;
 import pdk.chart.renderer.xy.XYItemRenderer;
 import pdk.chart.renderer.xy.XYLineAndShapeRenderer;
+import pdk.chart.renderer.xy.XYSplineRenderer;
 import pdk.chart.text.TextAnchor;
 
 import java.awt.*;
@@ -37,15 +38,18 @@ public class LineChart extends Chart {
     private final XYPlot plot_;
 
     public LineChart() {
-        super(null, null, new XYPlot<>(), false);
+        super(null, DEFAULT_TITLE_FONT, new XYPlot<>(), false);
         this.plot_ = (XYPlot) getPlot();
         domainAxis_ = new NumberAxis();
+        domainAxis_.setAutoRangeIncludesZero(false);
+
         rangeAxis_ = new NumberAxis();
         renderer_ = new XYLineAndShapeRenderer(true, false);
 
         plot_.setDomainAxis(domainAxis_);
         plot_.setRangeAxis(rangeAxis_);
         plot_.setRenderer(renderer_);
+
 
         DEFAULT_THEME.apply(this);
     }
@@ -85,7 +89,6 @@ public class LineChart extends Chart {
             legend.setBackgroundPaint(Color.WHITE);
             legend.setPosition(RectangleEdge.BOTTOM);
             addSubtitle(legend);
-            legend.addChangeListener(this);
         }
         return this;
     }
@@ -120,6 +123,20 @@ public class LineChart extends Chart {
      */
     public LineChart defaultShapesVisible(boolean showShape) {
         renderer_.setDefaultShapesVisible(showShape);
+        return this;
+    }
+
+    /**
+     * Set true to create scatter chart.
+     *
+     * @param showShape whether show shapes of data points
+     * @return this
+     */
+    public LineChart defaultShapesVisible(int dataset, boolean showShape) {
+        XYItemRenderer renderer = plot_.getRenderer(dataset);
+        if (renderer instanceof XYLineAndShapeRenderer lineAndShapeRenderer) {
+            lineAndShapeRenderer.setDefaultShapesVisible(showShape);
+        }
         return this;
     }
 
@@ -304,6 +321,27 @@ public class LineChart extends Chart {
     }
 
     /**
+     * Add a new dataset to the plot
+     *
+     * @param index   index of the dataset
+     * @param dataset {@link XYDataset} instance
+     * @return this
+     */
+    public LineChart addDataset(int index, XYDataset dataset, boolean smooth) {
+        XYDataset preDataset = plot_.getDataset(index);
+        if (preDataset != null) {
+            throw new IllegalStateException("Dataset with index " + index + " already exists!");
+        }
+        plot_.setDataset(index, dataset);
+        if (smooth) {
+            plot_.setRenderer(index, new XYSplineRenderer());
+        } else {
+            plot_.setRenderer(index, new XYLineAndShapeRenderer(true, false));
+        }
+        return this;
+    }
+
+    /**
      * Set the chart orientation.
      *
      * @param orientation {@link PlotOrientation}
@@ -475,6 +513,19 @@ public class LineChart extends Chart {
      */
     public LineChart domainAxisName(String xAxisTitle) {
         domainAxis_.setLabel(xAxisTitle);
+        return this;
+    }
+
+    /**
+     * Set the domain and range axis names.
+     *
+     * @param domainName domain axis title.
+     * @param rangeName  range axis title.
+     * @return this
+     */
+    public LineChart axisName(String domainName, String rangeName) {
+        domainAxis_.setLabel(domainName);
+        rangeAxis_.setLabel(rangeName);
         return this;
     }
 

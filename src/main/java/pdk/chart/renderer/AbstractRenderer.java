@@ -1,9 +1,6 @@
 package pdk.chart.renderer;
 
-import pdk.chart.ChartColor;
-import pdk.chart.ChartElement;
-import pdk.chart.ChartElementVisitor;
-import pdk.chart.ChartHints;
+import pdk.chart.*;
 import pdk.chart.api.PublicCloneable;
 import pdk.chart.api.RectangleInsets;
 import pdk.chart.data.ItemKey;
