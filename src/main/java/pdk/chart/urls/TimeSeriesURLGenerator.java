@@ -1,0 +1,176 @@
+package pdk.chart.urls;
+
+import pdk.chart.data.xy.XYDataset;
+import pdk.chart.internal.Args;
+
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.util.Date;
+
+/**
+ * A URL generator for time series charts.
+ */
+public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
+
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = -9122773175671182445L;
+
+    /**
+     * A formatter for the date.
+     */
+    private DateFormat dateFormat = DateFormat.getInstance();
+
+    /**
+     * Prefix to the URL
+     */
+    private String prefix = "index.html";
+
+    /**
+     * Name to use to identify the series
+     */
+    private String seriesParameterName = "series";
+
+    /**
+     * Name to use to identify the item
+     */
+    private String itemParameterName = "item";
+
+    /**
+     * Default constructor.
+     */
+    public TimeSeriesURLGenerator() {
+        super();
+    }
+
+    /**
+     * Construct TimeSeriesURLGenerator overriding defaults.
+     *
+     * @param dateFormat          a formatter for the date ({@code null} not
+     *                            permitted).
+     * @param prefix              the prefix of the URL ({@code null} not permitted).
+     * @param seriesParameterName the name of the series parameter in the URL
+     *                            ({@code null} not permitted).
+     * @param itemParameterName   the name of the item parameter in the URL
+     *                            ({@code null} not permitted).
+     */
+    public TimeSeriesURLGenerator(DateFormat dateFormat, String prefix,
+            String seriesParameterName, String itemParameterName) {
+
+        Args.nullNotPermitted(dateFormat, "dateFormat");
+        Args.nullNotPermitted(prefix, "prefix");
+        Args.nullNotPermitted(seriesParameterName, "seriesParameterName");
+        Args.nullNotPermitted(itemParameterName, "itemParameterName");
+        this.dateFormat = (DateFormat) dateFormat.clone();
+        this.prefix = prefix;
+        this.seriesParameterName = seriesParameterName;
+        this.itemParameterName = itemParameterName;
+    }
+
+    /**
+     * Returns a clone of the date format assigned to this URL generator.
+     *
+     * @return The date format (never {@code null}).
+     */
+    public DateFormat getDateFormat() {
+        return (DateFormat) this.dateFormat.clone();
+    }
+
+    /**
+     * Returns the prefix string.
+     *
+     * @return The prefix string (never {@code null}).
+     */
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    /**
+     * Returns the series parameter name.
+     *
+     * @return The series parameter name (never {@code null}).
+     */
+    public String getSeriesParameterName() {
+        return this.seriesParameterName;
+    }
+
+    /**
+     * Returns the item parameter name.
+     *
+     * @return The item parameter name (never {@code null}).
+     */
+    public String getItemParameterName() {
+        return this.itemParameterName;
+    }
+
+    /**
+     * Generates a URL for a particular item within a series.
+     *
+     * @param dataset the dataset ({@code null} not permitted).
+     * @param series  the series number (zero-based index).
+     * @param item    the item number (zero-based index).
+     * @return The generated URL.
+     */
+    @Override
+    public String generateURL(XYDataset dataset, int series, int item) {
+        String result = this.prefix;
+        boolean firstParameter = !result.contains("?");
+        Comparable seriesKey = dataset.getSeriesKey(series);
+        if (seriesKey != null) {
+            result += firstParameter ? "?" : "&amp;";
+            try {
+                result += this.seriesParameterName + "=" + URLEncoder.encode(
+                        seriesKey.toString(), "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                throw new RuntimeException(ex);
+            }
+            firstParameter = false;
+        }
+
+        long x = (long) dataset.getXValue(series, item);
+        String xValue = this.dateFormat.format(new Date(x));
+        result += firstParameter ? "?" : "&amp;";
+        try {
+            result += this.itemParameterName + "=" + URLEncoder.encode(xValue,
+                    "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return result;
+    }
+
+    /**
+     * Tests this generator for equality with an arbitrary object.
+     *
+     * @param obj the object ({@code null} permitted).
+     * @return A boolean.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof TimeSeriesURLGenerator)) {
+            return false;
+        }
+        TimeSeriesURLGenerator that = (TimeSeriesURLGenerator) obj;
+        if (!this.dateFormat.equals(that.dateFormat)) {
+            return false;
+        }
+        if (!this.itemParameterName.equals(that.itemParameterName)) {
+            return false;
+        }
+        if (!this.prefix.equals(that.prefix)) {
+            return false;
+        }
+        if (!this.seriesParameterName.equals(that.seriesParameterName)) {
+            return false;
+        }
+        return true;
+    }
+
+}

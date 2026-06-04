@@ -1,0 +1,46 @@
+package pdk.chart.data.general;
+
+import org.junit.jupiter.api.Test;
+import pdk.chart.TestUtils;
+import pdk.chart.internal.CloneUtils;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Tests for the {@link DefaultKeyedValues2DDataset} class.
+ */
+public class DefaultKeyedValues2DDatasetTest {
+
+    /**
+     * Confirm that cloning works.
+     *
+     * @throws java.lang.CloneNotSupportedException
+     */
+    @Test
+    public void testCloning() throws CloneNotSupportedException {
+        DefaultKeyedValues2DDataset<String, String> d1 = new DefaultKeyedValues2DDataset<>();
+        d1.setValue(Integer.valueOf(1), "V1", "C1");
+        d1.setValue(null, "V2", "C1");
+        d1.setValue(Integer.valueOf(3), "V3", "C2");
+        DefaultKeyedValues2DDataset<String, String> d2 = CloneUtils.clone(d1);
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
+    }
+
+    /**
+     * Serialize an instance, restore it, and check for equality.
+     */
+    @Test
+    public void testSerialization() {
+        DefaultKeyedValues2DDataset<String, String> d1 = new DefaultKeyedValues2DDataset<>();
+        d1.addValue(234.2, "Row1", "Col1");
+        d1.addValue(null, "Row1", "Col2");
+        d1.addValue(345.9, "Row2", "Col1");
+        d1.addValue(452.7, "Row2", "Col2");
+
+        DefaultKeyedValues2DDataset<String, String> d2 = TestUtils.serialised(d1);
+        assertEquals(d1, d2);
+    }
+
+}

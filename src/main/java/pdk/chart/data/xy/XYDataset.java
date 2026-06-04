@@ -1,0 +1,79 @@
+package pdk.chart.data.xy;
+
+import pdk.chart.data.DomainOrder;
+import pdk.chart.data.general.SeriesDataset;
+
+/**
+ * An interface through which data in the form of (x, y) items can be accessed.
+ *
+ * @param <S> the series key type.
+ */
+public interface XYDataset<S extends Comparable<S>> extends SeriesDataset<S> {
+
+    /**
+     * Returns the order of the domain (or X) values returned by the dataset.
+     *
+     * @return The order (never {@code null}).
+     */
+    DomainOrder getDomainOrder();
+
+    /**
+     * Returns the number of items in a series.
+     * <br><br>
+     * It is recommended that classes that implement this method should throw
+     * an {@code IllegalArgumentException} if the {@code series}
+     * argument is outside the specified range.
+     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @return The item count.
+     */
+    int getItemCount(int series);
+
+    /**
+     * Returns the x-value for an item within a series.  The x-values may or
+     * may not be returned in ascending order, that is up to the class
+     * implementing the interface.
+     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
+     * @return The x-value (never {@code null}).
+     */
+    Number getX(int series, int item);
+
+    /**
+     * Returns the x-value for an item within a series.
+     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
+     * @return The x-value.
+     */
+    double getXValue(int series, int item);
+
+    /**
+     * Returns the y-value for an item within a series.
+     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
+     * @return The y-value (possibly {@code null}).
+     */
+    Number getY(int series, int item);
+
+    /**
+     * Returns the y-value (as a double primitive) for an item within a series.
+     *
+     * @param series the series index (in the range {@code 0} to
+     *               {@code getSeriesCount() - 1}).
+     * @param item   the item index (in the range {@code 0} to
+     *               {@code getItemCount(series)}).
+     * @return The y-value.
+     */
+    double getYValue(int series, int item);
+
+}

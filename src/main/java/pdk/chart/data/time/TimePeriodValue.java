@@ -1,0 +1,152 @@
+package pdk.chart.data.time;
+
+import pdk.chart.internal.Args;
+
+import java.io.Serializable;
+
+/**
+ * Represents a time period and an associated value.
+ */
+public class TimePeriodValue implements Cloneable, Serializable {
+
+    /**
+     * For serialization.
+     */
+    private static final long serialVersionUID = 3390443360845711275L;
+
+    /**
+     * The time period.
+     */
+    private TimePeriod period;
+
+    /**
+     * The value associated with the time period.
+     */
+    private Number value;
+
+    /**
+     * Constructs a new data item.
+     *
+     * @param period the time period ({@code null} not permitted).
+     * @param value  the value associated with the time period.
+     * @throws IllegalArgumentException if {@code period} is {@code null}.
+     */
+    public TimePeriodValue(TimePeriod period, Number value) {
+        Args.nullNotPermitted(period, "period");
+        this.period = period;
+        this.value = value;
+    }
+
+    /**
+     * Constructs a new data item.
+     *
+     * @param period the time period ({@code null} not permitted).
+     * @param value  the value associated with the time period.
+     * @throws IllegalArgumentException if {@code period} is {@code null}.
+     */
+    public TimePeriodValue(TimePeriod period, double value) {
+        this(period, Double.valueOf(value));
+    }
+
+    /**
+     * Returns the time period.
+     *
+     * @return The time period (never {@code null}).
+     */
+    public TimePeriod getPeriod() {
+        return this.period;
+    }
+
+    /**
+     * Returns the value.
+     *
+     * @return The value (possibly {@code null}).
+     * @see #setValue(Number)
+     */
+    public Number getValue() {
+        return this.value;
+    }
+
+    /**
+     * Sets the value for this data item.
+     *
+     * @param value the new value ({@code null} permitted).
+     * @see #getValue()
+     */
+    public void setValue(Number value) {
+        this.value = value;
+    }
+
+    /**
+     * Tests this object for equality with the target object.
+     *
+     * @param obj the object ({@code null} permitted).
+     * @return A boolean.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof TimePeriodValue)) {
+            return false;
+        }
+
+        TimePeriodValue timePeriodValue = (TimePeriodValue) obj;
+
+        if (this.period != null ? !this.period.equals(timePeriodValue.period)
+                : timePeriodValue.period != null) {
+            return false;
+        }
+        if (this.value != null ? !this.value.equals(timePeriodValue.value)
+                : timePeriodValue.value != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return The hashcode
+     */
+    @Override
+    public int hashCode() {
+        int result;
+        result = (this.period != null ? this.period.hashCode() : 0);
+        result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
+        return result;
+    }
+
+    /**
+     * Clones the object.
+     * <p>
+     * Note: no need to clone the period or value since they are immutable
+     * classes.
+     *
+     * @return A clone.
+     */
+    @Override
+    public Object clone() {
+        Object clone = null;
+        try {
+            clone = super.clone();
+        } catch (CloneNotSupportedException e) { // won't get here...
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    /**
+     * Returns a string representing this instance, primarily for use in
+     * debugging.
+     *
+     * @return A string.
+     */
+    @Override
+    public String toString() {
+        return "TimePeriodValue[" + getPeriod() + "," + getValue() + "]";
+    }
+
+}
