@@ -1,4 +1,4 @@
 /**
- * Plug-in renderers for the {@link org.jfree.chart.plot.XYPlot} class.
+ * Plug-in renderers for the {@link pdk.chart.plot.XYPlot} class.
  */
-package org.jfree.chart.renderer.xy;
+package pdk.chart.renderer.xy;

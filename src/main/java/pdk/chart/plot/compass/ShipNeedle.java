@@ -1,43 +1,6 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * ---------------
- * ShipNeedle.java
- * ---------------
- * (C) Copyright 2002-present, by the Australian Antarctic Division and
- *                          Contributors.
- *
- * Original Author:  Bryan Scott (for the Australian Antarctic Division);
- * Contributor(s):   David Gilbert;
- *
- */
-
 package pdk.chart.plot.compass;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
@@ -46,11 +9,13 @@ import java.io.Serializable;
 
 /**
  * A needle in the shape of a ship, for use with the
- * {@link org.jfree.chart.plot.compass.CompassPlot} class.
+ * {@link pdk.chart.plot.compass.CompassPlot} class.
  */
 public class ShipNeedle extends MeterNeedle implements Cloneable, Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 149554868169435612L;
 
     /**
@@ -63,10 +28,10 @@ public class ShipNeedle extends MeterNeedle implements Cloneable, Serializable {
     /**
      * Draws the needle.
      *
-     * @param g2  the graphics device.
-     * @param plotArea  the plot area.
-     * @param rotate  the rotation point.
-     * @param angle  the angle.
+     * @param g2       the graphics device.
+     * @param plotArea the plot area.
+     * @param rotate   the rotation point.
+     * @param angle    the angle.
      */
     @Override
     protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
@@ -94,8 +59,7 @@ public class ShipNeedle extends MeterNeedle implements Cloneable, Serializable {
     /**
      * Tests another object for equality with this object.
      *
-     * @param object  the object to test.
-     *
+     * @param object the object to test.
      * @return A boolean.
      */
     @Override
@@ -126,9 +90,8 @@ public class ShipNeedle extends MeterNeedle implements Cloneable, Serializable {
      * Returns a clone of this needle.
      *
      * @return A clone.
-     *
      * @throws CloneNotSupportedException if the {@code ShipNeedle}
-     *     cannot be cloned (in theory, this should not happen).
+     *                                    cannot be cloned (in theory, this should not happen).
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

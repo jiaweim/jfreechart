@@ -34,6 +34,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * A collection of utility methods for creating some standard charts with
@@ -688,8 +689,8 @@ public abstract class ChartFactory {
             String categoryAxisLabel, String valueAxisLabel,
             CategoryDataset dataset, PlotOrientation orientation,
             boolean legend, boolean tooltips, boolean urls) {
+        Objects.requireNonNull(orientation, "orientation");
 
-        Args.nullNotPermitted(orientation, "orientation");
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         categoryAxis.setCategoryMargin(0.0);
 

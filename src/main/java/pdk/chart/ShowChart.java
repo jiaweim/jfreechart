@@ -8,6 +8,7 @@ import org.jfree.svg.SVGUtils;
 import pdk.chart.swing.ApplicationFrame;
 import pdk.chart.swing.ChartPanel;
 import pdk.chart.swing.UIUtils;
+import pdk.chart.title.TextTitle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,6 @@ public interface ShowChart {
 
     ChartTheme DEFAULT_THEME = new StandardChartTheme("PDK");
 
-
     /**
      * Display the specified chart.
      *
@@ -34,7 +34,12 @@ public interface ShowChart {
      */
     default void show(Chart chart) {
         SwingUtilities.invokeLater(() -> {
-            ApplicationFrame frame = new ApplicationFrame(chart.getTitle().getText());
+            TextTitle title = chart.getTitle();
+            String titleText = "";
+            if (title != null) {
+                titleText = title.getText();
+            }
+            ApplicationFrame frame = new ApplicationFrame(titleText);
             ChartPanel panel = new ChartPanel(chart);
             panel.setMouseWheelEnabled(true);
             frame.setContentPane(panel);

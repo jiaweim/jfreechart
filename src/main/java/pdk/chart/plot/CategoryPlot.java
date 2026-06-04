@@ -97,7 +97,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * The resourceBundle for the localization.
      */
     protected static ResourceBundle localizationResources
-            = ResourceBundle.getBundle("org.jfree.chart.plot.LocalizationBundle");
+            = ResourceBundle.getBundle("pdk.chart.plot.LocalizationBundle");
 
     /**
      * The plot orientation.

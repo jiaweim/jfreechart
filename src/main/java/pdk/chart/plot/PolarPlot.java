@@ -82,7 +82,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * The resourceBundle for the localization.
      */
     protected static ResourceBundle localizationResources
-            = ResourceBundle.getBundle("org.jfree.chart.plot.LocalizationBundle");
+            = ResourceBundle.getBundle("pdk.chart.plot.LocalizationBundle");
 
     /**
      * The angles that are marked with gridlines.

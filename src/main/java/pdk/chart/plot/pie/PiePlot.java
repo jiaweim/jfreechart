@@ -380,7 +380,7 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
      * The resourceBundle for the localization.
      */
     protected static ResourceBundle localizationResources
-            = ResourceBundle.getBundle("org.jfree.chart.plot.LocalizationBundle");
+            = ResourceBundle.getBundle("pdk.chart.plot.LocalizationBundle");
 
     /**
      * This debug flag controls whether an outline is drawn showing the

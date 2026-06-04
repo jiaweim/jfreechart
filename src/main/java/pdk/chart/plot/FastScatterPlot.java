@@ -122,7 +122,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * The resourceBundle for the localization.
      */
     protected static ResourceBundle localizationResources
-            = ResourceBundle.getBundle("org.jfree.chart.plot.LocalizationBundle");
+            = ResourceBundle.getBundle("pdk.chart.plot.LocalizationBundle");
 
     /**
      * Creates a new instance of {@code FastScatterPlot} with default

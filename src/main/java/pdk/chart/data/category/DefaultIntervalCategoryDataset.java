@@ -102,7 +102,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         this.endData = ends;
 
         if (starts != null && ends != null) {
-            ResourceBundle resources = ResourceBundle.getBundle("resources.pdk.chart.data.DataPackageResources");
+            ResourceBundle resources = ResourceBundle.getBundle("pdk.chart.data.resources.DataPackageResources");
 
             int seriesCount = starts.length;
             if (seriesCount != ends.length) {
