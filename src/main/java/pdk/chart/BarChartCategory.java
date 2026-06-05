@@ -6,8 +6,6 @@ import pdk.chart.api.RectangleInsets;
 import pdk.chart.axis.CategoryAxis;
 import pdk.chart.axis.NumberAxis;
 import pdk.chart.data.category.CategoryDataset;
-import pdk.chart.data.general.DatasetChangeEvent;
-import pdk.chart.event.PlotChangeEvent;
 import pdk.chart.labels.ItemLabelAnchor;
 import pdk.chart.labels.ItemLabelPosition;
 import pdk.chart.labels.StandardCategoryToolTipGenerator;
@@ -70,10 +68,7 @@ public class BarChartCategory extends Chart {
 
     /**
      * Sets the dataset for the plot, replacing the existing dataset, if there
-     * is one.  This method also calls the
-     * {@link #plot_.datasetChanged(DatasetChangeEvent)} method, which adjusts the
-     * axis ranges if necessary and sends a {@link PlotChangeEvent} to all
-     * registered listeners.
+     * is one.
      *
      * @param dataset the dataset.
      */
