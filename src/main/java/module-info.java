@@ -1,4 +1,5 @@
-module org.jfree.chart {
+module pdk.chart {
+
     requires java.desktop;
     requires org.jspecify;
     requires org.jfree.svg;

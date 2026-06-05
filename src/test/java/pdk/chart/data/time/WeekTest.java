@@ -543,8 +543,7 @@ public class WeekTest {
         t = cal.getTime();
         w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"), Locale.getDefault());
         assertEquals(35, w.getWeek());
-        w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"),
-                new Locale("da", "DK"));
+        w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"), Locale.of("da", "DK"));
         assertEquals(34, w.getWeek());
 
         Locale.setDefault(savedLocale);
