@@ -5,6 +5,7 @@ import pdk.chart.data.DefaultKeyedValues2D;
 import pdk.chart.data.UnknownKeyException;
 import pdk.chart.data.general.AbstractDataset;
 import pdk.chart.data.general.DatasetChangeEvent;
+import pdk.chart.internal.Args;
 
 import java.io.Serializable;
 import java.util.List;
@@ -184,6 +185,22 @@ public class DefaultCategoryDataset<R extends Comparable<R>, C extends Comparabl
      */
     public void addValue(double value, R rowKey, C columnKey) {
         addValue(Double.valueOf(value), rowKey, columnKey);
+    }
+
+    /**
+     * Add a series of values to this dataset.
+     *
+     * @param rowKey     the row key.
+     * @param columnKeys the column keys.
+     * @param values     the values.
+     */
+    public void addSeries(R rowKey, C[] columnKeys, double[] values) {
+        if (columnKeys.length != values.length) {
+            throw new IllegalArgumentException("The count of keys in columns is inconsistent with the number of values");
+        }
+        for (int i = 0; i < columnKeys.length; i++) {
+            addValue(values[i], rowKey, columnKeys[i]);
+        }
     }
 
     /**

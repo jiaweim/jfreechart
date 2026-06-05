@@ -48,7 +48,7 @@ import java.util.Map.Entry;
  * on the plot.  By using different renderers, various chart types can be
  * produced.
  * <p>
- * The {@link org.jfree.chart.ChartFactory} class contains static methods for
+ * The {@link pdk.chart.ChartFactory} class contains static methods for
  * creating pre-configured charts.
  *
  * @param <S>The type for the series keys.

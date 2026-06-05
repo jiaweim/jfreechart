@@ -1,40 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * --------------------------
- * OutlierListCollection.java
- * --------------------------
- * (C) Copyright 2003-present, by David Browning and Contributors.
- *
- * Original Author:  David Browning (for Australian Institute of Marine
- *                   Science);
- * Contributor(s):   -;
- *
- */
-
 package pdk.chart.renderer;
 
 import java.util.ArrayList;
@@ -44,16 +7,18 @@ import java.util.List;
 /**
  * A collection of outlier lists for a box and whisker plot. Each collection is
  * associated with a single box and whisker entity.
- *
+ * <p>
  * Outliers are grouped in lists for each entity. Lists contain
  * one or more outliers, determined by whether overlaps have
  * occurred. Overlapping outliers are grouped in the same list.
  *
- * @see org.jfree.chart.renderer.OutlierList
+ * @see pdk.chart.renderer.OutlierList
  */
 public class OutlierListCollection {
 
-    /** Storage for the outlier lists. */
+    /**
+     * Storage for the outlier lists.
+     */
     private List<OutlierList> outlierLists;
 
     /**
@@ -89,7 +54,7 @@ public class OutlierListCollection {
      * Sets the flag that indicates the presence of one or more far out values
      * at the top end of the range.
      *
-     * @param farOut  the flag.
+     * @param farOut the flag.
      */
     public void setHighFarOut(boolean farOut) {
         this.highFarOut = farOut;
@@ -109,20 +74,20 @@ public class OutlierListCollection {
      * Sets the flag that indicates the presence of one or more far out values
      * at the bottom end of the range.
      *
-     * @param farOut  the flag.
+     * @param farOut the flag.
      */
     public void setLowFarOut(boolean farOut) {
         this.lowFarOut = farOut;
     }
+
     /**
      * Appends the specified element as a new {@code OutlierList} to the
      * end of this list if it does not overlap an outlier in an existing list.
-     *
+     * <p>
      * If it does overlap, it is appended to the outlier list which it overlaps
      * and that list is updated.
      *
-     * @param outlier  element to be appended to this list.
-     *
+     * @param outlier element to be appended to this list.
      * @return {@code true} (as per the general contract of Collection.add).
      */
     public boolean add(Outlier outlier) {
@@ -157,9 +122,8 @@ public class OutlierListCollection {
      * setting the averaged outlier to the average x and y coordinate values
      * of the outliers in the list.
      *
-     * @param list  the outlier list to be updated.
-     * @param outlier  the outlier to be added
-     *
+     * @param list    the outlier list to be updated.
+     * @param outlier the outlier to be added
      * @return <tt>true</tt> (as per the general contract of Collection.add).
      */
     private boolean updateOutlierList(OutlierList list, Outlier outlier) {

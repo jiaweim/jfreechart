@@ -1,5 +1,6 @@
 package pdk.chart.labels;
 
+import org.jspecify.annotations.NonNull;
 import pdk.chart.api.PublicCloneable;
 import pdk.chart.data.xy.XYDataset;
 
@@ -11,9 +12,9 @@ import java.text.NumberFormat;
  * A standard item label generator for plots that use data from an
  * {@link XYDataset}.
  */
-public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
-        implements XYItemLabelGenerator, Cloneable, PublicCloneable,
-        Serializable {
+public class StandardXYItemLabelGenerator
+        extends AbstractXYItemLabelGenerator
+        implements XYItemLabelGenerator, Cloneable, PublicCloneable, Serializable {
 
     /**
      * For serialization.
@@ -47,16 +48,12 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
     /**
      * Creates an item label generator using the specified number formatters.
      *
-     * @param formatString the item label format string ({@code null} not
-     *                     permitted).
-     * @param xFormat      the format object for the x values ({@code null}
-     *                     not permitted).
-     * @param yFormat      the format object for the y values ({@code null}
-     *                     not permitted).
+     * @param formatString the item label format string.
+     * @param xFormat      the format object for the x values.
+     * @param yFormat      the format object for the y values.
      */
-    public StandardXYItemLabelGenerator(String formatString,
-            NumberFormat xFormat, NumberFormat yFormat) {
-
+    public StandardXYItemLabelGenerator(@NonNull String formatString,
+            @NonNull NumberFormat xFormat, @NonNull NumberFormat yFormat) {
         super(formatString, xFormat, yFormat);
     }
 

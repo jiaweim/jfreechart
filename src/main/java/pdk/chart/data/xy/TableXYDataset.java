@@ -1,38 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -------------------
- * TableXYDataset.java
- * -------------------
- * (C) Copyright 2000-present, by Richard Atkinson and Contributors.
- *
- * Original Author:  Richard Atkinson;
- * Contributor(s):   David Gilbert;
- */
-
 package pdk.chart.data.xy;
 
 /**
@@ -40,7 +5,7 @@ package pdk.chart.data.xy;
  * where all series in the dataset share the same set of x-values.  This is a
  * restricted form of the {@link XYDataset} interface (which allows independent
  * x-values between series). This is used primarily by the
- * {@link org.jfree.chart.renderer.xy.StackedXYAreaRenderer}.
+ * {@link pdk.chart.renderer.xy.StackedXYAreaRenderer}.
  *
  * @param <S> the series key type.
  */

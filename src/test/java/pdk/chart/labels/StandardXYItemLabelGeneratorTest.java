@@ -3,6 +3,8 @@ package pdk.chart.labels;
 import org.junit.jupiter.api.Test;
 import pdk.chart.TestUtils;
 import pdk.chart.api.PublicCloneable;
+import pdk.chart.data.xy.XYSeries;
+import pdk.chart.data.xy.XYSeriesCollection;
 import pdk.chart.internal.CloneUtils;
 
 import java.text.DateFormat;
@@ -148,4 +150,16 @@ public class StandardXYItemLabelGeneratorTest {
         assertEquals(g1, g2);
     }
 
+    @Test
+    void testFormat() {
+        StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator("{2}",
+                NumberFormat.getNumberInstance(), new DecimalFormat("0.000"));
+        XYSeriesCollection datasetCollection = new XYSeriesCollection();
+        XYSeries series = new XYSeries("XYSeries");
+        series.add(1.0, 2.0);
+        datasetCollection.addSeries(series);
+
+        String label = g1.generateLabel(datasetCollection, 0, 0);
+        assertEquals("2.000", label);
+    }
 }

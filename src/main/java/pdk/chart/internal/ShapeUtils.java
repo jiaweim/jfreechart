@@ -17,8 +17,7 @@ public class ShapeUtils {
     /**
      * Prevents instantiation.
      */
-    private ShapeUtils() {
-    }
+    private ShapeUtils() {}
 
     /**
      * Tests two shapes for equality.  If both shapes are {@code null},
@@ -282,6 +281,18 @@ public class ShapeUtils {
         p0.lineTo(-s, 0.0f);
         p0.closePath();
         return p0;
+    }
+
+    /**
+     * Create a circle of given size
+     *
+     * @param size Diameter of a circle
+     * @return {@link Ellipse2D}
+     */
+    public static Ellipse2D.Double createCircle(int size) {
+        double delta = size / 2.0;
+
+        return new Ellipse2D.Double(-delta, -delta, size, size);
     }
 
     /**

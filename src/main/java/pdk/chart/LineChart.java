@@ -2,6 +2,7 @@ package pdk.chart;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import pdk.chart.annotations.XYAnnotation;
 import pdk.chart.annotations.XYPointerAnnotation;
 import pdk.chart.api.Layer;
 import pdk.chart.api.RectangleEdge;
@@ -11,15 +12,15 @@ import pdk.chart.axis.TickUnitSource;
 import pdk.chart.data.xy.XYDataset;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.event.AxisChangeEvent;
 import pdk.chart.labels.StandardXYToolTipGenerator;
 import pdk.chart.legend.LegendTitle;
 import pdk.chart.plot.Marker;
 import pdk.chart.plot.PlotOrientation;
 import pdk.chart.plot.XYPlot;
-import pdk.chart.renderer.xy.XYItemRenderer;
-import pdk.chart.renderer.xy.XYLineAndShapeRenderer;
-import pdk.chart.renderer.xy.XYSplineRenderer;
+import pdk.chart.renderer.xy.*;
 import pdk.chart.text.TextAnchor;
+import pdk.chart.title.Title;
 
 import java.awt.*;
 
@@ -90,6 +91,17 @@ public class LineChart extends Chart {
             legend.setPosition(RectangleEdge.BOTTOM);
             addSubtitle(legend);
         }
+        return this;
+    }
+
+    /**
+     * Adds a chart subtitle, and notifies registered listeners that the chart
+     * has been modified.
+     *
+     * @param title the subtitle.
+     */
+    public LineChart addTitle(@NonNull Title title) {
+        addSubtitle(title);
         return this;
     }
 
@@ -323,6 +335,47 @@ public class LineChart extends Chart {
     /**
      * Add a new dataset to the plot
      *
+     * @param index    index of the dataset
+     * @param dataset  {@link XYDataset} instance
+     * @param renderer {@link XYItemRenderer} used to render this dataset.
+     * @return this
+     */
+    public LineChart addDataset(int index, XYDataset dataset, XYItemRenderer renderer) {
+        XYDataset preDataset = plot_.getDataset(index);
+        if (preDataset != null) {
+            throw new IllegalStateException("Dataset with index " + index + " already exists!");
+        }
+        plot_.setDataset(index, dataset);
+        plot_.setRenderer(index, renderer);
+        return this;
+    }
+
+    /**
+     * Add a new dataset to the plot
+     *
+     * @param index     index of the dataset
+     * @param dataset   {@link XYDataset} instance
+     * @param chartType {@link XYChartType} for this dataset.
+     * @return this
+     */
+    public LineChart addDataset(int index, XYDataset dataset, XYChartType chartType) {
+        XYItemRenderer renderer = null;
+        if (chartType == XYChartType.AREA) {
+            renderer = new XYAreaRenderer(XYAreaRenderer.AREA);
+        } else if (chartType == XYChartType.LINE) {
+            renderer = new XYLineAndShapeRenderer(true, false);
+        } else if (chartType == XYChartType.SCATTER) {
+            renderer = new XYLineAndShapeRenderer(false, true);
+        } else if (chartType == XYChartType.HISTOGRAM) {
+            renderer = new XYBarRenderer();
+        }
+
+        return addDataset(index, dataset, renderer);
+    }
+
+    /**
+     * Add a new dataset to the plot
+     *
      * @param index   index of the dataset
      * @param dataset {@link XYDataset} instance
      * @return this
@@ -400,6 +453,16 @@ public class LineChart extends Chart {
         annotation.setTextAnchor(textAnchor);
         annotation.setBackgroundPaint(backgroundColor);
         plot_.addAnnotation(annotation);
+        return this;
+    }
+
+    /**
+     * Adds an annotation to the plot.
+     *
+     * @param annotation the annotation ({@code null} not permitted).
+     */
+    public LineChart addAnnotation(XYAnnotation annotation) {
+        plot_.addAnnotation(annotation, false);
         return this;
     }
 
@@ -523,7 +586,7 @@ public class LineChart extends Chart {
      * @param rangeName  range axis title.
      * @return this
      */
-    public LineChart axisName(String domainName, String rangeName) {
+    public LineChart axisNames(String domainName, String rangeName) {
         domainAxis_.setLabel(domainName);
         rangeAxis_.setLabel(rangeName);
         return this;
@@ -577,6 +640,18 @@ public class LineChart extends Chart {
      *
      * @param source the source for standard tick units.
      */
+    public LineChart domainAxisStandardTickUnits(@Nullable TickUnitSource source) {
+        domainAxis_.setStandardTickUnits(source);
+        return this;
+    }
+
+    /**
+     * Sets the source for obtaining standard tick units for the axis.  The axis will
+     * try to select the smallest tick unit from the source that does not cause
+     * the tick labels to overlap.
+     *
+     * @param source the source for standard tick units.
+     */
     public LineChart rangeAxisStandardTickUnits(@Nullable TickUnitSource source) {
         rangeAxis_.setStandardTickUnits(source);
         return this;
@@ -592,6 +667,20 @@ public class LineChart extends Chart {
      */
     public LineChart domainAxisRange(double lower, double upper) {
         domainAxis_.setRange(lower, upper);
+        return this;
+    }
+
+    /**
+     * Sets the upper margin for the axis (as a percentage of the axis range)
+     * and sends an {@link AxisChangeEvent} to all registered listeners.
+     * <p>
+     * This margin is added only when the axis range is auto-calculated - if you set
+     * the axis range manually, the margin is ignored.
+     *
+     * @param margin the margin percentage (for example, 0.05 is five percent).
+     */
+    public LineChart domainAxisUpperMargin(double margin) {
+        domainAxis_.setUpperMargin(margin);
         return this;
     }
 

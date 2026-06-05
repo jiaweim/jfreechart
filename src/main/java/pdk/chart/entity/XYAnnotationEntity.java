@@ -1,66 +1,34 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -----------------------
- * XYAnnotationEntity.java
- * -----------------------
- * (C) Copyright 2004-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- */
-
 package pdk.chart.entity;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.io.Serializable;
 
 /**
  * A chart entity that represents an annotation on an
- * {@link org.jfree.chart.plot.XYPlot}.
+ * {@link pdk.chart.plot.XYPlot}.
  */
 public class XYAnnotationEntity extends ChartEntity implements Serializable {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 2340334068383660799L;
 
-    /** The renderer index. */
+    /**
+     * The renderer index.
+     */
     private int rendererIndex;
 
     /**
      * Creates a new entity.
      *
-     * @param hotspot  the area.
-     * @param rendererIndex  the rendererIndex (zero-based index).
-     * @param toolTipText  the tool tip text.
-     * @param urlText  the URL text for HTML image maps.
+     * @param hotspot       the area.
+     * @param rendererIndex the rendererIndex (zero-based index).
+     * @param toolTipText   the tool tip text.
+     * @param urlText       the URL text for HTML image maps.
      */
     public XYAnnotationEntity(Shape hotspot, int rendererIndex,
-                              String toolTipText, String urlText) {
+            String toolTipText, String urlText) {
         super(hotspot, toolTipText, urlText);
         this.rendererIndex = rendererIndex;
     }
@@ -77,7 +45,7 @@ public class XYAnnotationEntity extends ChartEntity implements Serializable {
     /**
      * Sets the renderer index.
      *
-     * @param index  the item index (zero-based).
+     * @param index the item index (zero-based).
      */
     public void setRendererIndex(int index) {
         this.rendererIndex = index;
@@ -86,8 +54,7 @@ public class XYAnnotationEntity extends ChartEntity implements Serializable {
     /**
      * Tests the entity for equality with an arbitrary object.
      *
-     * @param obj  the object ({@code null} permitted).
-     *
+     * @param obj the object ({@code null} permitted).
      * @return A boolean.
      */
     @Override
@@ -98,10 +65,9 @@ public class XYAnnotationEntity extends ChartEntity implements Serializable {
         if (!super.equals(obj)) {
             return false;
         }
-        if (!(obj instanceof XYAnnotationEntity)) {
+        if (!(obj instanceof XYAnnotationEntity that)) {
             return false;
         }
-        XYAnnotationEntity that = (XYAnnotationEntity) obj;
         if (this.rendererIndex != that.rendererIndex) {
             return false;
         }
