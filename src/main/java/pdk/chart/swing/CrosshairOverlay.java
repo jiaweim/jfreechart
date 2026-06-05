@@ -6,7 +6,6 @@ import pdk.chart.api.RectangleAnchor;
 import pdk.chart.api.RectangleEdge;
 import pdk.chart.api.RectangleInsets;
 import pdk.chart.axis.ValueAxis;
-import pdk.chart.internal.Args;
 import pdk.chart.internal.CloneUtils;
 import pdk.chart.plot.Crosshair;
 import pdk.chart.plot.PlotOrientation;
@@ -23,6 +22,7 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An overlay for a {@link ChartPanel} that draws crosshairs on a chart.  If
@@ -60,7 +60,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @see #addRangeCrosshair(pdk.chart.plot.Crosshair)
      */
     public void addDomainCrosshair(Crosshair crosshair) {
-        Args.nullNotPermitted(crosshair, "crosshair");
+        Objects.requireNonNull(crosshair, "crosshair");
         this.xCrosshairs.add(crosshair);
         crosshair.addPropertyChangeListener(this);
         fireOverlayChanged();
@@ -74,7 +74,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @see #addDomainCrosshair(pdk.chart.plot.Crosshair)
      */
     public void removeDomainCrosshair(Crosshair crosshair) {
-        Args.nullNotPermitted(crosshair, "crosshair");
+        Objects.requireNonNull(crosshair, "crosshair");
         if (this.xCrosshairs.remove(crosshair)) {
             crosshair.removePropertyChangeListener(this);
             fireOverlayChanged();
@@ -113,7 +113,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param crosshair the crosshair ({@code null} not permitted).
      */
     public void addRangeCrosshair(Crosshair crosshair) {
-        Args.nullNotPermitted(crosshair, "crosshair");
+        Objects.requireNonNull(crosshair, "crosshair");
         this.yCrosshairs.add(crosshair);
         crosshair.addPropertyChangeListener(this);
         fireOverlayChanged();
@@ -127,7 +127,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @see #addRangeCrosshair(pdk.chart.plot.Crosshair)
      */
     public void removeRangeCrosshair(Crosshair crosshair) {
-        Args.nullNotPermitted(crosshair, "crosshair");
+        Objects.requireNonNull(crosshair, "crosshair");
         if (this.yCrosshairs.remove(crosshair)) {
             crosshair.removePropertyChangeListener(this);
             fireOverlayChanged();
@@ -528,10 +528,9 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof CrosshairOverlay)) {
+        if (!(obj instanceof CrosshairOverlay that)) {
             return false;
         }
-        CrosshairOverlay that = (CrosshairOverlay) obj;
         if (!this.xCrosshairs.equals(that.xCrosshairs)) {
             return false;
         }
@@ -551,8 +550,8 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     @Override
     public Object clone() throws CloneNotSupportedException {
         CrosshairOverlay clone = (CrosshairOverlay) super.clone();
-        clone.xCrosshairs = (List) CloneUtils.cloneList(this.xCrosshairs);
-        clone.yCrosshairs = (List) CloneUtils.cloneList(this.yCrosshairs);
+        clone.xCrosshairs = CloneUtils.cloneList(this.xCrosshairs);
+        clone.yCrosshairs = CloneUtils.cloneList(this.yCrosshairs);
         return clone;
     }
 

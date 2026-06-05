@@ -1,5 +1,6 @@
 package pdk.chart;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import pdk.chart.api.Layer;
 import pdk.chart.api.RectangleEdge;
@@ -27,23 +28,23 @@ import java.awt.*;
 public class BarChart extends Chart {
 
     private final XYPlot plot_;
-    private final NumberAxis domainAxis_;
-    private final NumberAxis rangeAxis_;
+    private final NumberAxis xAxis_;
+    private final NumberAxis yAxis_;
     private final XYBarRenderer renderer_;
 
     public BarChart() {
         super(null, DEFAULT_TITLE_FONT, new XYPlot<>(), false);
 
         plot_ = getXYPlot();
-        domainAxis_ = new NumberAxis();
-        rangeAxis_ = new NumberAxis();
+        xAxis_ = new NumberAxis();
+        yAxis_ = new NumberAxis();
         renderer_ = new XYBarRenderer();
 
-        plot_.setDomainAxis(domainAxis_);
-        plot_.setRangeAxis(rangeAxis_);
+        plot_.setDomainAxis(xAxis_);
+        plot_.setRangeAxis(yAxis_);
         plot_.setRenderer(renderer_);
 
-        domainAxis_.setAutoRangeIncludesZero(false);
+        xAxis_.setAutoRangeIncludesZero(false);
 
         DEFAULT_THEME.apply(this);
     }
@@ -66,10 +67,10 @@ public class BarChart extends Chart {
     }
 
     /**
-     * configure chart to generate tool tips
+     * Configure chart to generate tool tips.
      *
-     * @param addTooltip true if generate tool tips
-     * @return this
+     * @param addTooltip true if generate tool tips.
+     * @return this.
      */
     public BarChart addTooltips(boolean addTooltip) {
         if (addTooltip) {
@@ -85,10 +86,10 @@ public class BarChart extends Chart {
      * Typically a marker will be drawn by the renderer as a line perpendicular
      * to the range axis, however this is entirely up to the renderer.
      *
-     * @param marker the marker ({@code null} not permitted).
+     * @param marker the marker.
      * @param layer  the layer (foreground or background).
      */
-    public BarChart addRangeMarker(Marker marker, Layer layer) {
+    public BarChart addRangeMarker(@NonNull Marker marker, Layer layer) {
         plot_.addRangeMarker(marker, layer);
         return this;
     }
@@ -117,7 +118,7 @@ public class BarChart extends Chart {
      * @return this
      */
     public BarChart domainAxisName(String xAxisTitle) {
-        domainAxis_.setLabel(xAxisTitle);
+        xAxis_.setLabel(xAxisTitle);
         return this;
     }
 
@@ -128,7 +129,20 @@ public class BarChart extends Chart {
      * @return this
      */
     public BarChart rangeAxisName(String yAxisTitle) {
-        rangeAxis_.setLabel(yAxisTitle);
+        yAxis_.setLabel(yAxisTitle);
+        return this;
+    }
+
+    /**
+     * Set the domain and range axis title.
+     *
+     * @param xAxisTitle x axis title.
+     * @param yAxisTitle y axis title.
+     * @return this.
+     */
+    public BarChart axisName(String xAxisTitle, String yAxisTitle) {
+        xAxis_.setLabel(xAxisTitle);
+        yAxis_.setLabel(yAxisTitle);
         return this;
     }
 
@@ -144,7 +158,7 @@ public class BarChart extends Chart {
      * @param xAxisIncludesZero the new value of the flag.
      */
     public BarChart domainAxisAutoRangeIncludesZero(boolean xAxisIncludesZero) {
-        domainAxis_.setAutoRangeIncludesZero(xAxisIncludesZero);
+        xAxis_.setAutoRangeIncludesZero(xAxisIncludesZero);
         return this;
     }
 
@@ -158,7 +172,7 @@ public class BarChart extends Chart {
      * @param yAxisIncludesZero the new value of the flag.
      */
     public BarChart rangeAxisAutoRangeIncludesZero(boolean yAxisIncludesZero) {
-        rangeAxis_.setAutoRangeIncludesZero(yAxisIncludesZero);
+        yAxis_.setAutoRangeIncludesZero(yAxisIncludesZero);
         return this;
     }
 
@@ -183,6 +197,4 @@ public class BarChart extends Chart {
         plot_.setOrientation(orientation);
         return this;
     }
-
-
 }
