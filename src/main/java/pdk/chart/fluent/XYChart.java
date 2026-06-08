@@ -10,10 +10,7 @@ import pdk.chart.api.RectangleEdge;
 import pdk.chart.api.RectangleInsets;
 import pdk.chart.axis.NumberAxis;
 import pdk.chart.data.xy.XYDataset;
-import pdk.chart.fluent.prop.NumberAxisProps;
-import pdk.chart.fluent.prop.XYBarProps;
-import pdk.chart.fluent.prop.XYLineAndShapeProps;
-import pdk.chart.fluent.prop.XYRendererProps;
+import pdk.chart.fluent.prop.*;
 import pdk.chart.legend.LegendTitle;
 import pdk.chart.plot.Marker;
 import pdk.chart.plot.PlotOrientation;
@@ -21,6 +18,7 @@ import pdk.chart.plot.XYPlot;
 import pdk.chart.renderer.xy.XYBarRenderer;
 import pdk.chart.renderer.xy.XYItemRenderer;
 import pdk.chart.renderer.xy.XYLineAndShapeRenderer;
+import pdk.chart.renderer.xy.YIntervalRenderer;
 import pdk.chart.text.TextAnchor;
 import pdk.chart.title.Title;
 
@@ -116,6 +114,24 @@ public class XYChart extends Chart {
             return new XYBarProps(this, xyBarRenderer);
         }
         throw new IllegalStateException("The renderer corresponding to the specified dataset is not BAR type.");
+    }
+
+
+    /**
+     * Return the {@link YIntervalProps} for a given dataset.
+     * <p>
+     * Throw an {@link IllegalStateException} if the chart type of the corresponding dataset
+     * is neither {@link XYChartType#PEAK}.
+     *
+     * @param dataset index of the dataset.
+     * @return {@link YIntervalProps}.
+     */
+    public YIntervalProps peakRenderer(int dataset) {
+        XYItemRenderer renderer = plot_.getRenderer(dataset);
+        if (renderer instanceof YIntervalRenderer intervalRenderer) {
+            return new YIntervalProps(this, intervalRenderer);
+        }
+        throw new IllegalStateException("The renderer corresponding to the specified dataset is not PEAK type.");
     }
 
     /**

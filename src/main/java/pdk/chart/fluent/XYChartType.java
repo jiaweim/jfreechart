@@ -2,6 +2,8 @@ package pdk.chart.fluent;
 
 import pdk.chart.renderer.xy.*;
 
+import java.awt.geom.Ellipse2D;
+
 /**
  * XYChart types.
  *
@@ -16,7 +18,8 @@ public enum XYChartType {
     SPLINE,
     SCATTER,
     HISTOGRAM,
-    BAR;
+    BAR,
+    PEAK;
 
     /**
      * Create {@link XYItemRenderer} for the given chart type.
@@ -35,6 +38,12 @@ public enum XYChartType {
         } else if (this == XYChartType.BAR || this == XYChartType.HISTOGRAM) {
             XYBarRenderer renderer = new XYBarRenderer();
             renderer.setShadowVisible(false);
+            return renderer;
+        } else if (this == XYChartType.PEAK) {
+            YIntervalRenderer renderer = new YIntervalRenderer();
+            Ellipse2D.Double shape = new Ellipse2D.Double(-0.5, 0.5, 1, 1);
+            renderer.setSeriesShape(0, shape);
+            renderer.setSeriesShape(1, shape);
             return renderer;
         } else {
             throw new IllegalStateException("Unexpected value: " + this);
