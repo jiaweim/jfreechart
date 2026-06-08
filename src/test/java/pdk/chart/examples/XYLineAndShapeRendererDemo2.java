@@ -1,11 +1,12 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
+import pdk.chart.internal.ShapeUtils;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 /**
  *
@@ -21,59 +22,71 @@ public class XYLineAndShapeRendererDemo2 {
         XYSeriesCollection<String> dataset4 = new XYSeriesCollection<>(new XYSeries<>("Series 4", new double[]{1, 2, 3}, new double[]{4, 4, 4}));
         XYSeriesCollection<String> dataset5 = new XYSeriesCollection<>(new XYSeries<>("Series 5", new double[]{1, 2, 3}, new double[]{5, 5, 5}));
 
-        Shape shape = new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0);
-        LineChart chart = new LineChart();
-        chart.title("XYLineAndShapeRendererDemo2")
-                .dataset(dataset1)
-                .addDataset(dataset2)
-                .addDataset(dataset3)
-                .addDataset(dataset4)
-                .addDataset(dataset5)
-                .domainAxisName("X")
-                .rangeAxisName("Y")
+        Shape shape = ShapeUtils.createCircle(8);
+        XYChart.create()
+                .title("XYLineAndShapeRendererDemo2")
+                .dataset(dataset1, XYChartType.LINE)
+                .addDataset(dataset2, XYChartType.LINE)
+                .addDataset(dataset3, XYChartType.LINE)
+                .addDataset(dataset4, XYChartType.LINE)
+                .addDataset(dataset5, XYChartType.LINE)
+                .axisNames("X", "Y")
+                .showLegend(true)
 
-                .defaultShapesVisible(true)
-                .defaultLinesVisible(true)
+                .lineAndShapeRenderer(0)
+                .defaultVisible(true, true)
                 .seriesShape(0, shape)
                 .seriesPaint(0, Color.RED)
                 .seriesFillPaint(0, Color.YELLOW)
                 .seriesOutlinePaint(0, Color.GRAY)
-
-                .defaultShapesVisible(1, true)
-                .seriesShape(1, 0, shape)
-                .seriesPaint(1, 0, Color.RED)
-                .seriesFillPaint(1, 0, Color.YELLOW)
-                .seriesOutlinePaint(1, 0, Color.GRAY)
-                .useFillPaint(1, true)
-
-                .defaultShapesVisible(2, true)
-                .seriesShape(2, 0, shape)
-                .seriesPaint(2, 0, Color.RED)
-                .seriesFillPaint(2, 0, Color.YELLOW)
-                .seriesOutlinePaint(2, 0, Color.GRAY)
-                .useOutlinePaint(2, true)
-
-                .defaultShapesVisible(3, true)
-                .seriesShape(3, 0, shape)
-                .seriesPaint(3, 0, Color.RED)
-                .seriesFillPaint(3, 0, Color.YELLOW)
-                .seriesOutlinePaint(3, 0, Color.GRAY)
-                .useFillPaint(3, true)
-                .useOutlinePaint(3, true)
-
-                .defaultShapesVisible(4, true)
-                .seriesShape(4, 0, shape)
-                .seriesPaint(4, 0, Color.RED)
-                .seriesFillPaint(4, 0, Color.YELLOW)
-                .seriesOutlinePaint(4, 0, Color.GRAY)
-                .useOutlinePaint(4, true)
-                .useFillPaint(4, true)
-                .drawOutlines(4, false)
-
-                .showLegend(true)
                 .addTooltips(true)
-                .domainAxisAutoRangeIncludesZero(false)
-                .rangeAxisAutoRangeIncludesZero(false);
-        chart.show();
+                .done()
+
+                .lineAndShapeRenderer(1)
+                .defaultShapesVisible(true)
+                .seriesShape(0, shape)
+                .seriesPaint(0, Color.RED)
+                .seriesFillPaint(0, Color.YELLOW)
+                .seriesOutlinePaint(0, Color.GRAY)
+                .useFillPaint(true)
+                .addTooltips(true)
+                .done()
+
+                .lineAndShapeRenderer(2)
+                .defaultShapesVisible(true)
+                .seriesShape(0, shape)
+                .seriesPaint(0, Color.RED)
+                .seriesFillPaint(0, Color.YELLOW)
+                .seriesOutlinePaint(0, Color.GRAY)
+                .useOutlinePaint(true)
+                .addTooltips(true)
+                .done()
+
+                .lineAndShapeRenderer(3)
+                .defaultShapesVisible(true)
+                .seriesShape(0, shape)
+                .seriesPaint(0, Color.RED)
+                .seriesFillPaint(0, Color.YELLOW)
+                .seriesOutlinePaint(0, Color.GRAY)
+                .useFillPaint(true)
+                .useOutlinePaint(true)
+                .addTooltips(true)
+                .done()
+
+                .lineAndShapeRenderer(4)
+                .defaultShapesVisible(true)
+                .seriesShape(0, shape)
+                .seriesPaint(0, Color.RED)
+                .seriesFillPaint(0, Color.YELLOW)
+                .seriesOutlinePaint(0, Color.GRAY)
+                .useOutlinePaint(true)
+                .useFillPaint(true)
+                .drawOutlines(true)
+                .addTooltips(true)
+                .done()
+
+                .domainAxis().autoRangeIncludesZero(false).done()
+                .rangeAxis().autoRangeIncludesZero(false).done()
+                .show();
     }
 }

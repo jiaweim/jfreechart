@@ -1,10 +1,10 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
-import pdk.chart.XYChartType;
 import pdk.chart.data.function.NormalDistributionFunction2D;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 
 /**
  *
@@ -22,11 +22,10 @@ public class NormalDistributionDemo {
         XYSeriesCollection<String> dataset1 = new XYSeriesCollection<>(lineSeries);
         XYSeriesCollection<String> dataset2 = new XYSeriesCollection<>(areaSeries);
 
-        LineChart chart = new LineChart();
-        chart.axisNames("X", "Probability Density")
-                .addDataset(0, dataset1, XYChartType.LINE)
-                .addDataset(1, dataset2, XYChartType.AREA)
-                .showLegend(false);
-        chart.show();
+        XYChart.create()
+                .axisNames("X", "Probability Density")
+                .dataset(dataset1, XYChartType.LINE)
+                .addDataset(dataset2, XYChartType.AREA)
+                .show();
     }
 }

@@ -1,0 +1,36 @@
+package pdk.chart.fluent;
+
+import pdk.chart.renderer.AreaRendererEndType;
+import pdk.chart.renderer.category.*;
+
+/**
+ * Supported categorized XYChart types.
+ *
+ * @author Jiawei Mao
+ * @version 1.0.0
+ * @since 08 Jun 2026, 10:46 AM
+ */
+public enum CategoryXYChartType {
+    LINE,
+    AREA,
+    BAR,
+    BoxWhisker;
+
+    public CategoryItemRenderer getRenderer() {
+        if (this == BoxWhisker) {
+            return new BoxAndWhiskerRenderer();
+        } else if (this == AREA) {
+            AreaRenderer areaRenderer = new AreaRenderer();
+            areaRenderer.setEndType(AreaRendererEndType.LEVEL);
+            return areaRenderer;
+        } else if (this == BAR) {
+            BarRenderer barRenderer = new BarRenderer();
+            barRenderer.setShadowVisible(false);
+            return barRenderer;
+        } else if (this == LINE) {
+            LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+            return renderer;
+        }
+        return null;
+    }
+}

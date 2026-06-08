@@ -1,12 +1,13 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
 import pdk.chart.api.RectangleAnchor;
 import pdk.chart.api.RectangleEdge;
 import pdk.chart.axis.ValueAxis;
 import pdk.chart.data.general.DatasetUtils;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 import pdk.chart.plot.Crosshair;
 import pdk.chart.plot.XYPlot;
 import pdk.chart.swing.*;
@@ -32,11 +33,10 @@ public class CrosshairOverlayDemo2 {
             dataset.addSeries(series);
         }
 
-        LineChart chart = new LineChart();
-        chart.title("CrosshairOverlayDemo2");
-        chart.domainAxisName("X")
-                .rangeAxisName("Y")
-                .dataset(dataset);
+        XYChart chart = XYChart.create()
+                .title("CrosshairOverlayDemo2")
+                .dataset(dataset, XYChartType.LINE)
+                .axisNames("X", "Y");
 
         CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
         Crosshair crosshair = new Crosshair(Double.NaN, Color.GRAY, new BasicStroke(0.5f));

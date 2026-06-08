@@ -1,7 +1,8 @@
 package pdk.chart.examples;
 
-import pdk.chart.BarChartCategory;
 import pdk.chart.data.category.DefaultCategoryDataset;
+import pdk.chart.fluent.CategoryXYChart;
+import pdk.chart.fluent.CategoryXYChartType;
 
 /**
  *
@@ -28,14 +29,14 @@ public class BarChartCategoryDemo {
         dataset.addValue(12.8, series1, category3);
         dataset.addValue(24.3, series2, category3);
 
-        BarChartCategory chart = new BarChartCategory();
-        chart.dataset(dataset)
+        CategoryXYChart.create()
+                .dataset(dataset, CategoryXYChartType.BAR)
                 .title("Antidepressant Medication Usage")
-                .axisName("Age Category", "Percent")
+                .axisNames("Age Category", "Percent")
                 .domainGridlinesVisible(true)
                 .rangeGridlinesVisible(true)
-                .categoryMargin(0.5)
-                .itemMargin(0.0);
-        chart.show();
+                .barRenderer(0).itemMargin(0.0).done()
+                .domainAxis().categoryMargin(0.5).done()
+                .show();
     }
 }

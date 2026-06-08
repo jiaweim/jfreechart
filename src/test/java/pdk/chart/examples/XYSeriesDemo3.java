@@ -1,10 +1,11 @@
 package pdk.chart.examples;
 
-import pdk.chart.BarChart;
 import pdk.chart.api.Layer;
 import pdk.chart.api.RectangleAnchor;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 import pdk.chart.plot.IntervalMarker;
 import pdk.chart.plot.Marker;
 import pdk.chart.text.TextAnchor;
@@ -33,13 +34,13 @@ public class XYSeriesDemo3 {
         marker.setLabelTextAnchor(TextAnchor.CENTER_LEFT);
         marker.setPaint(new Color(222, 222, 255, 128));
 
-        BarChart chart = new BarChart();
-        chart.dataset(dataset)
-                .title("XY Series Demo")
-                .axisName("X", "Y")
+        XYChart xyChart = XYChart.create()
+                .axisNames("X", "Y")
                 .showLegend(true)
-                .addTooltips(true)
-                .addRangeMarker(marker, Layer.BACKGROUND);
-        chart.show();
+                .addRangeMarker(marker, Layer.BACKGROUND)
+                .addDataset(dataset, XYChartType.BAR)
+                .barRenderer(0)
+                .addTooltips(true).chart();
+        xyChart.show();
     }
 }

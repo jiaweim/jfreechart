@@ -1,6 +1,7 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 import pdk.chart.plot.PlotOrientation;
 import pdk.chart.swing.ApplicationFrame;
 import pdk.chart.swing.ChartPanel;
@@ -12,47 +13,47 @@ public class ScatterPlotDemo1 {
 
     static void main() {
         SampleXYDataset2 dataset = new SampleXYDataset2();
-        LineChart chart = new LineChart();
-        chart.dataset(dataset)
+        XYChart chart = XYChart.create()
+                .dataset(dataset, XYChartType.LINE)
                 .noDataMessage("NO DATA")
-                .title("Scatter Plot Demo 1")
                 .orientation(PlotOrientation.VERTICAL)
+                .title("Scatter Plot Demo 1")
                 .showLegend(true)
-                .addTooltips(true)
-                .domainAxisName("X")
-                .rangeAxisName("Y")
-                .domainPannable(true)
-                .rangePannable(true)
-                .domainZeroBaselineVisible(true)
-                .rangeZeroBaselineVisible(true)
+                .axisNames("X", "Y")
+                .pannable(true, true)
+                .zeroBaselineVisible(true, true)
 
-                .domainGridlinesStroke(new BasicStroke(0.0F))
+                .domainGridlinesStroke(new BasicStroke(0.0f))
                 .domainGridlinePaint(Color.BLUE)
+
                 .domainMinorGridlineStroke(new BasicStroke(0.0F))
                 .domainMinorGridlinePaint(Color.GRAY)
                 .domainMinorGridlinesVisible(true)
-
                 .rangeGridlinesStroke(new BasicStroke(0.0F))
                 .rangeGridlinePaint(Color.BLUE)
                 .rangeMinorGridlineStroke(new BasicStroke(0.0F))
                 .rangeMinorGridlinePaint(Color.GRAY)
                 .rangeMinorGridlinesVisible(true)
 
+                .lineAndShapeRenderer(0)
+                .addTooltips(true)
                 .seriesOutlinePaint(0, Color.BLACK)
                 .useOutlinePaint(true)
                 .defaultShapesVisible(true)
                 .defaultLinesVisible(false)
-
-                .domainAxisAutoRangeIncludesZero(false)
-                .domainAxisTickMarkInsideLength(2.0f)
-                .domainAxisTickMarkOutsideLength(2.0f)
-                .domainAxisMinorTickCount(2)
-                .domainAxisMinorTickMarksVisible(true)
-                .rangeAxisTickMarkInsideLength(2.0f)
-                .rangeAxisTickMarkOutsideLength(2.0f)
-                .rangeAxisMinorTickCount(2)
-                .rangeAxisMinorTickMarksVisible(true)
-        ;
+                .done()
+                .domainAxis()
+                .autoRangeIncludesZero(false)
+                .tickMarkInsideLength(2.0f)
+                .tickMarkOutsideLength(2.0f)
+                .minorTickCount(2)
+                .minorTickMarksVisible(true)
+                .done()
+                .rangeAxis().tickMarkInsideLength(2.0f)
+                .tickMarkOutsideLength(2.0f)
+                .minorTickCount(2)
+                .minorTickMarksVisible(true)
+                .done();
 
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(500, 270));

@@ -1,8 +1,9 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 
 /**
  *
@@ -23,10 +24,9 @@ public class XYSplineRendererDemo1 {
         dataset.addSeries(s1);
         dataset.addSeries(s2);
 
-        LineChart chart = new LineChart();
-        chart.addDataset(0, dataset, true)
+        XYChart.create()
+                .dataset(dataset, XYChartType.SPLINE)
                 .showLegend(true)
-                .domainAxisAutoRangeIncludesZero(false);
-        chart.show();
+                .show();
     }
 }

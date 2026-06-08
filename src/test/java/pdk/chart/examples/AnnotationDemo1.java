@@ -1,10 +1,11 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
 import pdk.chart.annotations.XYTextAnnotation;
 import pdk.chart.axis.NumberAxis;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 import pdk.chart.text.TextAnchor;
 import pdk.chart.title.TextTitle;
 
@@ -117,18 +118,14 @@ public class AnnotationDemo1 {
         annotation9.setFont(font);
         annotation9.setTextAnchor(TextAnchor.HALF_ASCENT_LEFT);
 
-        LineChart chart = new LineChart();
-        chart.dataset(dataset)
-//                .title("JFreeChart: AnnotationDemo1.java")
+        XYChart.create()
+                .dataset(dataset, XYChartType.LINE)
                 .axisNames("Age in Months", "Weight (kg)")
                 .showLegend(true)
                 .addTitle(t1)
                 .addTitle(t2)
                 .domainPannable(true)
                 .rangePannable(true)
-                .domainAxisUpperMargin(0.12)
-                .domainAxisStandardTickUnits(NumberAxis.createIntegerTickUnits())
-                .rangeAxisAutoRangeIncludesZero(false)
                 .addAnnotation(annotation1)
                 .addAnnotation(annotation2)
                 .addAnnotation(annotation3)
@@ -138,8 +135,12 @@ public class AnnotationDemo1 {
                 .addAnnotation(annotation7)
                 .addAnnotation(annotation8)
                 .addAnnotation(annotation9)
-        ;
-
-        chart.show();
+                .domainAxis()
+                .upperMargin(0.12)
+                .standardTickUnits(NumberAxis.createIntegerTickUnits())
+                .done()
+                .rangeAxis()
+                .autoRangeIncludesZero(false)
+                .done().show();
     }
 }

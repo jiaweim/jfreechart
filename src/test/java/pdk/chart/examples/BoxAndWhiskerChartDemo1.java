@@ -1,8 +1,9 @@
 package pdk.chart.examples;
 
-import pdk.chart.BoxWhiskerChart;
 import pdk.chart.axis.NumberAxis;
 import pdk.chart.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
+import pdk.chart.fluent.CategoryXYChart;
+import pdk.chart.fluent.CategoryXYChartType;
 
 import java.awt.*;
 import java.util.List;
@@ -32,17 +33,19 @@ public class BoxAndWhiskerChartDemo1 {
             }
         }
 
-        BoxWhiskerChart chart = new BoxWhiskerChart();
-        chart.dataset(dataset)
+        CategoryXYChart xyChart = CategoryXYChart.create()
                 .title("Box and Whisker Chart Demo 1")
-                .axisName("Category", "Value")
+                .axisNames("Category", "Value")
                 .showLegend(true)
                 .backgroundPaint(Color.WHITE)
                 .plotBackgroundPaint(Color.LIGHT_GRAY)
+                .addDataset(dataset, CategoryXYChartType.BoxWhisker)
                 .domainGridlinePaint(Color.WHITE)
                 .domainGridlinesVisible(true)
                 .rangeGridlinePaint(Color.WHITE)
-                .rangeAxisStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        chart.show();
+                .rangeAxis()
+                .standardTickUnits(NumberAxis.createIntegerTickUnits())
+                .categoryChart();
+        xyChart.show();
     }
 }

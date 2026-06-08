@@ -1,7 +1,8 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChartCategory;
 import pdk.chart.data.category.DefaultCategoryDataset;
+import pdk.chart.fluent.CategoryXYChart;
+import pdk.chart.fluent.CategoryXYChartType;
 import pdk.chart.internal.ShapeUtils;
 
 import java.awt.*;
@@ -22,13 +23,16 @@ public class BasicLineChart {
         dataset.addSeries("Category",
                 new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"},
                 new double[]{150, 230, 224, 218, 135, 147, 260});
-        LineChartCategory chart = new LineChartCategory();
-        chart.dataset(dataset)
+
+        CategoryXYChart.create()
+                .dataset(dataset, CategoryXYChartType.LINE)
+                .showLegend(true)
+                .lineRenderer(0)
                 .seriesShape(0, ShapeUtils.createCircle(6))
+                .seriesLinesWidth(0, 2f)
                 .seriesShapesFilled(0, false)
-                .seriesLinesWidth(0, 2F)
-                .seriesOutlineStroke(0, new BasicStroke(2F))
-                .showLegend(true);
-        chart.show();
+                .seriesOutlineStroke(0, new BasicStroke(2f))
+                .done()
+                .show();
     }
 }

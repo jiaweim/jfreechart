@@ -1,8 +1,9 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
 import pdk.chart.data.xy.XYSeries;
 import pdk.chart.data.xy.XYSeriesCollection;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 
 /**
  *
@@ -17,13 +18,13 @@ public class XYSeriesDemo1 {
                 new double[]{1.0, 5.0, 4.0, 12.5, 17.3, 21.2, 21.9, 25.6, 30.0},
                 new double[]{500.2, 694.1, 100.0, 734.4, 453.2, 500.2, Double.NaN, 734.4, 453.2});
         XYSeriesCollection<String> dataset = new XYSeriesCollection<>(series1);
-        LineChart chart = new LineChart();
-        chart.title("XY Series Demo")
-                .domainAxisName("X")
-                .rangeAxisName("Y")
+
+        XYChart.create()
+                .title("XY Series Demo")
+                .axisNames("X", "Y")
                 .showLegend(true)
-                .addTooltips(true)
-                .dataset(dataset);
-        chart.show();
+                .dataset(dataset, XYChartType.LINE)
+                .lineAndShapeRenderer(0).addTooltips(true).done()
+                .show();
     }
 }

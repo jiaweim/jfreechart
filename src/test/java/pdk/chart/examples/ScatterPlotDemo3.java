@@ -1,6 +1,7 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChart;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 
 /**
  *
@@ -11,16 +12,18 @@ import pdk.chart.LineChart;
  */
 public class ScatterPlotDemo3 {
     static void main() {
-        LineChart chart = new LineChart();
-        chart.dataset(new SampleXYDataset2())
+        XYChart.create()
+                .dataset(new SampleXYDataset2(), XYChartType.LINE)
                 .title("Scatter Plot Demo 3")
                 .showLegend(true)
-                .addTooltips(true)
-                .defaultLinesVisible(false)
+                .axisNames("X", "Y")
+                .lineAndShapeRenderer(0)
                 .defaultShapesVisible(true)
-                .domainAxisName("X")
-                .rangeAxisName("Y")
-                .domainAxisAutoRangeIncludesZero(false);
-        chart.show();
+                .defaultLinesVisible(false)
+                .addTooltips(true)
+                .done()
+                .domainAxis()
+                .autoRangeIncludesZero(false)
+                .done().show();
     }
 }

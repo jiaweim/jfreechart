@@ -1,8 +1,8 @@
 package pdk.chart.examples;
 
-import pdk.chart.HistogramChart;
 import pdk.chart.data.statistics.HistogramDataset;
-import pdk.chart.plot.PlotOrientation;
+import pdk.chart.fluent.XYChart;
+import pdk.chart.fluent.XYChartType;
 
 import java.util.Random;
 
@@ -29,13 +29,13 @@ public class HistogramGaussian {
         }
         dataset.addSeries("H2", values, 100, 4.0, 10.0);
 
-        HistogramChart chart = new HistogramChart();
-        chart.dataset(dataset)
-                .title("Histogram Demo")
-                .orientation(PlotOrientation.VERTICAL)
+        XYChart.create()
+                .dataset(dataset, XYChartType.HISTOGRAM)
+                .title("Histogram Gaussian")
                 .showLegend(true)
+                .barRenderer(0)
                 .addTooltips(true)
-                .drawBarOutline(false);
-        chart.show();
+                .drawBarOutline(false)
+                .done().show();
     }
 }

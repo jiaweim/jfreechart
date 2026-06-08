@@ -1,8 +1,9 @@
 package pdk.chart.examples;
 
-import pdk.chart.LineChartCategory;
 import pdk.chart.axis.CategoryLabelPositions;
 import pdk.chart.data.category.DefaultCategoryDataset;
+import pdk.chart.fluent.CategoryXYChart;
+import pdk.chart.fluent.CategoryXYChartType;
 import pdk.chart.plot.PlotOrientation;
 
 /**
@@ -22,15 +23,19 @@ public class LineChartDemo1 {
                 new double[]{212.0, 504.0, 1520.0, 1842.0, 2991.0,
                         3500.0, 3793.0, 4024.0, 4240.0, 6005.0,
                         6002.0, 4411.0, 4433.0, 4545.0, 4569.0});
-        LineChartCategory chart = new LineChartCategory();
-        chart.dataset(dataset)
+
+        CategoryXYChart.create()
+                .dataset(dataset, CategoryXYChartType.LINE)
                 .title("Java Standard Class Library")
-                .domainAxisName(null)
-                .rangeAxisName("Class Count")
-                .categoryLabelPositions(CategoryLabelPositions.UP_90)
+                .axisNames(null, "Class Count")
                 .showLegend(false)
+                .orientation(PlotOrientation.VERTICAL)
+                .lineRenderer(0)
                 .addTooltips(true)
-                .orientation(PlotOrientation.VERTICAL);
-        chart.show();
+                .done()
+                .domainAxis()
+                .categoryLabelPositions(CategoryLabelPositions.UP_90)
+                .done()
+                .show();
     }
 }
