@@ -23,7 +23,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
     /**
      * Storage for the data series.
      */
-    private List<YIntervalSeries> data;
+    protected List<YIntervalSeries<S>> data;
 
     /**
      * Creates a new instance of {@code YIntervalSeriesCollection}.
@@ -39,7 +39,8 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      * @param series the series ({@code null} not permitted).
      */
     public void addSeries(YIntervalSeries<S> series) {
-        Args.nullNotPermitted(series, "series");
+        Objects.requireNonNull(series, "series");
+
         this.data.add(series);
         series.addChangeListener(this);
         fireDatasetChanged();
@@ -106,7 +107,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public Number getX(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getX(item);
     }
 
@@ -120,7 +121,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public double getYValue(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYValue(item);
     }
 
@@ -134,7 +135,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public double getStartYValue(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYLowValue(item);
     }
 
@@ -148,7 +149,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public double getEndYValue(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYHighValue(item);
     }
 
@@ -161,7 +162,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public Number getY(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYValue(item);
     }
 
@@ -200,7 +201,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public Number getStartY(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYLowValue(item);
     }
 
@@ -213,7 +214,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     @Override
     public Number getEndY(int series, int item) {
-        YIntervalSeries s = this.data.get(series);
+        YIntervalSeries<S> s = this.data.get(series);
         return s.getYHighValue(item);
     }
 
@@ -225,7 +226,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
      */
     public void removeSeries(int series) {
         Args.requireInRange(series, "series", 0, this.data.size() - 1);
-        YIntervalSeries ts = this.data.get(series);
+        YIntervalSeries<S> ts = this.data.get(series);
         ts.removeChangeListener(this);
         this.data.remove(series);
         fireDatasetChanged();
@@ -253,7 +254,7 @@ public class YIntervalSeriesCollection<S extends Comparable<S>>
     public void removeAllSeries() {
         // Unregister the collection as a change listener to each series in
         // the collection.
-        for (YIntervalSeries series : this.data) {
+        for (YIntervalSeries<S> series : this.data) {
             series.removeChangeListener(this);
         }
         this.data.clear();

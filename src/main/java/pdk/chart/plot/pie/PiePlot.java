@@ -28,10 +28,7 @@ import pdk.chart.util.ShadowGenerator;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -2031,7 +2028,6 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
         g2.setComposite(originalComposite);
 
         drawOutline(g2, area);
-
     }
 
     /**
@@ -2053,7 +2049,6 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
         }
         double gapHorizontal = plotArea.getWidth() * labelReserve * 2.0;
         double gapVertical = plotArea.getHeight() * this.interiorGap * 2.0;
-
 
         if (DEBUG_DRAW_INTERIOR) {
             double hGap = plotArea.getWidth() * this.interiorGap;
@@ -2133,7 +2128,7 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
         state.setPieHRadius(pieArea.getHeight() / 2.0);
 
         // plot the data (unless the dataset is null)...
-        if ((this.dataset != null) && (this.dataset.getKeys().size() > 0)) {
+        if ((this.dataset != null) && (!this.dataset.getKeys().isEmpty())) {
 
             List<K> keys = this.dataset.getKeys();
             double totalValue = DatasetUtils.calculatePieDatasetTotal(
@@ -2141,21 +2136,18 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
 
             int passesRequired = state.getPassesRequired();
             for (int pass = 0; pass < passesRequired; pass++) {
-                double runningTotal = 0.0;
                 for (int section = 0; section < keys.size(); section++) {
                     Number n = this.dataset.getValue(section);
                     if (n != null) {
                         double value = n.doubleValue();
                         if (value > 0.0) {
-                            runningTotal += value;
                             drawItem(g2, section, explodeArea, state, pass);
                         }
                     }
                 }
             }
             if (this.simpleLabels) {
-                drawSimpleLabels(g2, keys, totalValue, plotArea, linkArea,
-                        state);
+                drawSimpleLabels(g2, keys, totalValue, plotArea, linkArea, state);
             } else {
                 drawLabels(g2, keys, totalValue, plotArea, linkArea, state);
             }
@@ -2340,7 +2332,6 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
         }
 
         g2.setComposite(originalComposite);
-
     }
 
     /**
@@ -2402,13 +2393,10 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
 
         // draw the labels...
         if (this.labelGenerator != null) {
-            drawLeftLabels(leftKeys, g2, plotArea, linkArea, labelWidth,
-                    state);
-            drawRightLabels(rightKeys, g2, plotArea, linkArea, labelWidth,
-                    state);
+            drawLeftLabels(leftKeys, g2, plotArea, linkArea, labelWidth, state);
+            drawRightLabels(rightKeys, g2, plotArea, linkArea, labelWidth, state);
         }
         g2.setComposite(originalComposite);
-
     }
 
     /**
@@ -2992,9 +2980,9 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
     public int hashCode() {
         int hash = 7;
         hash = 73 * hash + this.pieIndex;
-        hash = 73 * hash + (int) (Double.doubleToLongBits(this.interiorGap) ^ (Double.doubleToLongBits(this.interiorGap) >>> 32));
+        hash = 73 * hash + Double.hashCode(interiorGap);
         hash = 73 * hash + (this.circular ? 1 : 0);
-        hash = 73 * hash + (int) (Double.doubleToLongBits(this.startAngle) ^ (Double.doubleToLongBits(this.startAngle) >>> 32));
+        hash = 73 * hash + Double.hashCode(startAngle);
         hash = 73 * hash + Objects.hashCode(this.direction);
         hash = 73 * hash + Objects.hashCode(this.sectionPaintMap);
         hash = 73 * hash + Objects.hashCode(this.defaultSectionPaint);
@@ -3074,6 +3062,7 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
      * @param stream the output stream.
      * @throws IOException if there is an I/O error.
      */
+    @Serial
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         SerialUtils.writePaint(this.defaultSectionPaint, stream);
@@ -3097,6 +3086,7 @@ public class PiePlot<K extends Comparable<K>> extends Plot implements Cloneable,
      * @throws IOException            if there is an I/O error.
      * @throws ClassNotFoundException if there is a classpath problem.
      */
+    @Serial
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();

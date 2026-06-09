@@ -1,12 +1,12 @@
 package pdk.chart.text;
 
 import pdk.chart.block.Size2D;
-import pdk.chart.internal.Args;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A sequence of {@link TextFragment} objects that together form a line of
@@ -60,9 +60,10 @@ public class TextLine implements Serializable {
      * @param paint the text color ({@code null} not permitted).
      */
     public TextLine(String text, Font font, Paint paint) {
-        Args.nullNotPermitted(text, "text");
-        Args.nullNotPermitted(font, "font");
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(text, "text must not be null.");
+        Objects.requireNonNull(font, "font must not be null.");
+        Objects.requireNonNull(paint, "paint must not be null.");
+
         this.fragments = new ArrayList<>();
         final TextFragment fragment = new TextFragment(text, font, paint);
         this.fragments.add(fragment);
@@ -74,7 +75,7 @@ public class TextLine implements Serializable {
      * @param fragment the text fragment ({@code null} not permitted).
      */
     public void addFragment(TextFragment fragment) {
-        Args.nullNotPermitted(fragment, "fragment");
+        Objects.requireNonNull(fragment, "fragment must not be null.");
         this.fragments.add(fragment);
     }
 

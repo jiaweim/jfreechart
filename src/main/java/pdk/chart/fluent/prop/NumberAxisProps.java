@@ -154,6 +154,19 @@ public class NumberAxisProps {
     }
 
     /**
+     * Sets the lower margin for the axis (as a percentage of the axis range)
+     * and sends an {@link AxisChangeEvent} to all registered listeners.  This
+     * margin is added only when the axis range is auto-calculated - if you set
+     * the axis range manually, the margin is ignored.
+     *
+     * @param margin the margin percentage (for example, 0.05 is five percent).
+     */
+    public NumberAxisProps lowerMargin(double margin) {
+        axis_.setLowerMargin(margin);
+        return this;
+    }
+
+    /**
      * Sets the upper margin for the axis (as a percentage of the axis range)
      * and sends an {@link AxisChangeEvent} to all registered listeners.
      * <p>

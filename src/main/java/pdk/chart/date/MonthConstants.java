@@ -1,39 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * -------------------
- * MonthConstants.java
- * -------------------
- * (C) Copyright 2006-present, by David Gilbert and Contributors.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   -;
- *
- */
-
 package pdk.chart.date;
 
 /**
@@ -41,40 +5,64 @@ package pdk.chart.date;
  */
 public interface MonthConstants {
 
-    /** Constant for January. */
+    /**
+     * Constant for January.
+     */
     int JANUARY = 1;
 
-    /** Constant for February. */
+    /**
+     * Constant for February.
+     */
     int FEBRUARY = 2;
 
-    /** Constant for March. */
+    /**
+     * Constant for March.
+     */
     int MARCH = 3;
 
-    /** Constant for April. */
+    /**
+     * Constant for April.
+     */
     int APRIL = 4;
 
-    /** Constant for May. */
+    /**
+     * Constant for May.
+     */
     int MAY = 5;
 
-    /** Constant for June. */
+    /**
+     * Constant for June.
+     */
     int JUNE = 6;
 
-    /** Constant for July. */
+    /**
+     * Constant for July.
+     */
     int JULY = 7;
 
-    /** Constant for August. */
+    /**
+     * Constant for August.
+     */
     int AUGUST = 8;
 
-    /** Constant for September. */
+    /**
+     * Constant for September.
+     */
     int SEPTEMBER = 9;
 
-    /** Constant for October. */
+    /**
+     * Constant for October.
+     */
     int OCTOBER = 10;
 
-    /** Constant for November. */
+    /**
+     * Constant for November.
+     */
     int NOVEMBER = 11;
 
-    /** Constant for December. */
+    /**
+     * Constant for December.
+     */
     int DECEMBER = 12;
 
 }

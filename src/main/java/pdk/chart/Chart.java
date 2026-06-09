@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 
@@ -243,8 +244,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      */
     public Chart(String title, Font titleFont, Plot plot,
             boolean createLegend) {
-
-        Args.nullNotPermitted(plot, "plot");
+        Objects.requireNonNull(plot, "plot");
         this.id = null;
         plot.setChart(this);
 
@@ -362,7 +362,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #getRenderingHints()
      */
     public void setRenderingHints(RenderingHints renderingHints) {
-        Args.nullNotPermitted(renderingHints, "renderingHints");
+        Objects.requireNonNull(renderingHints, "renderingHints");
         this.renderingHints = renderingHints;
         fireChartChanged();
     }
@@ -450,7 +450,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #getPadding()
      */
     public void setPadding(RectangleInsets padding) {
-        Args.nullNotPermitted(padding, "padding");
+        Objects.requireNonNull(padding, "padding");
         this.padding = padding;
         notifyListeners(new ChartChangeEvent(this));
     }
@@ -584,7 +584,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #getSubtitles()
      */
     public void setSubtitles(List<Title> subtitles) {
-        Args.nullNotPermitted(subtitles, "subtitles");
+        Objects.requireNonNull(subtitles, "subtitles");
         setNotify(false);
         clearSubtitles();
         for (Title t : subtitles) {
@@ -627,7 +627,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #getSubtitle(int)
      */
     public void addSubtitle(Title subtitle) {
-        Args.nullNotPermitted(subtitle, "subtitle");
+        Objects.requireNonNull(subtitle, "subtitle");
         this.subtitles.add(subtitle);
         subtitle.addChangeListener(this);
         fireChartChanged();
@@ -642,7 +642,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      */
     public void addSubtitle(int index, Title subtitle) {
         Args.requireInRange(index, "index", 0, getSubtitleCount());
-        Args.nullNotPermitted(subtitle, "subtitle");
+        Objects.requireNonNull(subtitle, "subtitle");
         this.subtitles.add(index, subtitle);
         subtitle.addChangeListener(this);
         fireChartChanged();
@@ -864,7 +864,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #getBackgroundImageAlignment()
      */
     public void setBackgroundImageAlignment(RectangleAlignment alignment) {
-        Args.nullNotPermitted(alignment, "alignment");
+        Objects.requireNonNull(alignment, "alignment");
         if (this.backgroundImageAlignment != alignment) {
             this.backgroundImageAlignment = alignment;
             fireChartChanged();
@@ -1088,8 +1088,8 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
     private Rectangle2D createAlignedRectangle2D(Size2D dimensions,
             Rectangle2D frame, HorizontalAlignment hAlign,
             VerticalAlignment vAlign) {
-        Args.nullNotPermitted(hAlign, "hAlign");
-        Args.nullNotPermitted(vAlign, "vAlign");
+        Objects.requireNonNull(hAlign, "hAlign");
+        Objects.requireNonNull(vAlign, "vAlign");
         double x = Double.NaN;
         double y = Double.NaN;
         switch (hAlign) {
@@ -1138,9 +1138,8 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      */
     protected EntityCollection drawTitle(Title t, Graphics2D g2,
             Rectangle2D area, boolean entities) {
-
-        Args.nullNotPermitted(t, "t");
-        Args.nullNotPermitted(area, "area");
+        Objects.requireNonNull(t, "title");
+        Objects.requireNonNull(area, "area");
         Rectangle2D titleArea;
         RectangleEdge position = t.getPosition();
         double ww = area.getWidth();
@@ -1308,7 +1307,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #removeChangeListener(ChartChangeListener)
      */
     public void addChangeListener(ChartChangeListener listener) {
-        Args.nullNotPermitted(listener, "listener");
+        Objects.requireNonNull(listener, "listener");
         this.changeListeners.add(ChartChangeListener.class, listener);
     }
 
@@ -1319,7 +1318,7 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      * @see #addChangeListener(ChartChangeListener)
      */
     public void removeChangeListener(ChartChangeListener listener) {
-        Args.nullNotPermitted(listener, "listener");
+        Objects.requireNonNull(listener, "listener");
         this.changeListeners.remove(ChartChangeListener.class, listener);
     }
 
@@ -1416,6 +1415,18 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
      */
     public void show() {
         show(this);
+    }
+
+    /**
+     * Save the chart in the specified format.
+     *
+     * @param file   target {@link Path} to save.
+     * @param format {@link FileFormat}.
+     * @param width  chart width.
+     * @param height chart height.
+     */
+    public void save(Path file, FileFormat format, int width, int height) {
+        save(this, file, format, width, height);
     }
 
     /**

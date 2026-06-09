@@ -1,40 +1,3 @@
-/* ======================================================
- * JFreeChart : a chart library for the Java(tm) platform
- * ======================================================
- *
- * (C) Copyright 2000-present, by David Gilbert and Contributors.
- *
- * Project Info:  https://www.jfree.org/jfreechart/index.html
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
- * Other names may be trademarks of their respective owners.]
- *
- * --------------------
- * AbstractDataset.java
- * --------------------
- * (C) Copyright 2000-present, by David Gilbert.
- *
- * Original Author:  David Gilbert;
- * Contributor(s):   Nicolas Brodu (for Astrium and EADS Corporate Research
- *                   Center);
- *
- */
-
 package pdk.chart.data.general;
 
 import javax.swing.event.EventListenerList;
@@ -50,13 +13,17 @@ import java.util.List;
 public abstract class AbstractDataset implements Dataset, Cloneable,
         Serializable, ObjectInputValidation {
 
-    /** For serialization. */
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 1918768939869230744L;
 
-    /** Storage for registered change listeners. */
+    /**
+     * Storage for registered change listeners.
+     */
     private transient EventListenerList listenerList;
-    
-    /** 
+
+    /**
      * A flag that can be used to temporarily suppress dataset change event
      * notifications.
      */
@@ -71,37 +38,36 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     }
 
     /**
-     * Returns the value of the notify flag.  The default value is 
-     * {@code true}.  If this is {@code false}, calls to the 
+     * Returns the value of the notify flag.  The default value is
+     * {@code true}.  If this is {@code false}, calls to the
      * {@link #fireDatasetChanged()} method will NOT trigger a dataset
      * change event.
-     * 
+     *
      * @return A boolean.
      */
     public boolean getNotify() {
         return this.notify;
     }
-    
+
     /**
      * Sets the notify flag, which controls whether the {@link #fireDatasetChanged()}
      * method notifies listeners.  Setting this flag to {@code true} will
-     * trigger a {@code DatasetChangeEvent} because there may be 
+     * trigger a {@code DatasetChangeEvent} because there may be
      * queued up changes.
-     * 
-     * @param notify  the new flag value.
+     *
+     * @param notify the new flag value.
      */
     public void setNotify(boolean notify) {
         this.notify = notify;
         if (notify) {
             fireDatasetChanged();
-        }    
+        }
     }
-    
+
     /**
      * Registers an object to receive notification of changes to the dataset.
      *
-     * @param listener  the object to register.
-     *
+     * @param listener the object to register.
      * @see #removeChangeListener(DatasetChangeListener)
      */
     @Override
@@ -113,8 +79,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * Deregisters an object so that it no longer receives notification of
      * changes to the dataset.
      *
-     * @param listener  the object to deregister.
-     *
+     * @param listener the object to deregister.
      * @see #addChangeListener(DatasetChangeListener)
      */
     @Override
@@ -127,10 +92,8 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * the dataset as a listener.  Most applications won't need to call this
      * method, it exists mainly for use by unit testing code.
      *
-     * @param listener  the listener.
-     *
+     * @param listener the listener.
      * @return A boolean.
-     *
      * @see #addChangeListener(DatasetChangeListener)
      * @see #removeChangeListener(DatasetChangeListener)
      */
@@ -140,8 +103,8 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     }
 
     /**
-     * Notifies all registered listeners that the dataset has changed, 
-     * provided that the {@code notify} flag has not been set to 
+     * Notifies all registered listeners that the dataset has changed,
+     * provided that the {@code notify} flag has not been set to
      * {@code false}.
      *
      * @see #addChangeListener(DatasetChangeListener)
@@ -155,9 +118,8 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     /**
      * Notifies all registered listeners that the dataset has changed.
      *
-     * @param event  contains information about the event that triggered the
-     *               notification.
-     *
+     * @param event contains information about the event that triggered the
+     *              notification.
      * @see #addChangeListener(DatasetChangeListener)
      * @see #removeChangeListener(DatasetChangeListener)
      */
@@ -177,9 +139,8 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * this dataset.
      *
      * @return A clone.
-     *
-     * @throws CloneNotSupportedException  if the dataset does not support
-     *                                     cloning.
+     * @throws CloneNotSupportedException if the dataset does not support
+     *                                    cloning.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -191,8 +152,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     /**
      * Handles serialization.
      *
-     * @param stream  the output stream.
-     *
+     * @param stream the output stream.
      * @throws IOException if there is an I/O problem.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
@@ -202,17 +162,16 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     /**
      * Restores a serialized object.
      *
-     * @param stream  the input stream.
-     *
-     * @throws IOException if there is an I/O problem.
+     * @param stream the input stream.
+     * @throws IOException            if there is an I/O problem.
      * @throws ClassNotFoundException if there is a problem loading a class.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
         stream.registerValidation(this, 10);  // see comments about priority of
-                                              // 10 in validateObject()
+        // 10 in validateObject()
     }
 
     /**
@@ -230,11 +189,10 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * readObject or validateObject methods. Notify them that this dataset has
      * changed.
      *
-     * @exception InvalidObjectException If the object cannot validate itself.
+     * @throws InvalidObjectException If the object cannot validate itself.
      */
     @Override
     public void validateObject() throws InvalidObjectException {
         fireDatasetChanged();
     }
-
 }

@@ -29,14 +29,9 @@ public class ExportUtils {
     public static boolean isJFreeSVGAvailable() {
         Class<?> svgClass = null;
         try {
-            svgClass = Class.forName("pdk.svg.SVGGraphics2D");
+            svgClass = Class.forName("org.jfree.svg.SVGGraphics2D");
         } catch (ClassNotFoundException e) {
-            // see if there is maybe an older version of JFreeSVG (different package name)
-            try {
-                svgClass = Class.forName("pdk.graphics2d.svg.SVGGraphics2D");
-            } catch (ClassNotFoundException e2) {
-                // svgClass will be null so the function will return false
-            }
+            // svgClass will be null so the function will return false
         }
         return (svgClass != null);
     }
@@ -71,24 +66,21 @@ public class ExportUtils {
      */
     public static void writeAsSVG(Drawable drawable, int w, int h, File file) {
         if (!ExportUtils.isJFreeSVGAvailable()) {
-            throw new IllegalStateException(
-                    "JFreeSVG is not present on the classpath.");
+            throw new IllegalStateException("JFreeSVG is not present on the classpath.");
         }
         Args.nullNotPermitted(drawable, "drawable");
         Args.nullNotPermitted(file, "file");
         try {
             Class<?> svg2Class = Class.forName(
-                    "pdk.graphics2d.svg.SVGGraphics2D");
-            Constructor<?> c1 = svg2Class.getConstructor(int.class, int.class);
+                    "org.jfree.svg.SVGGraphics2D");
+            Constructor<?> c1 = svg2Class.getConstructor(double.class, double.class);
             Graphics2D svg2 = (Graphics2D) c1.newInstance(w, h);
             Rectangle2D drawArea = new Rectangle2D.Double(0, 0, w, h);
             drawable.draw(svg2, drawArea);
-            Class<?> svgUtilsClass = Class.forName(
-                    "pdk.graphics2d.svg.SVGUtils");
+            Class<?> svgUtilsClass = Class.forName("org.jfree.svg.SVGUtils");
             Method m1 = svg2Class.getMethod("getSVGElement", (Class[]) null);
             String element = (String) m1.invoke(svg2, (Object[]) null);
-            Method m2 = svgUtilsClass.getMethod("writeToSVG", File.class,
-                    String.class);
+            Method m2 = svgUtilsClass.getMethod("writeToSVG", File.class, String.class);
             m2.invoke(svgUtilsClass, file, element);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  NoSuchMethodException | SecurityException | IllegalArgumentException |

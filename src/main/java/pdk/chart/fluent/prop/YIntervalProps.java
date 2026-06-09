@@ -52,9 +52,22 @@ public class YIntervalProps extends XYRendererProps {
      *
      * @param generator the generator ({@code null} permitted).
      */
-    public YIntervalProps setDefaultItemLabelGenerator(XYItemLabelGenerator generator) {
+    public YIntervalProps defaultItemLabelGenerator(XYItemLabelGenerator generator) {
         renderer_.setDefaultItemLabelGenerator(generator);
         return this;
     }
+
+    /**
+     * Sets the stroke for a series and, if requested, sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series the series index (zero-based).
+     * @param stroke the stroke ({@code null} permitted).
+     */
+    public YIntervalProps seriesStroke(int series, Stroke stroke) {
+        renderer_.setSeriesStroke(series, stroke, false);
+        return this;
+    }
+
 }
 

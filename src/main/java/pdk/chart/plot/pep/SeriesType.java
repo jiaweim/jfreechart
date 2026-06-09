@@ -1,0 +1,33 @@
+package pdk.chart.plot.pep;
+
+import java.awt.*;
+
+/**
+ * type of series in {@link SpectrumPlot}.
+ *
+ * @author Jiawei Mao
+ * @version 1.0.0
+ * @since 09 Jun 2026, 6:12 PM
+ */
+public enum SeriesType implements Comparable<SeriesType> {
+
+    mz(new Color(90, 90, 90), 1),
+    b(new Color(0, 99, 115), 2),
+    y(new Color(190, 9, 0), 2);
+
+    private final Color color;
+    private final int stokeWidth;
+
+    SeriesType(Color color, int stokeWidth) {
+        this.color = color;
+        this.stokeWidth = stokeWidth;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getStokeWidth() {
+        return stokeWidth;
+    }
+}

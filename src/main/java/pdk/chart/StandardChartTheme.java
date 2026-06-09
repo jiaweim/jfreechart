@@ -291,7 +291,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      *               included.
      */
     public StandardChartTheme(String name, boolean shadow) {
-        Args.nullNotPermitted(name, "name");
+        Objects.requireNonNull(name, "name");
         this.name = name;
         this.extraLargeFont = new Font("Tahoma", Font.BOLD, 20);
         this.largeFont = new Font("Tahoma", Font.BOLD, 14);
@@ -348,7 +348,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getExtraLargeFont()
      */
     public void setExtraLargeFont(Font font) {
-        Args.nullNotPermitted(font, "font");
+        Objects.requireNonNull(font, "font");
         this.extraLargeFont = font;
     }
 
@@ -868,7 +868,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getThermometerPaint()
      */
     public void setThermometerPaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.thermometerPaint = paint;
     }
 
@@ -889,7 +889,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getErrorIndicatorPaint()
      */
     public void setErrorIndicatorPaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.errorIndicatorPaint = paint;
     }
 
@@ -910,7 +910,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getGridBandPaint()
      */
     public void setGridBandPaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.gridBandPaint = paint;
     }
 
@@ -931,7 +931,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getGridBandAlternatePaint()
      */
     public void setGridBandAlternatePaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.gridBandAlternatePaint = paint;
     }
 
@@ -969,7 +969,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getDrawingSupplier()
      */
     public void setDrawingSupplier(DrawingSupplier supplier) {
-        Args.nullNotPermitted(supplier, "supplier");
+        Objects.requireNonNull(supplier, "supplier");
         this.drawingSupplier = supplier;
     }
 
@@ -980,7 +980,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     @Override
     public void apply(Chart chart) {
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(chart, "chart");
         TextTitle title = chart.getTitle();
         if (title != null) {
             title.setFont(this.extraLargeFont);
@@ -1071,7 +1071,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot the plot ({@code null} not permitted).
      */
     protected void applyToPlot(Plot plot) {
-        Args.nullNotPermitted(plot, "plot");
+        Objects.requireNonNull(plot, "plot");
         if (plot.getDrawingSupplier() != null) {
             plot.setDrawingSupplier(getDrawingSupplier());
         }

@@ -12,10 +12,12 @@ import pdk.chart.data.statistics.StatisticalCategoryDataset;
 import pdk.chart.data.xy.*;
 import pdk.chart.internal.Args;
 import pdk.chart.internal.ArrayUtils;
+import pdk.chart.plot.pep.PeptideDataset;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A collection of useful static methods relating to datasets.
@@ -39,7 +41,7 @@ public final class DatasetUtils {
      * @return The total.
      */
     public static <K extends Comparable<K>> double calculatePieDatasetTotal(PieDataset<K> dataset) {
-        Args.nullNotPermitted(dataset, "dataset");
+        Objects.requireNonNull(dataset, "dataset");
         double totalValue = 0;
         for (K key : dataset.getKeys()) {
             if (key != null) {
@@ -368,6 +370,21 @@ public final class DatasetUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * Returns {@code true} if the dataset is empty (or {@code null}),
+     * and {@code false} otherwise.
+     *
+     * @param dataset the dataset ({@code null} permitted).
+     * @return A boolean.
+     */
+    public static boolean isEmptyOrNull(PeptideDataset dataset) {
+        if (dataset == null) {
+            return true;
+        }
+        char[] value = dataset.getValue();
+        return value == null || value.length == 0;
     }
 
     /**

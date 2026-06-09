@@ -322,11 +322,9 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
      * @param dataset the data set.
      */
     public ThermometerPlot(ValueDataset dataset) {
-
         super();
 
-        this.padding = new RectangleInsets(UnitType.RELATIVE, 0.05, 0.05, 0.05,
-                0.05);
+        this.padding = new RectangleInsets(UnitType.RELATIVE, 0.05, 0.05, 0.05, 0.05);
         this.dataset = dataset;
         if (dataset != null) {
             dataset.addChangeListener(this);
@@ -375,7 +373,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         // send a dataset change event to self...
         DatasetChangeEvent event = new DatasetChangeEvent(this, dataset);
         datasetChanged(event);
-
     }
 
     /**
@@ -481,7 +478,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
      * @see #getPadding()
      */
     public void setPadding(RectangleInsets padding) {
-        Args.nullNotPermitted(padding, "padding");
+        Objects.requireNonNull(padding, "padding");
         this.padding = padding;
         fireChangeEvent();
     }
@@ -1142,7 +1139,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
                     break;
                 default:
             }
-            /***/
         }
 
         g2.setPaint(this.thermometerPaint);

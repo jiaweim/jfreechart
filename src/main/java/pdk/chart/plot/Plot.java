@@ -912,13 +912,12 @@ public abstract class Plot implements ChartElement, AxisChangeListener,
      */
     protected void fillBackground(Graphics2D g2, Rectangle2D area,
             PlotOrientation orientation) {
-        Args.nullNotPermitted(orientation, "orientation");
+        Objects.requireNonNull(orientation, "orientation");
         if (this.backgroundPaint == null) {
             return;
         }
         Paint p = this.backgroundPaint;
-        if (p instanceof GradientPaint) {
-            GradientPaint gp = (GradientPaint) p;
+        if (p instanceof GradientPaint gp) {
             if (orientation == PlotOrientation.VERTICAL) {
                 p = new GradientPaint((float) area.getCenterX(),
                         (float) area.getMaxY(), gp.getColor1(),

@@ -3,13 +3,13 @@ package pdk.chart;
 import pdk.chart.encoders.EncoderUtil;
 import pdk.chart.encoders.ImageFormat;
 import pdk.chart.imagemap.*;
-import pdk.chart.internal.Args;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * A collection of utility methods for JFreeChart.  Includes methods for
@@ -122,8 +122,7 @@ public abstract class ChartUtils {
     public static void writeChartAsPNG(OutputStream out, Chart chart,
             int width, int height, ChartRenderingInfo info)
             throws IOException {
-
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(chart, "Chart cannot be null.");
         BufferedImage bufferedImage
                 = chart.createBufferedImage(width, height, info);
         EncoderUtil.writeBufferedImage(bufferedImage, ImageFormat.PNG, out);
@@ -148,9 +147,9 @@ public abstract class ChartUtils {
     public static void writeChartAsPNG(OutputStream out, Chart chart,
             int width, int height, ChartRenderingInfo info,
             boolean encodeAlpha, int compression) throws IOException {
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(chart, "Chart cannot be null.");
 
-        Args.nullNotPermitted(out, "out");
-        Args.nullNotPermitted(chart, "chart");
         BufferedImage chartImage = chart.createBufferedImage(width, height,
                 BufferedImage.TYPE_INT_ARGB, info);
         ChartUtils.writeBufferedImageAsPNG(out, chartImage, encodeAlpha,
@@ -172,9 +171,8 @@ public abstract class ChartUtils {
     public static void writeScaledChartAsPNG(OutputStream out,
             Chart chart, int width, int height, int widthScaleFactor,
             int heightScaleFactor) throws IOException {
-
-        Args.nullNotPermitted(out, "out");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(chart, "Chart cannot be null.");
 
         double desiredWidth = width * widthScaleFactor;
         double desiredHeight = height * heightScaleFactor;
@@ -241,8 +239,7 @@ public abstract class ChartUtils {
     public static void saveChartAsPNG(File file, Chart chart,
             int width, int height, ChartRenderingInfo info)
             throws IOException {
-
-        Args.nullNotPermitted(file, "file");
+        Objects.requireNonNull(file, "file");
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             ChartUtils.writeChartAsPNG(out, chart, width, height, info);
         }
@@ -266,13 +263,11 @@ public abstract class ChartUtils {
     public static void saveChartAsPNG(File file, Chart chart,
             int width, int height, ChartRenderingInfo info, boolean encodeAlpha,
             int compression) throws IOException {
-
-        Args.nullNotPermitted(file, "file");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(file, "file");
+        Objects.requireNonNull(chart, "chart");
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             writeChartAsPNG(out, chart, width, height, info, encodeAlpha, compression);
         }
-
     }
 
     /**
@@ -329,9 +324,8 @@ public abstract class ChartUtils {
     public static void writeChartAsJPEG(OutputStream out, Chart chart,
             int width, int height, ChartRenderingInfo info)
             throws IOException {
-
-        Args.nullNotPermitted(out, "out");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(chart, "chart");
         BufferedImage image = chart.createBufferedImage(width, height,
                 BufferedImage.TYPE_INT_RGB, info);
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out);
@@ -355,9 +349,8 @@ public abstract class ChartUtils {
     public static void writeChartAsJPEG(OutputStream out, float quality,
             Chart chart, int width, int height, ChartRenderingInfo info)
             throws IOException {
-
-        Args.nullNotPermitted(out, "out");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(out, "out");
+        Objects.requireNonNull(chart, "chart");
         BufferedImage image = chart.createBufferedImage(width, height,
                 BufferedImage.TYPE_INT_RGB, info);
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out, quality);
@@ -412,9 +405,8 @@ public abstract class ChartUtils {
      */
     public static void saveChartAsJPEG(File file, Chart chart,
             int width, int height, ChartRenderingInfo info) throws IOException {
-
-        Args.nullNotPermitted(file, "file");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(file, "file");
+        Objects.requireNonNull(chart, "chart");
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             writeChartAsJPEG(out, chart, width, height, info);
         }
@@ -438,9 +430,8 @@ public abstract class ChartUtils {
     public static void saveChartAsJPEG(File file, float quality,
             Chart chart, int width, int height,
             ChartRenderingInfo info) throws IOException {
-
-        Args.nullNotPermitted(file, "file");
-        Args.nullNotPermitted(chart, "chart");
+        Objects.requireNonNull(file, "file");
+        Objects.requireNonNull(chart, "chart");
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             writeChartAsJPEG(out, quality, chart, width, height, info);
         }

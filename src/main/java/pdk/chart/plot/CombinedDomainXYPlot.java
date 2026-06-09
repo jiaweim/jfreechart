@@ -705,7 +705,6 @@ public class CombinedDomainXYPlot<S extends Comparable<S>> extends XYPlot<S>
         }
 
         return result;
-
     }
 
 }

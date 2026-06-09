@@ -1,9 +1,8 @@
 package pdk.chart.data.general;
 
-import pdk.chart.internal.Args;
-
 import javax.swing.event.EventListenerList;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Base class representing a data series.  Subclasses are left to implement the
@@ -46,7 +45,7 @@ public abstract class Series<K extends Comparable<K>>
      * @param key the series key ({@code null} not permitted).
      */
     protected Series(K key) {
-        Args.nullNotPermitted(key, "key");
+        Objects.requireNonNull(key, "key");
         this.key = key;
         this.listeners = new EventListenerList();
         this.notify = true;

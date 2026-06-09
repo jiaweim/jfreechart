@@ -1,6 +1,7 @@
 package pdk.chart.fluent.prop;
 
 import org.jspecify.annotations.Nullable;
+import pdk.chart.event.RendererChangeEvent;
 import pdk.chart.fluent.XYChart;
 import pdk.chart.labels.StandardXYToolTipGenerator;
 import pdk.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -206,6 +207,18 @@ public class XYLineAndShapeProps extends XYRendererProps {
         if (addTooltip) {
             renderer_.setDefaultToolTipGenerator(new StandardXYToolTipGenerator());
         }
+        return this;
+    }
+
+    /**
+     * Sets the flag that controls whether each series is drawn as a
+     * single path and sends a {@link RendererChangeEvent} to all registered
+     * listeners.
+     *
+     * @param flag the flag.
+     */
+    public XYLineAndShapeProps drawSeriesLineAsPath(boolean flag) {
+        renderer_.setDrawSeriesLineAsPath(flag);
         return this;
     }
 }
