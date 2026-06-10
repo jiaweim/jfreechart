@@ -57,14 +57,7 @@ public class ComparableObjectSeriesTest {
         assertEquals(Integer.MAX_VALUE, s1.getMaximumItemCount());
 
         // try null key
-        boolean pass = false;
-        try {
-            /*s1 = */
-            new ComparableObjectSeries<String>(null);
-        } catch (IllegalArgumentException e) {
-            pass = true;
-        }
-        assertTrue(pass);
+        assertThrows(NullPointerException.class, () -> new ComparableObjectSeries<>(null));
     }
 
     /**

@@ -308,12 +308,7 @@ public class ChartTest implements ChartChangeListener {
         chart.addSubtitle(t1);
         assertEquals(t1, chart.getSubtitle(2));  // subtitle 1 is the legend
 
-        try {
-            chart.addSubtitle(null);
-            fail("Should have thrown an IllegalArgumentException.");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Null 'subtitle' argument.", e.getMessage());
-        }
+        assertThrows(NullPointerException.class, () -> chart.addSubtitle(null));
 
         try {
             chart.addSubtitle(-1, t0);
