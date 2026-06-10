@@ -13,7 +13,11 @@ public enum SeriesType implements Comparable<SeriesType> {
 
     mz(new Color(90, 90, 90), 1),
     b(new Color(0, 99, 115), 2),
-    y(new Color(190, 9, 0), 2);
+    y(new Color(190, 9, 0), 2),
+    c(new Color(99, 110, 250), 2),
+    z(new Color(239, 85, 59), 2),
+    zdot(new Color(239, 85, 59), 2),
+    p(new Color(118, 0, 161), 2);
 
     private final Color color;
     private final int stokeWidth;
@@ -27,6 +31,9 @@ public enum SeriesType implements Comparable<SeriesType> {
         return color;
     }
 
+    /**
+     * @return the stroke width used to render peaks.
+     */
     public int getStokeWidth() {
         return stokeWidth;
     }

@@ -1,5 +1,6 @@
 package pdk.chart.plot.pep;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import pdk.chart.api.RectangleInsets;
 import pdk.chart.data.general.DatasetChangeEvent;
@@ -13,6 +14,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A plot that displays a peptide sequence.
@@ -34,9 +36,7 @@ public class PeptidePlot extends Plot {
 
     public static final Paint DEFAULT_RESIDUE_PAINT = Color.BLACK;
 
-    public static final Paint DEFAULT_N_LABEL_PAINT = Color.RED;
-
-    public static final Paint DEFAULT_C_LABEL_PAINT = Color.BLUE;
+    public static final Paint DEFAULT_SPECIAL_RESIDUE_PAINT = Color.RED;
 
     public static final double DEFAULT_RESIDUE_SPACING = 16.0;
 
@@ -44,27 +44,29 @@ public class PeptidePlot extends Plot {
 
     public static final double DEFAULT_RESIDUE_LINE_SPACING = 2.0;
 
-    public static final double DEFAULT_LABEL_LINE_SPACING = 6.0;
+    public static final double DEFAULT_LABEL_LINE_SPACING = 2.0;
 
     /**
      * The dataset for the plot.
      */
     private PeptideDataset dataset;
-
     /**
      * The font to write the residue.
      * Monospace fonts are commonly used to ensure alignment.
      */
-    private Font residueFont = DEFAULT_RESIDUE_FONT;
+    private Font aminoAcidFont = DEFAULT_RESIDUE_FONT;
     /**
      * Color that the value is written in.
      */
-    private transient Paint residuePaint = DEFAULT_RESIDUE_PAINT;
+    private transient Paint aminoAcidPaint = DEFAULT_RESIDUE_PAINT;
+    /**
+     * Paint used for rendering special amino acids, such as modified amino acids.
+     */
+    private transient Paint markAminoAcidPaint = DEFAULT_SPECIAL_RESIDUE_PAINT;
     /**
      * The space between adjacent residues.
      */
-    private double residueSpacing = DEFAULT_RESIDUE_SPACING;
-
+    private double aminoAcidSpacing = DEFAULT_RESIDUE_SPACING;
     /**
      * The font used to render annotation label.
      * <p>
@@ -72,16 +74,12 @@ public class PeptidePlot extends Plot {
      */
     private Font labelFont = DEFAULT_LABEL_FONT;
 
-    private transient Paint nFragmentPaint = DEFAULT_N_LABEL_PAINT;
-
-    private transient Paint cFragmentPaint = DEFAULT_C_LABEL_PAINT;
-
     private transient Stroke annotationLineStroke = DEFAULT_LINE_STROKE;
 
     /**
      * The space between amino acid residue and annotation line.
      */
-    private double residueLineSpacing = DEFAULT_RESIDUE_LINE_SPACING;
+    private double aminoAcidAnnotationLineGap = DEFAULT_RESIDUE_LINE_SPACING;
 
     private double labelLineSpacing = DEFAULT_LABEL_LINE_SPACING;
 
@@ -100,6 +98,178 @@ public class PeptidePlot extends Plot {
     public PeptidePlot(PeptideDataset dataset) {
         super();
         this.dataset = dataset;
+    }
+
+    /**
+     * Set the font used for rendering amino acid residues.
+     *
+     * @param font {@link Font}
+     */
+    public void setAminoAcidFont(@NonNull Font font) {
+        Objects.requireNonNull(font, "font");
+        if (!this.aminoAcidFont.equals(font)) {
+            this.aminoAcidFont = font;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Return the {@link Font } used for rendering amino acid residues.
+     *
+     * @return {@link Font}
+     */
+    public Font getAminoAcidFont() {
+        return this.aminoAcidFont;
+    }
+
+    /**
+     * Set the paint used to draw amino acid letters.
+     *
+     * @param paint {@link Paint}
+     */
+    public void setAminoAcidPaint(@NonNull Paint paint) {
+        Objects.requireNonNull(paint, "paint");
+        this.aminoAcidPaint = paint;
+        fireChangeEvent();
+    }
+
+    /**
+     * Return the paint used to draw amino acid letters.
+     *
+     * @return {@link Paint}
+     */
+    public Paint getAminoAcidPaint() {
+        return this.aminoAcidPaint;
+    }
+
+    /**
+     * Return the paint used to draw marked amino acid letters.
+     *
+     * @return {@link Paint}
+     */
+    public Paint getMarkAminoAcidPaint() {
+        return this.markAminoAcidPaint;
+    }
+
+    /**
+     * Set the paint used to draw marked amino acid letters.
+     *
+     * @param paint {@link Paint}
+     */
+    public void setMarkAminoAcidPaint(@NonNull Paint paint) {
+        Objects.requireNonNull(paint, "paint");
+        if (!this.markAminoAcidPaint.equals(paint)) {
+            this.markAminoAcidPaint = paint;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Returns the gap width between adjacent residues.
+     *
+     * @return the gap width in pixels.
+     */
+    public double getAminoAcidSpacing() {
+        return aminoAcidSpacing;
+    }
+
+    /**
+     * Set the gap between adjacent residues and sends a {@link pdk.chart.event.PlotChangeEvent}
+     * to all registered listeners.
+     *
+     * @param aminoAcidSpacing the gap in pixels.
+     */
+    public void setAminoAcidSpacing(double aminoAcidSpacing) {
+        if (this.aminoAcidSpacing != aminoAcidSpacing) {
+            this.aminoAcidSpacing = aminoAcidSpacing;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Return the font used to draw annotation text.
+     *
+     * @return {@link Font}
+     */
+    public Font getLabelFont() {
+        return this.labelFont;
+    }
+
+    /**
+     * Set the font used to draw annotation text.
+     *
+     * @param font {@link Font}.
+     */
+    public void setLabelFont(@NonNull Font font) {
+        Objects.requireNonNull(font, "font");
+        if (!this.labelFont.equals(font)) {
+            this.labelFont = font;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Return the stroke used to draw annotation line.
+     *
+     * @return {@link Stroke}.
+     */
+    public Stroke getAnnotationLineStroke() {
+        return annotationLineStroke;
+    }
+
+    /**
+     * Set the stroke used to draw annotation line.
+     *
+     * @param stroke {@link Stroke}
+     */
+    public void setAnnotationLineStroke(Stroke stroke) {
+        Objects.requireNonNull(stroke);
+        if (!this.annotationLineStroke.equals(stroke)) {
+            this.annotationLineStroke = stroke;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Returns the vertical distance between amino acid residues and annotation lines.
+     *
+     * @return the gap between amino acid letters and annotation lines.
+     */
+    public double getAminoAcidAnnotationLineGap() {
+        return this.aminoAcidAnnotationLineGap;
+    }
+
+    /**
+     * Set the vertical distance between amino acid residues and annotation lines.
+     *
+     * @param gap the gap in pixels.
+     */
+    public void setAminoAcidAnnotationLineGap(double gap) {
+        if (this.aminoAcidAnnotationLineGap != gap) {
+            this.aminoAcidAnnotationLineGap = gap;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Return the vertical distance between the annotation label and annotation line.
+     *
+     * @return gap between annotation text and line.
+     */
+    public double getLabelLineGap() {
+        return this.labelLineSpacing;
+    }
+
+    /**
+     * Set the vertical distance between the annotation label and annotation line.
+     *
+     * @param gap gap in pixel.
+     */
+    public void setLabelLineGap(double gap) {
+        if (this.labelLineSpacing != gap) {
+            this.labelLineSpacing = gap;
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -132,26 +302,6 @@ public class PeptidePlot extends Plot {
 
         DatasetChangeEvent event = new DatasetChangeEvent(this, dataset);
         datasetChanged(event);
-    }
-
-    /**
-     * Returns the gap width between adjacent residues.
-     *
-     * @return the gap width in pixels.
-     */
-    public double getResidueSpacing() {
-        return residueSpacing;
-    }
-
-    /**
-     * Set the gap between adjacent residues and sends a {@link pdk.chart.event.PlotChangeEvent}
-     * to all registered listeners.
-     *
-     * @param residueSpacing the gap in pixels.
-     */
-    public void setResidueSpacing(double residueSpacing) {
-        this.residueSpacing = residueSpacing;
-        fireChangeEvent();
     }
 
     @Override
@@ -206,107 +356,131 @@ public class PeptidePlot extends Plot {
         Font originalFont = g2.getFont();
 
         // 1. draw amino acid letters
-        g2.setFont(residueFont);
-        g2.setPaint(residuePaint);
+        g2.setFont(aminoAcidFont);
+        g2.setPaint(aminoAcidPaint);
 
         FontMetrics metrics = g2.getFontMetrics();
         int aaWidth = metrics.stringWidth("M");
-        int aaAscent = metrics.getAscent();
         int aaDescent = metrics.getDescent();
-        int aaHeight = metrics.getHeight();
+        int aaHeight = metrics.getAscent() + aaDescent; // without leading
 
-        // top=baseline-ascent // 字体框的顶部，不一定是字符顶部
-        // bottom=baseline+descent
-        // height = ascent+descent
-
-        double aaAndSpacing = residueSpacing + aaWidth;
+        // 字体高度从上到下：Leading+Ascent+Descent
+        // drawString 中的 y 为 baseline 位置，为 Ascent 和 Descent 之间
+        // ascent: 从基线向上到大多数字符顶部的距离（正值） 文本顶部 y = 基线 y - ascent
+        // descent：从基线向下到字符下伸底部的距离（正值） 文本底部 y = 基线 y + descent
+        double aaAndSpacing = aminoAcidSpacing + aaWidth;
 
         int length = dataset.size();
         double totalWidth = length * aaAndSpacing;
-        double halfSpacing = residueSpacing * 0.5;
+        double halfSpacing = aminoAcidSpacing * 0.5;
         double halfAAAndSpacing = aaAndSpacing * 0.5;
 
         double startX = plotArea.getCenterX() - totalWidth / 2;
         double endX = plotArea.getCenterX() + totalWidth / 2;
         double centerY = plotArea.getCenterY();
 
-        float aaY = (float) (centerY + (aaAscent - aaDescent) / 2.0);
+        // 文本垂直居中时，底部位置为 centerY+aaHeight/2，而 baseline 比底部高 descent,因此位置为 centerY+aaHeight/2-descent
+        float aaY = (float) (centerY + aaHeight / 2.0 - aaDescent);
         char[] value = dataset.getValue();
+        boolean[] marked = dataset.getMarked();
+        // first round.
         for (int i = 0; i < length; i++) {
-            String letter = String.valueOf(value[i]);
+            if (!marked[i]) {
+                String letter = String.valueOf(value[i]);
 
-            double centerX = startX + halfAAAndSpacing + i * aaAndSpacing;
-            float textX = (float) (centerX - metrics.stringWidth(letter) / 2.0); // Horizontally centered
-            g2.drawString(letter, textX, aaY); // textX
+                double centerX = startX + halfAAAndSpacing + i * aaAndSpacing;
+                float textX = (float) (centerX - metrics.stringWidth(letter) / 2.0); // Horizontally centered
+                g2.drawString(letter, textX, aaY); // textX
+            }
+        }
+        // second round.
+        g2.setPaint(markAminoAcidPaint);
+        for (int i = 0; i < length; i++) {
+            if (marked[i]) {
+                String letter = String.valueOf(value[i]);
+
+                double centerX = startX + halfAAAndSpacing + i * aaAndSpacing;
+                float textX = (float) (centerX - metrics.stringWidth(letter) / 2.0); // Horizontally centered
+                g2.drawString(letter, textX, aaY); // textX
+            }
         }
 
         // 2. draw annotations
-        g2.setFont(labelFont);
-        g2.setStroke(annotationLineStroke);
-        metrics = g2.getFontMetrics();
-
         List<PeptideAnnotation> annotations = dataset.getAnnotations();
-        List<PeptideAnnotation> nAnnotations = new ArrayList<>();
-        List<PeptideAnnotation> cAnnotations = new ArrayList<>();
-        for (PeptideAnnotation annotation : annotations) {
-            if (annotation.isNTerminal()) {
-                nAnnotations.add(annotation);
-            } else {
-                cAnnotations.add(annotation);
+        if (!annotations.isEmpty()) {
+            g2.setFont(labelFont);
+            g2.setStroke(annotationLineStroke);
+            metrics = g2.getFontMetrics();
+            // 这里忽略线段宽度
+            float offset = (float) (aaHeight / 2.0 + aminoAcidAnnotationLineGap + labelLineSpacing);
+
+            List<PeptideAnnotation> nAnnotations = new ArrayList<>();
+            List<PeptideAnnotation> cAnnotations = new ArrayList<>();
+            for (PeptideAnnotation annotation : annotations) {
+                if (annotation.isNTerminal()) {
+                    nAnnotations.add(annotation);
+                } else {
+                    cAnnotations.add(annotation);
+                }
             }
-        }
 
-        if (!nAnnotations.isEmpty()) {
-            g2.setPaint(nFragmentPaint);
+            // N 端注释残基上面
+            if (!nAnnotations.isEmpty()) {
+                // 文本底部在 centerY-offset，baseline 往上 descent
+                float labelY = (float) (centerY - offset - metrics.getDescent()); // baseline for the text,
 
-            float labelY = (float) (centerY - aaHeight / 2.0 - residueLineSpacing - labelLineSpacing);
+                int[] xPoints = new int[3];
+                int[] yPoints = new int[3];
+                yPoints[0] = (int) centerY;
+                yPoints[1] = (int) (centerY - aaHeight / 2.0 - aminoAcidAnnotationLineGap);
+                yPoints[2] = yPoints[1];
 
-            int[] xPoints = new int[3];
-            int[] yPoints = new int[3];
-            yPoints[0] = (int) centerY;
-            yPoints[1] = (int) (centerY - aaHeight / 2.0 - residueLineSpacing);
-            yPoints[2] = yPoints[1];
+                for (PeptideAnnotation annotation : nAnnotations) {
+                    SeriesType seriesType = annotation.getSeriesType();
+                    g2.setPaint(seriesType.getColor());
 
-            for (PeptideAnnotation annotation : nAnnotations) {
-                int fragSize = annotation.getSize();
-                String label = annotation.getLabel();
-                int labelWidth = metrics.stringWidth(label);
+                    int fragSize = annotation.getSize();
+                    String label = annotation.getLabel();
+                    int labelWidth = metrics.stringWidth(label);
 
-                float labelX = (float) (endX - (fragSize - 1) * aaAndSpacing - halfAAAndSpacing - labelWidth / 2.0);
-                // draw label
-                g2.drawString(label, labelX, labelY);
+                    float labelX = (float) (endX - (fragSize - 1) * aaAndSpacing - halfAAAndSpacing - labelWidth / 2.0);
+                    // draw label
+                    g2.drawString(label, labelX, labelY);
 
-                // draw annotation line
-                xPoints[0] = (int) (endX - fragSize * aaAndSpacing);
-                xPoints[1] = xPoints[0];
-                xPoints[2] = xPoints[0] + aaWidth + (int) halfSpacing;
-                g2.drawPolyline(xPoints, yPoints, 3);
+                    // draw annotation line
+                    xPoints[0] = (int) (endX - fragSize * aaAndSpacing);
+                    xPoints[1] = xPoints[0];
+                    xPoints[2] = xPoints[0] + aaWidth + (int) halfSpacing;
+                    g2.drawPolyline(xPoints, yPoints, 3);
+                }
             }
-        }
-        if (!cAnnotations.isEmpty()) {
-            g2.setPaint(cFragmentPaint);
-            float labelY = (float) (centerY + aaHeight / 2.0 + residueLineSpacing + labelLineSpacing + (metrics.getAscent() - metrics.getDescent()) / 2.0);
+            if (!cAnnotations.isEmpty()) {
+                // 文本顶部在 centerY+offset，文本 baseline 需要加 ascent
+                float labelY = (float) (centerY + offset + metrics.getAscent());
 
-            int[] xPoints = new int[3];
-            int[] yPoints = new int[3];
-            yPoints[0] = (int) centerY;
-            yPoints[1] = (int) (centerY + aaHeight / 2.0 + residueLineSpacing);
-            yPoints[2] = yPoints[1];
+                int[] xPoints = new int[3];
+                int[] yPoints = new int[3];
+                yPoints[0] = (int) centerY;
+                yPoints[1] = (int) (centerY + aaHeight / 2.0 + aminoAcidAnnotationLineGap);
+                yPoints[2] = yPoints[1];
 
-            for (PeptideAnnotation annotation : cAnnotations) {
-                int fragSize = annotation.getSize();
-                String label = annotation.getLabel();
-                int labelWidth = metrics.stringWidth(label);
+                for (PeptideAnnotation annotation : cAnnotations) {
+                    g2.setPaint(annotation.getSeriesType().getColor());
 
-                // draw label
-                float labelX = (float) (startX + (fragSize - 1) * aaAndSpacing + halfAAAndSpacing - labelWidth / 2.0);
-                g2.drawString(label, labelX, labelY);
+                    int fragSize = annotation.getSize();
+                    String label = annotation.getLabel();
+                    int labelWidth = metrics.stringWidth(label);
 
-                // draw line
-                xPoints[0] = (int) (startX + fragSize * aaAndSpacing);
-                xPoints[1] = xPoints[0];
-                xPoints[2] = (int) (xPoints[0] - aaWidth - halfSpacing);
-                g2.drawPolyline(xPoints, yPoints, 3);
+                    // draw label
+                    float labelX = (float) (startX + (fragSize - 1) * aaAndSpacing + halfAAAndSpacing - labelWidth / 2.0);
+                    g2.drawString(label, labelX, labelY);
+
+                    // draw line
+                    xPoints[0] = (int) (startX + fragSize * aaAndSpacing);
+                    xPoints[1] = xPoints[0];
+                    xPoints[2] = (int) (xPoints[0] - aaWidth - halfSpacing);
+                    g2.drawPolyline(xPoints, yPoints, 3);
+                }
             }
         }
 

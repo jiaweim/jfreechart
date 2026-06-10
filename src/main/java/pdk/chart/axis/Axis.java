@@ -454,7 +454,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.labelPaint = paint;
         fireChangeEvent();
     }
@@ -690,7 +690,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @see #getTickLabelFont()
      */
     public void setTickLabelFont(Font font) {
-        Args.nullNotPermitted(font, "font");
+        Objects.requireNonNull(font, "font");
         if (!this.tickLabelFont.equals(font)) {
             this.tickLabelFont = font;
             fireChangeEvent();
@@ -835,7 +835,7 @@ public abstract class Axis implements ChartElement, Cloneable, Serializable {
      * @see #getTickMarkStroke()
      */
     public void setTickMarkStroke(Stroke stroke) {
-        Args.nullNotPermitted(stroke, "stroke");
+        Objects.requireNonNull(stroke, "stroke");
         if (!this.tickMarkStroke.equals(stroke)) {
             this.tickMarkStroke = stroke;
             fireChangeEvent();

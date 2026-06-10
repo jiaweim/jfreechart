@@ -1,11 +1,8 @@
-package pdk.chart.fluent;
+package pdk.chart.plot.pep;
 
 import org.jspecify.annotations.Nullable;
 import pdk.chart.Chart;
 import pdk.chart.event.PlotChangeEvent;
-import pdk.chart.plot.pep.PeptideAnnotation;
-import pdk.chart.plot.pep.PeptideDataset;
-import pdk.chart.plot.pep.PeptidePlot;
 
 import java.awt.*;
 
@@ -133,10 +130,10 @@ public class PeptideChart extends Chart {
     static void main() {
         PeptideDataset dataset = new PeptideDataset("VQGGALEDSQLVAGVAFKK".toCharArray());
         for (int i = 2; i <= 17; i++) {
-            dataset.addAnnotation(new PeptideAnnotation(false, i, "b" + i));
+            dataset.addAnnotation(new PeptideAnnotation(SeriesType.b, i, "b" + i));
         }
         for (int i = 1; i <= 18; i++) {
-            dataset.addAnnotation(new PeptideAnnotation(true, i, "y" + i));
+            dataset.addAnnotation(new PeptideAnnotation(SeriesType.y, i, "y" + i));
         }
 
         PeptideChart chart = new PeptideChart();

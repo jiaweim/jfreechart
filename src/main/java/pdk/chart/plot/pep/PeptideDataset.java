@@ -24,6 +24,7 @@ public class PeptideDataset extends AbstractDataset
      * The value.
      */
     private char[] value;
+    private boolean[] marked;
     /**
      * {@link PeptideAnnotation}
      */
@@ -44,6 +45,21 @@ public class PeptideDataset extends AbstractDataset
     public PeptideDataset(char[] value) {
         super();
         this.value = value;
+        if (value != null) {
+            this.marked = new boolean[value.length];
+            Arrays.fill(this.marked, false);
+        }
+    }
+
+    /**
+     * Create a new dataset with the specified value.
+     *
+     * @param value the initial value.
+     */
+    public PeptideDataset(char[] value, boolean[] marked) {
+        super();
+        this.value = value;
+        this.marked = marked;
     }
 
     /**
@@ -74,12 +90,37 @@ public class PeptideDataset extends AbstractDataset
     }
 
     /**
+     * Return the mark array.
+     *
+     * @return mark array.
+     */
+    public boolean[] getMarked() {
+        return marked;
+    }
+
+    /**
      * Set the value and sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param value the new value ({@code null} permitted).
      */
     public void setValue(char[] value) {
         this.value = value;
+        if (value != null) {
+            this.marked = new boolean[value.length];
+            Arrays.fill(this.marked, false);
+        }
+        notifyListeners(new DatasetChangeEvent(this, this));
+    }
+
+    /**
+     * Set the value and sends a {@link DatasetChangeEvent} to all registered listeners.
+     *
+     * @param value  values
+     * @param marked Whether to perform marking
+     */
+    public void setValue(char[] value, boolean[] marked) {
+        this.value = value;
+        this.marked = marked;
         notifyListeners(new DatasetChangeEvent(this, this));
     }
 

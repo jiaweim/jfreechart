@@ -14,6 +14,7 @@ import pdk.chart.internal.SerialUtils;
 import pdk.chart.legend.LegendTitle;
 import pdk.chart.legend.PaintScaleLegend;
 import pdk.chart.plot.*;
+import pdk.chart.plot.pep.PSMPlot;
 import pdk.chart.plot.pie.MultiplePiePlot;
 import pdk.chart.plot.pie.PieLabelLinkStyle;
 import pdk.chart.plot.pie.PiePlot;
@@ -1102,6 +1103,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToSpiderWebPlot((SpiderWebPlot) plot);
         } else if (plot instanceof PolarPlot) {
             applyToPolarPlot((PolarPlot) plot);
+        } else if (plot instanceof PSMPlot psmPlot) {
+            applyToXYPlot(psmPlot.getSpectrumPlot());
         }
     }
 

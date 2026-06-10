@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- *
+ * dataset for {@link SpectrumPlot}.
  *
  * @author Jiawei Mao
  * @version 1.0.0
@@ -30,10 +30,11 @@ public class SpectrumDataset extends YIntervalSeriesCollection<SeriesType> {
     }
 
     /**
+     * Add a series of peaks.
      *
-     * @param seriesType
-     * @param x
-     * @param y
+     * @param seriesType {@link SeriesType} of the peaks.
+     * @param x          mz values.
+     * @param y          intensity values.
      */
     public void addSeries(SeriesType seriesType, double[] x, double[] y) {
         Objects.requireNonNull(seriesType);
@@ -51,10 +52,12 @@ public class SpectrumDataset extends YIntervalSeriesCollection<SeriesType> {
     }
 
     /**
+     * Add a series of peaks.
      *
-     * @param seriesType
-     * @param x
-     * @param y
+     * @param seriesType {@link SeriesType} of the peaks.
+     * @param x          mz values
+     * @param y          intensity values.
+     * @param labels     peak annotation labels.
      */
     public void addSeries(SeriesType seriesType, double[] x, double[] y, String[] labels) {
         Objects.requireNonNull(seriesType);
