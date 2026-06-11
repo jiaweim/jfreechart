@@ -50,6 +50,29 @@ public interface ShowChart {
     }
 
     /**
+     * Display the specified chart.
+     *
+     * @param chart {@link Chart} to show.
+     */
+    default void show(Chart chart, int width, int height) {
+        SwingUtilities.invokeLater(() -> {
+            TextTitle title = chart.getTitle();
+            String titleText = "";
+            if (title != null) {
+                titleText = title.getText();
+            }
+            ApplicationFrame frame = new ApplicationFrame(titleText);
+            ChartPanel panel = new ChartPanel(chart);
+            panel.setPreferredSize(new Dimension(width, height));
+            panel.setMouseWheelEnabled(true);
+            frame.setContentPane(panel);
+            frame.pack();
+            UIUtils.centerFrameOnScreen(frame);
+            frame.setVisible(true);
+        });
+    }
+
+    /**
      * Save the chart in the specified format.
      *
      * @param chart  {@link Chart} to save.

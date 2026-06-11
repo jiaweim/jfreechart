@@ -57,18 +57,18 @@ public class XYChart extends Chart {
     /**
      * Return the configuration class for range axis properties.
      *
-     * @return {@link NumberAxisProps}.
+     * @return {@link CategoryNumberAxisProps}.
      */
-    public NumberAxisProps rangeAxis() {
-        return new NumberAxisProps(this, rangeAxis_);
+    public NumberAxisProps<XYChart> rangeAxis() {
+        return new NumberAxisProps<>(this, rangeAxis_);
     }
 
     /**
      * Return the configuration class for domain axis properties.
      *
-     * @return {@link NumberAxisProps}.
+     * @return {@link CategoryNumberAxisProps}.
      */
-    public NumberAxisProps domainAxis() {
+    public NumberAxisProps<XYChart> domainAxis() {
         return new NumberAxisProps(this, domainAxis_);
     }
 

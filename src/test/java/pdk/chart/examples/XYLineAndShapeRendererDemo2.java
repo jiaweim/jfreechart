@@ -85,7 +85,7 @@ public class XYLineAndShapeRendererDemo2 {
                 .addTooltips(true)
                 .done()
 
-                .domainAxis().autoRangeIncludesZero(false).done()
+                .domainAxis().autoRangeIncludesZero(false).doneXY()
                 .rangeAxis().autoRangeIncludesZero(false).done()
                 .show();
     }

@@ -1,12 +1,10 @@
 package pdk.chart.fluent.prop;
 
 import org.jspecify.annotations.Nullable;
-import pdk.chart.Chart;
 import pdk.chart.axis.NumberAxis;
 import pdk.chart.axis.TickUnitSource;
 import pdk.chart.event.AxisChangeEvent;
 import pdk.chart.fluent.CategoryXYChart;
-import pdk.chart.fluent.XYChart;
 
 /**
  * A class for configuring properties of NumberAxis, designed with a fluent style API.
@@ -15,37 +13,22 @@ import pdk.chart.fluent.XYChart;
  * @version 1.0.0
  * @since 08 Jun 2026, 9:12 AM
  */
-public class NumberAxisProps<T extends Chart> {
+public class CategoryNumberAxisProps {
 
-    protected final T chart_;
+    private final CategoryXYChart chart_;
     private final NumberAxis axis_;
 
-    public NumberAxisProps(T chart, NumberAxis axis) {
+    public CategoryNumberAxisProps(CategoryXYChart chart, NumberAxis axis) {
         this.chart_ = chart;
         this.axis_ = axis;
     }
 
-    public T done() {
+    /**
+     *
+     * @return
+     */
+    public CategoryXYChart done() {
         return chart_;
-    }
-
-    /**
-     * Return the {@link Chart} the axis belongs to.
-     *
-     * @return {@link Chart}.
-     */
-    public XYChart doneXY() {
-        return (XYChart) chart_;
-    }
-
-    /**
-     * Return the {@link CategoryXYChart} this axis belongs to.
-     * If the owner chart is not a {@link CategoryXYChart}, throw an exception.
-     *
-     * @return {@link CategoryXYChart}
-     */
-    public CategoryXYChart doneCategory() {
-        return (CategoryXYChart) chart_;
     }
 
     /**
@@ -54,7 +37,7 @@ public class NumberAxisProps<T extends Chart> {
      * @param axisTitle axis title.
      * @return this.
      */
-    public NumberAxisProps name(String axisTitle) {
+    public CategoryNumberAxisProps name(String axisTitle) {
         axis_.setLabel(axisTitle);
         return this;
     }
@@ -68,7 +51,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param axisIncludesZero the new value of the flag.
      */
-    public NumberAxisProps autoRangeIncludesZero(boolean axisIncludesZero) {
+    public CategoryNumberAxisProps autoRangeIncludesZero(boolean axisIncludesZero) {
         axis_.setAutoRangeIncludesZero(axisIncludesZero);
         return this;
     }
@@ -81,7 +64,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param source the source for standard tick units.
      */
-    public NumberAxisProps standardTickUnits(@Nullable TickUnitSource source) {
+    public CategoryNumberAxisProps standardTickUnits(@Nullable TickUnitSource source) {
         axis_.setStandardTickUnits(source);
         return this;
     }
@@ -95,7 +78,7 @@ public class NumberAxisProps<T extends Chart> {
      * @param lower the lower axis limit.
      * @param upper the upper axis limit.
      */
-    public NumberAxisProps range(double lower, double upper) {
+    public CategoryNumberAxisProps range(double lower, double upper) {
         axis_.setRange(lower, upper);
         return this;
     }
@@ -107,7 +90,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param flag the flag.
      */
-    public NumberAxisProps minorTickMarksVisible(boolean flag) {
+    public CategoryNumberAxisProps minorTickMarksVisible(boolean flag) {
         axis_.setMinorTickMarksVisible(flag);
         return this;
     }
@@ -119,7 +102,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param count the count.
      */
-    public NumberAxisProps minorTickCount(int count) {
+    public CategoryNumberAxisProps minorTickCount(int count) {
         axis_.setMinorTickCount(count);
         return this;
     }
@@ -129,7 +112,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param length the new length.
      */
-    public NumberAxisProps tickMarkInsideLength(float length) {
+    public CategoryNumberAxisProps tickMarkInsideLength(float length) {
         axis_.setTickMarkInsideLength(length);
         return this;
     }
@@ -139,7 +122,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param length the new length.
      */
-    public NumberAxisProps tickMarkOutsideLength(float length) {
+    public CategoryNumberAxisProps tickMarkOutsideLength(float length) {
         axis_.setTickMarkOutsideLength(length);
         return this;
     }
@@ -151,7 +134,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param size the size.
      */
-    public NumberAxisProps autoRangeMinimumSize(double size) {
+    public CategoryNumberAxisProps autoRangeMinimumSize(double size) {
         axis_.setAutoRangeMinimumSize(size, false);
         return this;
     }
@@ -164,7 +147,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param margin the margin percentage (for example, 0.05 is five percent).
      */
-    public NumberAxisProps lowerMargin(double margin) {
+    public CategoryNumberAxisProps lowerMargin(double margin) {
         axis_.setLowerMargin(margin);
         return this;
     }
@@ -178,7 +161,7 @@ public class NumberAxisProps<T extends Chart> {
      *
      * @param margin the margin percentage (for example, 0.05 is five percent).
      */
-    public NumberAxisProps upperMargin(double margin) {
+    public CategoryNumberAxisProps upperMargin(double margin) {
         axis_.setUpperMargin(margin);
         return this;
     }

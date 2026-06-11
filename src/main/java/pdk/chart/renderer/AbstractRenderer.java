@@ -701,7 +701,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @return The paint (never {@code null}).
      */
     public Paint lookupSeriesPaint(int series) {
-
         Paint seriesPaint = getSeriesPaint(series);
         if (seriesPaint == null && this.autoPopulateSeriesPaint) {
             DrawingSupplier supplier = getDrawingSupplier();

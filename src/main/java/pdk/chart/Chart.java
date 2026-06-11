@@ -1417,6 +1417,10 @@ public class Chart implements ShowChart, Drawable, TitleChangeListener,
         show(this);
     }
 
+    public void show(int width, int height) {
+        show(this, width, height);
+    }
+
     /**
      * Save the chart in the specified format.
      *

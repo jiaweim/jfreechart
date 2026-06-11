@@ -138,9 +138,9 @@ public class AnnotationDemo1 {
                 .domainAxis()
                 .upperMargin(0.12)
                 .standardTickUnits(NumberAxis.createIntegerTickUnits())
-                .done()
+                .doneXY()
                 .rangeAxis()
                 .autoRangeIncludesZero(false)
-                .done().show();
+                .doneXY().show();
     }
 }

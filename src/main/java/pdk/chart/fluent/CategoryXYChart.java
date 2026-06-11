@@ -3,15 +3,20 @@ package pdk.chart.fluent;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import pdk.chart.Chart;
+import pdk.chart.api.Layer;
 import pdk.chart.api.RectangleEdge;
 import pdk.chart.api.RectangleInsets;
+import pdk.chart.axis.AxisLocation;
 import pdk.chart.axis.CategoryAxis;
 import pdk.chart.axis.NumberAxis;
+import pdk.chart.axis.ValueAxis;
 import pdk.chart.data.category.CategoryDataset;
+import pdk.chart.event.PlotChangeEvent;
 import pdk.chart.fluent.prop.*;
 import pdk.chart.labels.ItemLabelAnchor;
 import pdk.chart.labels.ItemLabelPosition;
 import pdk.chart.legend.LegendTitle;
+import pdk.chart.plot.CategoryMarker;
 import pdk.chart.plot.CategoryPlot;
 import pdk.chart.plot.PlotOrientation;
 import pdk.chart.renderer.category.AreaRenderer;
@@ -23,6 +28,7 @@ import pdk.chart.title.TextTitle;
 import pdk.chart.title.Title;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * XYChart with category domain axis.
@@ -110,14 +116,25 @@ public class CategoryXYChart extends Chart {
     /**
      * Return the configuration class for range axis properties.
      *
-     * @return {@link NumberAxisProps}.
+     * @return {@link CategoryNumberAxisProps}.
      */
-    public NumberAxisProps rangeAxis() {
-        return new NumberAxisProps(this, rangeAxis_);
+    public NumberAxisProps<CategoryXYChart> rangeAxis() {
+        return new NumberAxisProps<>(this, rangeAxis_);
     }
 
     public CategoryAxisProps domainAxis() {
         return new CategoryAxisProps(this, domainAxis_);
+    }
+
+    /**
+     * Sets the location of the range axis and sends a {@link PlotChangeEvent}
+     * to all registered listeners.
+     *
+     * @param location the location ({@code null} not permitted).
+     */
+    public CategoryXYChart rangeAxisLocation(AxisLocation location) {
+        plot_.setRangeAxisLocation(location);
+        return this;
     }
 
     /**
@@ -230,6 +247,18 @@ public class CategoryXYChart extends Chart {
     }
 
     /**
+     * Set the renderer for a given dataset.
+     *
+     * @param index    dataset index.
+     * @param renderer {@link CategoryItemRenderer}.
+     * @return this.
+     */
+    public CategoryXYChart setRenderer(int index, CategoryItemRenderer renderer) {
+        plot_.setRenderer(index, renderer);
+        return this;
+    }
+
+    /**
      * Set the chart orientation.
      *
      * @param orientation {@link PlotOrientation}
@@ -322,4 +351,115 @@ public class CategoryXYChart extends Chart {
         plot_.setRangeGridlinesVisible(showGridlines);
         return this;
     }
+
+    /**
+     * Sets the flag indicating whether the range crosshair is visible.
+     *
+     * @param flag the new value of the flag.
+     */
+    public CategoryXYChart rangeCrosshairVisible(boolean flag) {
+        plot_.setRangeCrosshairVisible(flag);
+        return this;
+    }
+
+    /**
+     * Sets the paint used to draw the range crosshair (if visible) and
+     * sends a {@link PlotChangeEvent} to all registered listeners.
+     *
+     * @param paint the paint ({@code null} not permitted).
+     */
+    public CategoryXYChart rangeCrosshairPaint(Paint paint) {
+        plot_.setRangeCrosshairPaint(paint);
+        return this;
+    }
+
+    /**
+     * Sets the message that is displayed when the dataset is empty or
+     * {@code null}, and sends a {@link PlotChangeEvent} to all registered
+     * listeners.
+     *
+     * @param message the message.
+     */
+    public CategoryXYChart setNoDataMessage(@Nullable String message) {
+        plot_.setNoDataMessage(message);
+        return this;
+    }
+
+    /**
+     * Sets the flag that enables or disables panning of the plot along
+     * the range axes.
+     *
+     * @param pannable the new flag value.
+     */
+    public CategoryXYChart rangePannable(boolean pannable) {
+        plot_.setRangePannable(pannable);
+        return this;
+    }
+
+    /**
+     * Adds a marker for display against the domain axis and sends a
+     * {@link PlotChangeEvent} to all registered listeners.
+     * <p>
+     * Typically a marker will be drawn by the renderer as a line perpendicular to the domain
+     * axis, however this is entirely up to the renderer.
+     *
+     * @param marker the marker.
+     * @param layer  the layer (foreground or background).
+     */
+    public CategoryXYChart addDomainMarker(@NonNull CategoryMarker marker, @NonNull Layer layer) {
+        plot_.addDomainMarker(0, marker, layer);
+        return this;
+    }
+
+    /**
+     * Sets a range axis and sends a {@link PlotChangeEvent} to all registered
+     * listeners.
+     *
+     * @param index the axis index.
+     * @param axis  the axis.
+     */
+    public CategoryXYChart addRangeAxis(int index, ValueAxis axis) {
+        plot_.setRangeAxis(index, axis);
+        return this;
+    }
+
+    /**
+     * Sets a range axis and sends a {@link PlotChangeEvent} to all registered
+     * listeners.
+     *
+     * @param index the axis index.
+     * @param axis  the axis.
+     */
+    public CategoryXYChart addDomainAxis(int index, CategoryAxis axis) {
+        plot_.setDomainAxis(index, axis);
+        return this;
+    }
+
+    /**
+     * Maps the specified dataset to the axes in the list.  Note that the
+     * conversion of data values into Java2D space is always performed using
+     * the first axis in the list.
+     *
+     * @param index       the dataset index (zero-based).
+     * @param axisIndices the axis indices ({@code null} permitted).
+     */
+    public CategoryXYChart mapDatasetToDomainAxes(int index, List<Integer> axisIndices) {
+        plot_.mapDatasetToDomainAxes(index, axisIndices);
+        return this;
+    }
+
+
+    /**
+     * Maps the specified dataset to the axes in the list.  Note that the
+     * conversion of data values into Java2D space is always performed using
+     * the first axis in the list.
+     *
+     * @param index       the dataset index (zero-based).
+     * @param axisIndices the axis indices ({@code null} permitted).
+     */
+    public CategoryXYChart mapDatasetToRangeAxes(int index, List<Integer> axisIndices) {
+        plot_.mapDatasetToRangeAxes(index, axisIndices);
+        return this;
+    }
+
 }

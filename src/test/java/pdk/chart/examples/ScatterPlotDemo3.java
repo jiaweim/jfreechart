@@ -24,6 +24,6 @@ public class ScatterPlotDemo3 {
                 .done()
                 .domainAxis()
                 .autoRangeIncludesZero(false)
-                .done().show();
+                .doneXY().show();
     }
 }

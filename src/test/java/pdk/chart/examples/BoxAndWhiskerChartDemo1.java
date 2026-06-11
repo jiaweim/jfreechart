@@ -45,7 +45,7 @@ public class BoxAndWhiskerChartDemo1 {
                 .rangeGridlinePaint(Color.WHITE)
                 .rangeAxis()
                 .standardTickUnits(NumberAxis.createIntegerTickUnits())
-                .categoryChart();
+                .doneCategory();
         xyChart.show();
     }
 }

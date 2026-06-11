@@ -2671,7 +2671,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getDomainCrosshairStroke()
      */
     public void setDomainCrosshairStroke(Stroke stroke) {
-        Args.nullNotPermitted(stroke, "stroke");
+        Objects.requireNonNull(stroke, "stroke");
         this.domainCrosshairStroke = stroke;
     }
 
@@ -2785,7 +2785,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getRangeCrosshairStroke()
      */
     public void setRangeCrosshairStroke(Stroke stroke) {
-        Args.nullNotPermitted(stroke, "stroke");
+        Objects.requireNonNull(stroke, "stoke");
         this.rangeCrosshairStroke = stroke;
         fireChangeEvent();
     }
@@ -2810,7 +2810,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getRangeCrosshairPaint()
      */
     public void setRangeCrosshairPaint(Paint paint) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.rangeCrosshairPaint = paint;
         fireChangeEvent();
     }
@@ -2845,7 +2845,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @param notify     notify listeners?
      */
     public void addAnnotation(CategoryAnnotation annotation, boolean notify) {
-        Args.nullNotPermitted(annotation, "annotation");
+        Objects.requireNonNull(annotation, "annotation");
         this.annotations.add(annotation);
         annotation.addChangeListener(this);
         if (notify) {

@@ -465,7 +465,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * @see #getBarPainter()
      */
     public void setBarPainter(BarPainter painter) {
-        Args.nullNotPermitted(painter, "painter");
+        Objects.requireNonNull(painter, "painter");
         this.barPainter = painter;
         fireChangeEvent();
     }

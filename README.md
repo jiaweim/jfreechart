@@ -20,3 +20,6 @@ To use pdk-chart in your projects, add the following dependency to your build to
     <version>2.10.0</version>
 </dependency>
 ```
+
+## Bar Chart
+
