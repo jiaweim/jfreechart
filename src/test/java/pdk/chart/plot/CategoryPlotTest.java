@@ -1,45 +1,32 @@
 package pdk.chart.plot;
 
 import org.junit.jupiter.api.Test;
+import pdk.chart.Chart;
+import pdk.chart.ChartFactory;
+import pdk.chart.TestUtils;
+import pdk.chart.annotations.CategoryLineAnnotation;
+import pdk.chart.annotations.CategoryTextAnnotation;
+import pdk.chart.api.Layer;
+import pdk.chart.api.RectangleInsets;
+import pdk.chart.api.SortOrder;
+import pdk.chart.axis.*;
+import pdk.chart.data.Range;
+import pdk.chart.data.category.CategoryDataset;
+import pdk.chart.data.category.DefaultCategoryDataset;
+import pdk.chart.event.MarkerChangeListener;
+import pdk.chart.internal.CloneUtils;
+import pdk.chart.legend.LegendItem;
+import pdk.chart.legend.LegendItemCollection;
+import pdk.chart.renderer.category.*;
+import pdk.chart.util.DefaultShadowGenerator;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
-
-import pdk.chart.ChartFactory;
-import pdk.chart.Chart;
-import pdk.chart.legend.LegendItem;
-import pdk.chart.legend.LegendItemCollection;
-import pdk.chart.TestUtils;
-import pdk.chart.annotations.CategoryLineAnnotation;
-import pdk.chart.annotations.CategoryTextAnnotation;
-import pdk.chart.axis.AxisLocation;
-import pdk.chart.axis.AxisSpace;
-import pdk.chart.axis.CategoryAnchor;
-import pdk.chart.axis.CategoryAxis;
-import pdk.chart.axis.NumberAxis;
-import pdk.chart.event.MarkerChangeListener;
-import pdk.chart.renderer.category.AreaRenderer;
-import pdk.chart.renderer.category.BarRenderer;
-import pdk.chart.renderer.category.CategoryItemRenderer;
-import pdk.chart.renderer.category.DefaultCategoryItemRenderer;
-import pdk.chart.renderer.category.LineAndShapeRenderer;
-import pdk.chart.api.Layer;
-import pdk.chart.api.RectangleInsets;
-import pdk.chart.internal.CloneUtils;
-import pdk.chart.util.DefaultShadowGenerator;
-import pdk.chart.api.SortOrder;
-import pdk.chart.data.Range;
-import pdk.chart.data.category.CategoryDataset;
-import pdk.chart.data.category.DefaultCategoryDataset;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,8 +53,8 @@ public class CategoryPlotTest {
         DefaultCategoryDataset<String, String> datasetB = new DefaultCategoryDataset<>();
         datasetB.addValue(50.0, "R1", "C1");
         datasetB.addValue(80.0, "R1", "C1");
-        CategoryPlot<String, String> plot = new CategoryPlot<>(datasetA, 
-                new CategoryAxis(null), new NumberAxis(null), 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(datasetA,
+                new CategoryAxis(null), new NumberAxis(null),
                 new LineAndShapeRenderer());
         plot.setDataset(1, datasetB);
         plot.setRenderer(1, new LineAndShapeRenderer());
@@ -444,7 +431,7 @@ public class CategoryPlotTest {
         p2.setDomainAxis(1, new CategoryAxis("B"));
         assertNotEquals(p1, p2);
     }
-    
+
     /**
      * This test covers a flaw in the ObjectList equals() method.
      */
@@ -472,7 +459,7 @@ public class CategoryPlotTest {
         p2.setRangeAxis(1, new NumberAxis("B"));
         assertNotEquals(p1, p2);
     }
-    
+
     /**
      * This test covers a flaw in the ObjectList equals() method.
      */
@@ -516,8 +503,7 @@ public class CategoryPlotTest {
         CategoryPlot<String, String> p2;
         try {
             p2 = CloneUtils.clone(p1);
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             fail("Cloning failed.");
             return;
         }
@@ -567,8 +553,7 @@ public class CategoryPlotTest {
         CategoryPlot<String, String> p2;
         try {
             p2 = CloneUtils.clone(p1);
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             fail("Cloning failed.");
             return;
         }
@@ -598,8 +583,7 @@ public class CategoryPlotTest {
         CategoryPlot<String, String> p2;
         try {
             p2 = CloneUtils.clone(p1);
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             fail("Cloning failed.");
             return;
         }
@@ -633,8 +617,7 @@ public class CategoryPlotTest {
         CategoryPlot<String, String> p2;
         try {
             p2 = CloneUtils.clone(p1);
-        }
-        catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             fail("Cloning failed.");
             return;
         }
@@ -656,7 +639,7 @@ public class CategoryPlotTest {
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
         BarRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> p1 = new CategoryPlot<>(dataset, domainAxis, 
+        CategoryPlot<String, String> p1 = new CategoryPlot<>(dataset, domainAxis,
                 rangeAxis, renderer);
         p1.setOrientation(PlotOrientation.HORIZONTAL);
         CategoryPlot<String, String> p2 = TestUtils.serialised(p1);
@@ -672,7 +655,7 @@ public class CategoryPlotTest {
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
         BarRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> p1 = new CategoryPlot<>(data, domainAxis, 
+        CategoryPlot<String, String> p1 = new CategoryPlot<>(data, domainAxis,
                 rangeAxis, renderer);
         p1.setOrientation(PlotOrientation.VERTICAL);
         CategoryPlot<String, String> p2 = TestUtils.serialised(p1);
@@ -693,8 +676,7 @@ public class CategoryPlotTest {
         // now check that the chart is usable...
         try {
             chart2.createBufferedImage(300, 200);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("No exception should be thrown.");
         }
     }
@@ -718,8 +700,7 @@ public class CategoryPlotTest {
         // now check that the chart is usable...
         try {
             chart2.createBufferedImage(300, 200);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("No exception should be thrown.");
         }
     }
@@ -735,7 +716,7 @@ public class CategoryPlotTest {
         CategoryAxis domainAxis1 = new CategoryAxis("Domain 1");
         NumberAxis rangeAxis1 = new NumberAxis("Range 1");
         BarRenderer renderer1 = new BarRenderer();
-        CategoryPlot<String, String> p1 = new CategoryPlot<>(dataset1, 
+        CategoryPlot<String, String> p1 = new CategoryPlot<>(dataset1,
                 domainAxis1, rangeAxis1, renderer1);
         CategoryAxis domainAxis2 = new CategoryAxis("Domain 2");
         NumberAxis rangeAxis2 = new NumberAxis("Range 2");
@@ -753,7 +734,7 @@ public class CategoryPlotTest {
         CategoryAxis domainAxisA = p2.getDomainAxis(0);
         NumberAxis rangeAxisA = (NumberAxis) p2.getRangeAxis(0);
         @SuppressWarnings("unchecked")
-        DefaultCategoryDataset<String, String> datasetA 
+        DefaultCategoryDataset<String, String> datasetA
                 = (DefaultCategoryDataset) p2.getDataset(0);
         BarRenderer rendererA = (BarRenderer) p2.getRenderer(0);
         CategoryAxis domainAxisB = p2.getDomainAxis(1);
@@ -761,7 +742,7 @@ public class CategoryPlotTest {
         @SuppressWarnings("unchecked")
         DefaultCategoryDataset<String, String> datasetB
                 = (DefaultCategoryDataset) p2.getDataset(1);
-        BarRenderer rendererB  = (BarRenderer) p2.getRenderer(1);
+        BarRenderer rendererB = (BarRenderer) p2.getRenderer(1);
         assertTrue(datasetA.hasListener(p2));
         assertTrue(domainAxisA.hasListener(p2));
         assertTrue(rangeAxisA.hasListener(p2));
@@ -847,13 +828,12 @@ public class CategoryPlotTest {
         CategoryPlot<String, String> plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
         try {
-            BufferedImage image = new BufferedImage(200 , 100,
+            BufferedImage image = new BufferedImage(200, 100,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
             g2.dispose();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("No exception should be thrown.");
         }
     }
@@ -866,21 +846,14 @@ public class CategoryPlotTest {
         CategoryAxis domainAxis1 = new CategoryAxis("X1");
         CategoryAxis domainAxis2 = new CategoryAxis("X2");
         NumberAxis rangeAxis1 = new NumberAxis("Y1");
-        CategoryPlot<String, String> plot = new CategoryPlot<>(null, domainAxis1, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(null, domainAxis1,
                 rangeAxis1, null);
         assertEquals(0, plot.getDomainAxisIndex(domainAxis1));
         assertEquals(-1, plot.getDomainAxisIndex(domainAxis2));
         plot.setDomainAxis(1, domainAxis2);
         assertEquals(1, plot.getDomainAxisIndex(domainAxis2));
         assertEquals(-1, plot.getDomainAxisIndex(new CategoryAxis("X2")));
-        boolean pass = false;
-        try {
-            plot.getDomainAxisIndex(null);
-        }
-        catch (IllegalArgumentException e) {
-            pass = true;
-        }
-        assertTrue(pass);
+        assertThrows(NullPointerException.class, () -> plot.getDomainAxisIndex(null));
     }
 
     /**
@@ -891,21 +864,14 @@ public class CategoryPlotTest {
         CategoryAxis domainAxis1 = new CategoryAxis("X1");
         NumberAxis rangeAxis1 = new NumberAxis("Y1");
         NumberAxis rangeAxis2 = new NumberAxis("Y2");
-        CategoryPlot<String, String> plot = new CategoryPlot<>(null, domainAxis1, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(null, domainAxis1,
                 rangeAxis1, null);
         assertEquals(0, plot.getRangeAxisIndex(rangeAxis1));
         assertEquals(-1, plot.getRangeAxisIndex(rangeAxis2));
         plot.setRangeAxis(1, rangeAxis2);
         assertEquals(1, plot.getRangeAxisIndex(rangeAxis2));
         assertEquals(-1, plot.getRangeAxisIndex(new NumberAxis("Y2")));
-        boolean pass = false;
-        try {
-            plot.getRangeAxisIndex(null);
-        }
-        catch (IllegalArgumentException e) {
-            pass = true;
-        }
-        assertTrue(pass);
+        assertThrows(NullPointerException.class, () -> plot.getRangeAxisIndex(null));
     }
 
     /**
@@ -937,7 +903,7 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
         assertEquals(xAxis, plot.getDomainAxisForDataset(0));
 
@@ -945,8 +911,7 @@ public class CategoryPlotTest {
         boolean pass = false;
         try {
             plot.getDomainAxisForDataset(-1);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -960,11 +925,11 @@ public class CategoryPlotTest {
         plot.mapDatasetToDomainAxis(0, 1);
         assertEquals(xAxis2, plot.getDomainAxisForDataset(0));
 
-        List<Integer> axisIndices = Arrays.asList(new Integer[] {0, 1});
+        List<Integer> axisIndices = Arrays.asList(new Integer[]{0, 1});
         plot.mapDatasetToDomainAxes(0, axisIndices);
         assertEquals(xAxis, plot.getDomainAxisForDataset(0));
 
-        axisIndices = Arrays.asList(new Integer[] {1, 2});
+        axisIndices = Arrays.asList(new Integer[]{1, 2});
         plot.mapDatasetToDomainAxes(0, axisIndices);
         assertEquals(xAxis2, plot.getDomainAxisForDataset(0));
     }
@@ -978,7 +943,7 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new DefaultCategoryItemRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
         assertEquals(yAxis, plot.getRangeAxisForDataset(0));
 
@@ -986,8 +951,7 @@ public class CategoryPlotTest {
         boolean pass = false;
         try {
             plot.getRangeAxisForDataset(-1);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -1001,15 +965,15 @@ public class CategoryPlotTest {
         plot.mapDatasetToRangeAxis(0, 1);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
 
-        List<Integer> axisIndices = Arrays.asList(new Integer[] {0, 1});
+        List<Integer> axisIndices = Arrays.asList(new Integer[]{0, 1});
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis, plot.getRangeAxisForDataset(0));
 
-        axisIndices = Arrays.asList(new Integer[] {1, 2});
+        axisIndices = Arrays.asList(new Integer[]{1, 2});
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
     }
-    
+
     /**
      * Datasets are now stored in a Map, and it should be possible to assign
      * them an arbitrary key (index).
@@ -1020,23 +984,23 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
-        
+
         assertEquals(dataset, plot.getDataset(0));
-        
-        DefaultCategoryDataset<String,String> dataset2 = new DefaultCategoryDataset<>();
+
+        DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
-        
+
         // we should be able to give a dataset an arbitrary index
         plot.setDataset(99, dataset2);
         assertEquals(2, plot.getDatasetCount());
         assertEquals(dataset2, plot.getDataset(99));
-        
+
         assertEquals(0, plot.indexOf(dataset));
         assertEquals(99, plot.indexOf(dataset2));
     }
-    
+
     /**
      * Tests for the getDomainAxis() and getRangeAxis() methods.
      */
@@ -1046,15 +1010,15 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
-        assertEquals(xAxis, plot.getDomainAxis(0));        
-        assertEquals(yAxis, plot.getRangeAxis(0)); 
-        
+        assertEquals(xAxis, plot.getDomainAxis(0));
+        assertEquals(yAxis, plot.getRangeAxis(0));
+
         CategoryAxis xAxis2 = new CategoryAxis("X2");
         plot.setDomainAxis(99, xAxis2);
         assertEquals(xAxis2, plot.getDomainAxis(99));
-        
+
         NumberAxis yAxis2 = new NumberAxis("Y2");
         plot.setRangeAxis(99, yAxis2);
         assertEquals(yAxis2, plot.getRangeAxis(99));
@@ -1063,89 +1027,89 @@ public class CategoryPlotTest {
     /**
      * Tests for the getDomainAxisLocation() and getRangeAxisLocation() methods.
      */
-    @Test 
+    @Test
     public void testAxisLocationIndices() {
         CategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
 
         CategoryAxis xAxis2 = new CategoryAxis("X2");
         NumberAxis yAxis2 = new NumberAxis("Y2");
         plot.setDomainAxis(99, xAxis2);
         plot.setRangeAxis(99, yAxis2);
-        
+
         plot.setDomainAxisLocation(99, AxisLocation.BOTTOM_OR_RIGHT);
-        assertEquals(AxisLocation.BOTTOM_OR_RIGHT, 
+        assertEquals(AxisLocation.BOTTOM_OR_RIGHT,
                 plot.getDomainAxisLocation(99));
         plot.setRangeAxisLocation(99, AxisLocation.BOTTOM_OR_LEFT);
-        assertEquals(AxisLocation.BOTTOM_OR_LEFT, 
+        assertEquals(AxisLocation.BOTTOM_OR_LEFT,
                 plot.getRangeAxisLocation(99));
     }
-    
-    @Test 
+
+    @Test
     public void testRendererIndices() {
         CategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
-        
+
         assertEquals(renderer, plot.getRenderer(0));
-        
+
         // we should be able to give a renderer an arbitrary index
         CategoryItemRenderer renderer2 = new LineAndShapeRenderer();
         plot.setRenderer(20, renderer2);
         assertEquals(2, plot.getRendererCount());
         assertEquals(renderer2, plot.getRenderer(20));
-        
+
         assertEquals(20, plot.getIndexOf(renderer2));
     }
 
-    @Test 
+    @Test
     public void testGetRendererForDataset2() {
         CategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
 
         // add a second dataset
         DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
         plot.setDataset(99, dataset2);
-       
+
         // by default, the renderer with index 0 is used
         assertEquals(renderer, plot.getRendererForDataset(dataset2));
-        
+
         // add a second renderer with the same index as dataset2, now it will
         // be used
         CategoryItemRenderer renderer2 = new LineAndShapeRenderer();
         plot.setRenderer(99, renderer2);
         assertEquals(renderer2, plot.getRendererForDataset(dataset2));
     }
-    
+
     @Test
     public void testMapDatasetToDomainAxis() {
         CategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
 
         CategoryAxis xAxis2 = new CategoryAxis("X2");
         plot.setDomainAxis(11, xAxis2);
-        
+
         // add a second dataset
         DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
-        plot.setDataset(99, dataset);    
-        
+        plot.setDataset(99, dataset);
+
         assertEquals(xAxis, plot.getDomainAxisForDataset(99));
 
         // now map the dataset to the second xAxis
@@ -1159,43 +1123,43 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
 
         NumberAxis yAxis2 = new NumberAxis("Y2");
         plot.setRangeAxis(22, yAxis2);
-        
+
         // add a second dataset
         DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
-        plot.setDataset(99, dataset);    
-        
+        plot.setDataset(99, dataset);
+
         assertEquals(yAxis, plot.getRangeAxisForDataset(99));
 
         // now map the dataset to the second xAxis
         plot.mapDatasetToRangeAxis(99, 22);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(99));
     }
-    
+
     @Test
     public void testDomainMarkerIndices() {
         CategoryDataset<String, String> dataset = new DefaultCategoryDataset<>();
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
-        
+
         // add a second dataset, plotted against a second x axis
         DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
-        plot.setDataset(99, dataset);    
+        plot.setDataset(99, dataset);
         CategoryAxis xAxis2 = new CategoryAxis("X2");
         plot.setDomainAxis(1, xAxis2);
         LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
         plot.setRenderer(99, renderer2);
         plot.mapDatasetToDomainAxis(99, 1);
-        
+
         CategoryMarker xMarker1 = new CategoryMarker(123);
         plot.addDomainMarker(99, xMarker1, Layer.FOREGROUND);
         assertTrue(plot.getDomainMarkers(99, Layer.FOREGROUND).contains(
@@ -1208,19 +1172,19 @@ public class CategoryPlotTest {
         CategoryAxis xAxis = new CategoryAxis("X");
         NumberAxis yAxis = new NumberAxis("Y");
         CategoryItemRenderer renderer = new BarRenderer();
-        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis, 
+        CategoryPlot<String, String> plot = new CategoryPlot<>(dataset, xAxis,
                 yAxis, renderer);
-        
+
         // add a second dataset, plotted against a second axis
         DefaultCategoryDataset<String, String> dataset2 = new DefaultCategoryDataset<>();
         dataset2.setValue(1, "R1", "C1");
-        plot.setDataset(99, dataset);    
+        plot.setDataset(99, dataset);
         NumberAxis yAxis2 = new NumberAxis("Y2");
         plot.setRangeAxis(1, yAxis2);
         LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
         plot.setRenderer(99, renderer2);
         plot.mapDatasetToRangeAxis(99, 1);
-        
+
         ValueMarker yMarker1 = new ValueMarker(123);
         plot.addRangeMarker(99, yMarker1, Layer.FOREGROUND);
         assertTrue(plot.getRangeMarkers(99, Layer.FOREGROUND).contains(

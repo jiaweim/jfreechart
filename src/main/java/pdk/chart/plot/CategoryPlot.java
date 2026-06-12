@@ -1237,7 +1237,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #mapDatasetToDomainAxis(int, int)
      */
     public CategoryAxis getDomainAxisForDataset(int index) {
-        Objects.requireNonNull(index, "index");
+        Args.requireNonNegative(index, "index");
         CategoryAxis axis;
         List<Integer> axisIndices = this.datasetToDomainAxesMap.get(index);
         if (axisIndices != null) {

@@ -99,6 +99,7 @@ public class BarRendererTest {
 
         // shadowsVisible
         r1.setShadowVisible(false);
+        r2.setShadowVisible(true);
         assertNotEquals(r1, r2);
         r2.setShadowVisible(false);
         assertEquals(r1, r2);
