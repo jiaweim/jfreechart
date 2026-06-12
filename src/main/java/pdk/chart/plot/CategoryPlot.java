@@ -503,7 +503,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getOrientation()
      */
     public void setOrientation(PlotOrientation orientation) {
-        Args.nullNotPermitted(orientation, "orientation");
+        Objects.requireNonNull(orientation, "orientation");
         this.orientation = orientation;
         fireChangeEvent();
     }
@@ -526,7 +526,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getAxisOffset()
      */
     public void setAxisOffset(RectangleInsets offset) {
-        Args.nullNotPermitted(offset, "offset");
+        Objects.requireNonNull(offset, "offset");
         this.axisOffset = offset;
         fireChangeEvent();
     }
@@ -648,7 +648,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getRangeAxisIndex(ValueAxis)
      */
     public int getDomainAxisIndex(CategoryAxis axis) {
-        Args.nullNotPermitted(axis, "axis");
+        Objects.requireNonNull(axis, "axis");
         for (Entry<Integer, CategoryAxis> entry : this.domainAxes.entrySet()) {
             if (entry.getValue() == axis) {
                 return entry.getKey();
@@ -917,7 +917,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getDomainAxisIndex(CategoryAxis)
      */
     public int getRangeAxisIndex(ValueAxis axis) {
-        Args.nullNotPermitted(axis, "axis");
+        Objects.requireNonNull(axis, "axis");
         int result = findRangeAxisIndex(axis);
         if (result < 0) { // try the parent plot
             Plot parent = getParent();
@@ -1237,7 +1237,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #mapDatasetToDomainAxis(int, int)
      */
     public CategoryAxis getDomainAxisForDataset(int index) {
-        Args.requireNonNegative(index, "index");
+        Objects.requireNonNull(index, "index");
         CategoryAxis axis;
         List<Integer> axisIndices = this.datasetToDomainAxesMap.get(index);
         if (axisIndices != null) {
@@ -1490,7 +1490,7 @@ public class CategoryPlot<R extends Comparable<R>, C extends Comparable<C>>
      * @see #getDatasetRenderingOrder()
      */
     public void setDatasetRenderingOrder(DatasetRenderingOrder order) {
-        Args.nullNotPermitted(order, "order");
+        Objects.requireNonNull(order, "order");
         this.renderingOrder = order;
         fireChangeEvent();
     }

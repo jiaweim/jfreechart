@@ -18,6 +18,7 @@ import pdk.chart.labels.ItemLabelPosition;
 import pdk.chart.legend.LegendTitle;
 import pdk.chart.plot.CategoryMarker;
 import pdk.chart.plot.CategoryPlot;
+import pdk.chart.plot.Marker;
 import pdk.chart.plot.PlotOrientation;
 import pdk.chart.renderer.category.AreaRenderer;
 import pdk.chart.renderer.category.BarRenderer;
@@ -95,6 +96,21 @@ public class CategoryXYChart extends Chart {
         return this;
     }
 
+    /**
+     * Sets the main title for the chart.
+     * <p>
+     * If you do not want a title for the chart, set it to {@code null}.
+     * <p>
+     * If you want more than one title on a chart, use the {@link #addSubtitle(Title)} method.
+     *
+     * @param title the title ({@code null} permitted).
+     * @see #getTitle()
+     */
+    public CategoryXYChart title(TextTitle title) {
+        setTitle(title);
+        return this;
+    }
+
     public CategoryXYChart addTitle(Title title) {
         addSubtitle(title);
         return this;
@@ -118,8 +134,8 @@ public class CategoryXYChart extends Chart {
      *
      * @return {@link CategoryNumberAxisProps}.
      */
-    public NumberAxisProps<CategoryXYChart> rangeAxis() {
-        return new NumberAxisProps<>(this, rangeAxis_);
+    public NumberAxisProps rangeAxis() {
+        return new NumberAxisProps(this, rangeAxis_);
     }
 
     public CategoryAxisProps domainAxis() {
@@ -269,6 +285,7 @@ public class CategoryXYChart extends Chart {
         return this;
     }
 
+
     /**
      * Sets the paint used to fill the chart background.
      *
@@ -286,6 +303,16 @@ public class CategoryXYChart extends Chart {
      */
     public CategoryXYChart plotBackgroundPaint(@Nullable Paint paint) {
         plot_.setBackgroundPaint(paint);
+        return this;
+    }
+
+    /**
+     * Sets the insets for the plot.
+     *
+     * @param insets the new insets ({@code null} not permitted).
+     */
+    public CategoryXYChart plotInsets(@NonNull RectangleInsets insets) {
+        plot_.setInsets(insets);
         return this;
     }
 
@@ -386,6 +413,29 @@ public class CategoryXYChart extends Chart {
     }
 
     /**
+     * Sets the paint used to draw the outline of the plot area.
+     * <p>
+     * If you set this attribute to {@code null}, no outline will be drawn.
+     *
+     * @param paint the paint.
+     */
+    public CategoryXYChart plotOutlinePaint(@Nullable Paint paint) {
+        plot_.setOutlinePaint(paint);
+        return this;
+    }
+
+    /**
+     * Sets the stroke used to draw the grid-lines against the range axis.
+     *
+     * @param stroke the stroke.
+     */
+    public CategoryXYChart rangeGridlineStroke(@NonNull Stroke stroke) {
+        plot_.setRangeGridlineStroke(stroke);
+        return this;
+    }
+
+
+    /**
      * Sets the flag that enables or disables panning of the plot along
      * the range axes.
      *
@@ -393,6 +443,20 @@ public class CategoryXYChart extends Chart {
      */
     public CategoryXYChart rangePannable(boolean pannable) {
         plot_.setRangePannable(pannable);
+        return this;
+    }
+
+    /**
+     * Adds a marker for display against the range axis.
+     * <p>
+     * Typically a marker will be drawn by the renderer as a line perpendicular to the range axis,
+     * however this is entirely up to the renderer.
+     *
+     * @param marker the marker.
+     * @param layer  the layer (foreground or background).
+     */
+    public CategoryXYChart addRangeMarker(@NonNull Marker marker, @NonNull Layer layer) {
+        plot_.addRangeMarker(marker, layer);
         return this;
     }
 

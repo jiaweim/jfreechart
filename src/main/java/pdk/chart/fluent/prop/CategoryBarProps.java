@@ -140,6 +140,29 @@ public class CategoryBarProps extends CategoryXYRendererProps {
         return this;
     }
 
+
+    /**
+     * Set whether the item labels of the specified series are visible.
+     *
+     * @param visible the flag.
+     */
+    public CategoryBarProps seriesItemLabelsVisible(int series, Boolean visible) {
+        renderer_.setSeriesItemLabelsVisible(series, visible);
+        return this;
+    }
+
+
+    /**
+     * Sets the fallback position for positive item labels that don't fit
+     * within a bar.
+     *
+     * @param position the position.
+     */
+    public CategoryBarProps positiveItemLabelPositionFallback(@Nullable ItemLabelPosition position) {
+        renderer_.setPositiveItemLabelPositionFallback(position);
+        return this;
+    }
+
     /**
      * Sets the maximum bar width, which is specified as a percentage of the
      * available space for all bars.
@@ -177,7 +200,8 @@ public class CategoryBarProps extends CategoryXYRendererProps {
     }
 
     /**
-     * Sets the item label insets.
+     * Sets the item label insets, which is the distance
+     * of the itemLabel relative to the bar.
      *
      * @param itemLabelInsets the insets
      */

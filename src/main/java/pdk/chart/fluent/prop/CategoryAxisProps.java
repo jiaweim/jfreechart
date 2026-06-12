@@ -88,4 +88,24 @@ public class CategoryAxisProps {
         axis_.setCategoryLabelPositions(positions);
         return this;
     }
+
+    /**
+     * Sets  whether the axis is visible.
+     *
+     * @param flag the flag.
+     */
+    public CategoryAxisProps visible(boolean flag) {
+        axis_.setVisible(flag);
+        return this;
+    }
+
+    /**
+     * Sets the maximum category label width ratio.
+     *
+     * @param ratio the ratio.
+     */
+    public CategoryAxisProps maximumCategoryLabelWidthRatio(float ratio) {
+        axis_.setMaximumCategoryLabelWidthRatio(ratio);
+        return this;
+    }
 }

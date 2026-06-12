@@ -436,7 +436,7 @@ public abstract class Plot implements ChartElement, AxisChangeListener,
      * @see #setInsets(RectangleInsets)
      */
     public void setInsets(RectangleInsets insets, boolean notify) {
-        Args.nullNotPermitted(insets, "insets");
+        Objects.requireNonNull(insets, "insets");
         if (!this.insets.equals(insets)) {
             this.insets = insets;
             if (notify) {

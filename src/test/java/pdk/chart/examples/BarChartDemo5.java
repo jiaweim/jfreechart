@@ -44,8 +44,8 @@ public class BarChartDemo5 {
 
     static void main() {
         CategoryXYChart chart = CategoryXYChart.create();
-        chart.dataset(createDataset(), CategoryXYChartType.BAR)
-                .orientation(PlotOrientation.HORIZONTAL)
+        chart.orientation(PlotOrientation.HORIZONTAL)
+                .dataset(createDataset(), CategoryXYChartType.BAR)
                 .title("Prison Population Rates - Selected Countries")
                 .axisNames("Country", "Prisoners Per 100,000 National Population")
                 .addTitle(new TextTitle("Source: http://www.homeoffice.gov.uk/rds/pdfs2/r188.pdf", new Font("Dialog", Font.ITALIC, 10)))
@@ -56,7 +56,7 @@ public class BarChartDemo5 {
                 .defaultItemLabelsVisible(true)
                 .defaultItemLabelGenerator(new StandardCategoryItemLabelGenerator<>())
                 .defaultToolTipGenerator(new StandardCategoryToolTipGenerator<>("{0}, {1}) = {2} per 100,000", new DecimalFormat("0")))
-                .itemLabelInsets(new RectangleInsets(0.0, 0.0, 0.0, 0.0))
+                .itemLabelInsets(new RectangleInsets(0.0, 9.0, 0.0, 9.0))
                 .done()
                 .domainAxis()
                 .categoryMargin(0.25)

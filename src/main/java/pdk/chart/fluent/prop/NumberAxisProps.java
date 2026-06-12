@@ -8,6 +8,8 @@ import pdk.chart.event.AxisChangeEvent;
 import pdk.chart.fluent.CategoryXYChart;
 import pdk.chart.fluent.XYChart;
 
+import java.awt.*;
+
 /**
  * A class for configuring properties of NumberAxis, designed with a fluent style API.
  *
@@ -15,17 +17,17 @@ import pdk.chart.fluent.XYChart;
  * @version 1.0.0
  * @since 08 Jun 2026, 9:12 AM
  */
-public class NumberAxisProps<T extends Chart> {
+public class NumberAxisProps {
 
-    protected final T chart_;
+    protected final Chart chart_;
     private final NumberAxis axis_;
 
-    public NumberAxisProps(T chart, NumberAxis axis) {
+    public NumberAxisProps(Chart chart, NumberAxis axis) {
         this.chart_ = chart;
         this.axis_ = axis;
     }
 
-    public T done() {
+    public Chart done() {
         return chart_;
     }
 
@@ -88,8 +90,7 @@ public class NumberAxisProps<T extends Chart> {
     }
 
     /**
-     * Sets the range for the axis and sends a change event to all registered
-     * listeners.
+     * Sets the range for the axis.
      * <p>
      * As a side effect, the auto-range flag is set to {@code false}.
      *
@@ -181,6 +182,26 @@ public class NumberAxisProps<T extends Chart> {
      */
     public NumberAxisProps upperMargin(double margin) {
         axis_.setUpperMargin(margin);
+        return this;
+    }
+
+    /**
+     * Sets  whether the axis is visible.
+     *
+     * @param flag the flag.
+     */
+    public NumberAxisProps visible(boolean flag) {
+        axis_.setVisible(flag);
+        return this;
+    }
+
+    /**
+     * Sets the paint used to draw tick marks.
+     *
+     * @param paint the paint ({@code null} not permitted).
+     */
+    public NumberAxisProps tickMarkPaint(Paint paint) {
+        axis_.setTickMarkPaint(paint);
         return this;
     }
 }

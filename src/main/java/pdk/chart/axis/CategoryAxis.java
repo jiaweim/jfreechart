@@ -7,7 +7,6 @@ import pdk.chart.data.category.CategoryDataset;
 import pdk.chart.entity.CategoryLabelEntity;
 import pdk.chart.entity.EntityCollection;
 import pdk.chart.event.AxisChangeEvent;
-import pdk.chart.internal.Args;
 import pdk.chart.internal.PaintUtils;
 import pdk.chart.internal.SerialUtils;
 import pdk.chart.internal.ShapeUtils;
@@ -295,7 +294,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #getCategoryLabelPositions()
      */
     public void setCategoryLabelPositions(CategoryLabelPositions positions) {
-        Args.nullNotPermitted(positions, "positions");
+        Objects.requireNonNull(positions, "positions");
         this.categoryLabelPositions = positions;
         fireChangeEvent();
     }
@@ -308,7 +307,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #setTickLabelFont(Comparable, Font)
      */
     public Font getTickLabelFont(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         Font result = this.tickLabelFontMap.get(category);
         // if there is no specific font, use the general one...
         if (result == null) {
@@ -326,7 +325,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #getTickLabelFont(Comparable)
      */
     public void setTickLabelFont(Comparable category, Font font) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         if (font == null) {
             this.tickLabelFontMap.remove(category);
         } else {
@@ -343,7 +342,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #setTickLabelPaint(Paint)
      */
     public Paint getTickLabelPaint(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         Paint result = this.tickLabelPaintMap.get(category);
         // if there is no specific paint, use the general one...
         if (result == null) {
@@ -361,7 +360,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #getTickLabelPaint(Comparable)
      */
     public void setTickLabelPaint(Comparable category, Paint paint) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         if (paint == null) {
             this.tickLabelPaintMap.remove(category);
         } else {
@@ -379,7 +378,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #removeCategoryLabelToolTip(Comparable)
      */
     public void addCategoryLabelToolTip(Comparable category, String tooltip) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         this.categoryLabelToolTips.put(category, tooltip);
         fireChangeEvent();
     }
@@ -394,7 +393,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #removeCategoryLabelToolTip(Comparable)
      */
     public String getCategoryLabelToolTip(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         return this.categoryLabelToolTips.get(category);
     }
 
@@ -408,7 +407,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #clearCategoryLabelToolTips()
      */
     public void removeCategoryLabelToolTip(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         if (this.categoryLabelToolTips.remove(category) != null) {
             fireChangeEvent();
         }
@@ -435,7 +434,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #removeCategoryLabelURL(Comparable)
      */
     public void addCategoryLabelURL(Comparable category, String url) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         this.categoryLabelURLs.put(category, url);
         fireChangeEvent();
     }
@@ -449,7 +448,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #removeCategoryLabelURL(Comparable)
      */
     public String getCategoryLabelURL(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         return this.categoryLabelURLs.get(category);
     }
 
@@ -463,7 +462,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @see #clearCategoryLabelURLs()
      */
     public void removeCategoryLabelURL(Comparable category) {
-        Args.nullNotPermitted(category, "category");
+        Objects.requireNonNull(category, "category");
         if (this.categoryLabelURLs.remove(category) != null) {
             fireChangeEvent();
         }
@@ -494,23 +493,13 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
             int category, int categoryCount, Rectangle2D area,
             RectangleEdge edge) {
-        Args.nullNotPermitted(anchor, "anchor");
-        double result = 0.0;
-        switch (anchor) {
-            case START:
-                result = getCategoryStart(category, categoryCount, area, edge);
-                break;
-            case MIDDLE:
-                result = getCategoryMiddle(category, categoryCount, area, edge);
-                break;
-            case END:
-                result = getCategoryEnd(category, categoryCount, area, edge);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected anchor value.");
-        }
-        return result;
-
+        Objects.requireNonNull(anchor, "anchor");
+        return switch (anchor) {
+            case START -> getCategoryStart(category, categoryCount, area, edge);
+            case MIDDLE -> getCategoryMiddle(category, categoryCount, area, edge);
+            case END -> getCategoryEnd(category, categoryCount, area, edge);
+            default -> throw new IllegalStateException("Unexpected anchor value.");
+        };
     }
 
     /**
@@ -598,7 +587,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public double getCategoryMiddle(Comparable category,
             List categories, Rectangle2D area, RectangleEdge edge) {
-        Args.nullNotPermitted(categories, "categories");
+        Objects.requireNonNull(categories, "categories");
         int categoryIndex = categories.indexOf(category);
         int categoryCount = categories.size();
         return getCategoryMiddle(categoryIndex, categoryCount, area, edge);
@@ -863,8 +852,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     protected AxisState drawCategoryLabels(Graphics2D g2, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge, AxisState state,
             PlotRenderingInfo plotState) {
+        Objects.requireNonNull(state, "state");
 
-        Args.nullNotPermitted(state, "state");
         if (!isTickLabelsVisible()) {
             return state;
         }
@@ -1175,13 +1164,12 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof CategoryAxis)) {
+        if (!(obj instanceof CategoryAxis that)) {
             return false;
         }
         if (!super.equals(obj)) {
             return false;
         }
-        CategoryAxis that = (CategoryAxis) obj;
         if (that.lowerMargin != this.lowerMargin) {
             return false;
         }
