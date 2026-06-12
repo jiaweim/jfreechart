@@ -87,7 +87,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
     /**
      * The default value for the initialisation of the shadowsVisible flag.
      */
-    private static boolean defaultShadowsVisible = true;
+    private static boolean defaultShadowsVisible = false;
 
     /**
      * Returns the default value for the {@code shadowsVisible} flag.
@@ -113,22 +113,18 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * The margin between items (bars) within a category.
      */
     private double itemMargin;
-
     /**
      * A flag that controls whether bar outlines are drawn.
      */
     private boolean drawBarOutline;
-
     /**
      * The maximum bar width as a percentage of the available space.
      */
     private double maximumBarWidth;
-
     /**
      * The minimum bar length (in Java2D units).
      */
     private double minimumBarLength;
-
     /**
      * An optional class used to transform gradient paint objects to fit each
      * bar.

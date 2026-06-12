@@ -1,12 +1,10 @@
 package pdk.chart.fluent.prop;
 
 import org.jspecify.annotations.Nullable;
+import pdk.chart.api.RectangleInsets;
 import pdk.chart.event.RendererChangeEvent;
 import pdk.chart.fluent.CategoryXYChart;
-import pdk.chart.labels.CategoryItemLabelGenerator;
-import pdk.chart.labels.CategorySeriesLabelGenerator;
-import pdk.chart.labels.ItemLabelPosition;
-import pdk.chart.labels.StandardCategoryToolTipGenerator;
+import pdk.chart.labels.*;
 import pdk.chart.renderer.category.BarPainter;
 import pdk.chart.renderer.category.BarRenderer;
 import pdk.chart.util.GradientPaintTransformer;
@@ -65,8 +63,7 @@ public class CategoryBarProps extends CategoryXYRendererProps {
     }
 
     /**
-     * Sets the flag that controls whether bar outlines are drawn and
-     * sends a {@link RendererChangeEvent} to all registered listeners.
+     * Sets whether bar outlines are drawn.
      *
      * @param draw the flag.
      */
@@ -143,5 +140,49 @@ public class CategoryBarProps extends CategoryXYRendererProps {
         return this;
     }
 
+    /**
+     * Sets the maximum bar width, which is specified as a percentage of the
+     * available space for all bars.
+     * <p>
+     * The width of bars is calculated based on available space,
+     * categoryMargin, itemMargin and other parameters.
+     *
+     * @param percent the percent (where 0.05 is five percent).
+     */
+    public CategoryBarProps maximumBarWidth(double percent) {
+        renderer_.setMaximumBarWidth(percent);
+        return this;
+    }
 
+    /**
+     * Sets the legend item label generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator the generator ({@code null} not permitted).
+     */
+    public CategoryBarProps legendItemLabelGenerator(CategorySeriesLabelGenerator generator) {
+        renderer_.setLegendItemLabelGenerator(generator);
+        return this;
+    }
+
+    /**
+     * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
+     * to all registered listeners.
+     *
+     * @param generator the generator ({@code null} permitted).
+     */
+    public CategoryBarProps defaultToolTipGenerator(CategoryToolTipGenerator generator) {
+        renderer_.setDefaultToolTipGenerator(generator, true);
+        return this;
+    }
+
+    /**
+     * Sets the item label insets.
+     *
+     * @param itemLabelInsets the insets
+     */
+    public CategoryBarProps itemLabelInsets(RectangleInsets itemLabelInsets) {
+        renderer_.setItemLabelInsets(itemLabelInsets);
+        return this;
+    }
 }

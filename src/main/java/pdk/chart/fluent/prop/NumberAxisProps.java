@@ -39,7 +39,8 @@ public class NumberAxisProps<T extends Chart> {
     }
 
     /**
-     * Return the {@link CategoryXYChart} this axis belongs to.
+     * Back to the {@link CategoryXYChart} this axis belongs to.
+     * <p>
      * If the owner chart is not a {@link CategoryXYChart}, throw an exception.
      *
      * @return {@link CategoryXYChart}

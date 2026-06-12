@@ -442,7 +442,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #endElementGroup(java.awt.Graphics2D)
      */
     protected void beginElementGroup(Graphics2D g2, ItemKey key) {
-        Args.nullNotPermitted(key, "key");
+        Objects.requireNonNull(key, "key");
         Map<String, String> m = new HashMap<>(1);
         m.put("ref", key.toJSONString());
         g2.setRenderingHint(ChartHints.KEY_BEGIN_ELEMENT, m);
@@ -827,8 +827,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
         this.autoPopulateSeriesPaint = auto;
     }
 
-    //// FILL PAINT //////////////////////////////////////////////////////////
-
     /**
      * Returns the paint used to fill data items as they are drawn.  The
      * default implementation passes control to the
@@ -936,7 +934,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultFillPaint()
      */
     public void setDefaultFillPaint(Paint paint, boolean notify) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.defaultFillPaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -966,8 +964,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
     public void setAutoPopulateSeriesFillPaint(boolean auto) {
         this.autoPopulateSeriesFillPaint = auto;
     }
-
-    // OUTLINE PAINT //////////////////////////////////////////////////////////
 
     /**
      * Returns the paint used to outline data items as they are drawn.
@@ -1078,7 +1074,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultOutlinePaint()
      */
     public void setDefaultOutlinePaint(Paint paint, boolean notify) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.defaultOutlinePaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -1108,8 +1104,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
     public void setAutoPopulateSeriesOutlinePaint(boolean auto) {
         this.autoPopulateSeriesOutlinePaint = auto;
     }
-
-    // STROKE
 
     /**
      * Returns the stroke used to draw data items.
@@ -1231,7 +1225,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultStroke()
      */
     public void setDefaultStroke(Stroke stroke, boolean notify) {
-        Args.nullNotPermitted(stroke, "stroke");
+        Objects.requireNonNull(stroke, "stroke");
         this.defaultStroke = stroke;
         if (notify) {
             fireChangeEvent();
@@ -1259,8 +1253,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
     public void setAutoPopulateSeriesStroke(boolean auto) {
         this.autoPopulateSeriesStroke = auto;
     }
-
-    // OUTLINE STROKE
 
     /**
      * Returns the stroke used to outline data items.  The default
@@ -1369,7 +1361,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultOutlineStroke()
      */
     public void setDefaultOutlineStroke(Stroke stroke, boolean notify) {
-        Args.nullNotPermitted(stroke, "stroke");
+        Objects.requireNonNull(stroke, "stroke");
         this.defaultOutlineStroke = stroke;
         if (notify) {
             fireChangeEvent();
@@ -1399,8 +1391,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
     public void setAutoPopulateSeriesOutlineStroke(boolean auto) {
         this.autoPopulateSeriesOutlineStroke = auto;
     }
-
-    // SHAPE
 
     /**
      * Returns a shape used to represent a data item.
@@ -1523,7 +1513,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultShape()
      */
     public void setDefaultShape(Shape shape, boolean notify) {
-        Args.nullNotPermitted(shape, "shape");
+        Objects.requireNonNull(shape, "shape");
         this.defaultShape = shape;
         if (notify) {
             fireChangeEvent();
@@ -1551,8 +1541,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
     public void setAutoPopulateSeriesShape(boolean auto) {
         this.autoPopulateSeriesShape = auto;
     }
-
-    // ITEM LABEL VISIBILITY...
 
     /**
      * Returns {@code true} if an item label is visible, and
@@ -1672,8 +1660,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
         }
     }
 
-    //// ITEM LABEL FONT //////////////////////////////////////////////////////
-
     /**
      * Returns the font for an item label.
      *
@@ -1761,7 +1747,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultItemLabelFont()
      */
     public void setDefaultItemLabelFont(Font font) {
-        Args.nullNotPermitted(font, "font");
+        Objects.requireNonNull(font, "font");
         setDefaultItemLabelFont(font, true);
     }
 
@@ -1780,8 +1766,6 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
             fireChangeEvent();
         }
     }
-
-    //// ITEM LABEL PAINT  ////////////////////////////////////////////////////
 
     /**
      * Returns {@code true} if contrast colors are automatically computed for
@@ -1917,7 +1901,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #getDefaultItemLabelPaint()
      */
     public void setDefaultItemLabelPaint(Paint paint, boolean notify) {
-        Args.nullNotPermitted(paint, "paint");
+        Objects.requireNonNull(paint, "paint");
         this.defaultItemLabelPaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -2031,7 +2015,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      */
     public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position,
             boolean notify) {
-        Args.nullNotPermitted(position, "position");
+        Objects.requireNonNull(position, "position");
         this.defaultPositiveItemLabelPosition = position;
         if (notify) {
             fireChangeEvent();
@@ -2134,7 +2118,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      */
     public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position,
             boolean notify) {
-        Args.nullNotPermitted(position, "position");
+        Objects.requireNonNull(position, "position");
         this.defaultNegativeItemLabelPosition = position;
         if (notify) {
             fireChangeEvent();
@@ -2156,7 +2140,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @param itemLabelInsets the insets
      */
     public void setItemLabelInsets(RectangleInsets itemLabelInsets) {
-        Args.nullNotPermitted(itemLabelInsets, "itemLabelInsets");
+        Objects.requireNonNull(itemLabelInsets, "itemLabelInsets");
         this.itemLabelInsets = itemLabelInsets;
         fireChangeEvent();
     }
@@ -2446,7 +2430,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @param font the font ({@code null} permitted).
      */
     public void setDefaultLegendTextFont(Font font) {
-        Args.nullNotPermitted(font, "font");
+        Objects.requireNonNull(font, "font");
         this.defaultLegendTextFont = font;
         fireChangeEvent();
     }
@@ -2566,7 +2550,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      */
     protected Point2D calculateLabelAnchorPoint(ItemLabelAnchor anchor,
             double x, double y, PlotOrientation orientation) {
-        Args.nullNotPermitted(anchor, "anchor");
+        Objects.requireNonNull(anchor, "anchor");
         Point2D result = null;
         if (anchor == ItemLabelAnchor.CENTER) {
             result = new Point2D.Double(x, y);
@@ -2657,7 +2641,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #removeChangeListener(RendererChangeListener)
      */
     public void addChangeListener(RendererChangeListener listener) {
-        Args.nullNotPermitted(listener, "listener");
+        Objects.requireNonNull(listener, "listener");
         this.listenerList.add(RendererChangeListener.class, listener);
     }
 
@@ -2669,7 +2653,7 @@ public abstract class AbstractRenderer implements ChartElement, Cloneable, Seria
      * @see #addChangeListener(RendererChangeListener)
      */
     public void removeChangeListener(RendererChangeListener listener) {
-        Args.nullNotPermitted(listener, "listener");
+        Objects.requireNonNull(listener, "listener");
         this.listenerList.remove(RendererChangeListener.class, listener);
     }
 

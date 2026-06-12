@@ -3,7 +3,7 @@ Proteomics chart library
 
 Overview
 --------
-pdk-chart is a chart library modified from JFreeChart. It adds features related to proteomics data visualization and add fluent-style APIs.
+pdk-chart is a chart library modified from JFreeChart. It adds features related to proteomics data visualization and fluent-style APIs.
 
 pdk-chart requires JDK 25 or later.
 

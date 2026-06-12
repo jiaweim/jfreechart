@@ -107,7 +107,7 @@ public class CategoryXYChart extends Chart {
      * @param yName name for range axis.
      * @return this.
      */
-    public CategoryXYChart axisNames(String xName, String yName) {
+    public CategoryXYChart axisNames(@Nullable String xName, @Nullable String yName) {
         domainAxis_.setLabel(xName);
         rangeAxis_.setLabel(yName);
         return this;
